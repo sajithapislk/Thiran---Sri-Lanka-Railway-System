@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('refunds', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('b_id');
+            $table->unsignedBigInteger('booking_id');
             $table->string('reason');
             $table->string('status');
-            $table->timestamp('is_refunded')->nullable();
+            $table->datetime('is_refunded')->nullable();
             $table->timestamps();
+            $table->foreign('booking_id')->references('id')->on('books');
         });
     }
 

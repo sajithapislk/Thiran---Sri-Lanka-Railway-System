@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('station_id');
             $table->string('status');
             $table->timestamps();
+            $table->foreign('st_id')->references('id')->on('schedule_times');
+            $table->foreign('station_id')->references('id')->on('stations');
         });
     }
 

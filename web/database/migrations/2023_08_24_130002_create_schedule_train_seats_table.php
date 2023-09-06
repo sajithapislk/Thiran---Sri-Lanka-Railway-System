@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('st_id');
             $table->integer('is_available')->default(true);
             $table->timestamps();
+            $table->foreign('st_id')->references('id')->on('schedule_times');
         });
     }
 

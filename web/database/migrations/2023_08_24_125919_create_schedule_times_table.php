@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('schedule_times', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('train_id');
-            $table->timestamp('start_at');
-            $table->timestamp('end_at');
+            $table->datetime('start_at');
+            $table->datetime('end_at');
             $table->string('status');
             $table->timestamps();
+            $table->foreign('train_id')->references('id')->on('trains');
         });
     }
 

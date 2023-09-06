@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('longitude');
             $table->string('status');
             $table->timestamps();
+            $table->foreign('st_id')->references('id')->on('schedule_times');
         });
     }
 

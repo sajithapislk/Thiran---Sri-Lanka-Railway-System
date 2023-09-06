@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('complains', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('booking_id');
             $table->string('note');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

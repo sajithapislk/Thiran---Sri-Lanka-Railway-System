@@ -16,9 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('st_id');
             $table->unsignedBigInteger('seat_id');
             $table->unsignedBigInteger('payment_id');
-            $table->timestamp('entered_at')->nullable();
-            $table->timestamp('is_canceled')->nullable();
+            $table->datetime('entered_at')->nullable();
+            $table->datetime('is_canceled')->nullable();
             $table->timestamps();
+            $table->foreign('st_id')->references('id')->on('schedule_times');
+            $table->foreign('seat_id')->references('id')->on('schedule_train_seats');
+            $table->foreign('payment_id')->references('id')->on('payments');
         });
     }
 
