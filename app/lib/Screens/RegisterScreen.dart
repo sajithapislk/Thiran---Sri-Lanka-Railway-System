@@ -61,16 +61,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     hintText: 'Enter secure password'),
               ),
             ),
-            TextButton(
-              onPressed: (){
-                //TODO FORGOT PASSWORD SCREEN GOES HERE
-              },
-              child: Text(
-                'Forgot Password',
-                style: TextStyle(color: Colors.blue, fontSize: 15),
-              ),
-            ),
             Container(
+              margin: EdgeInsets.only(top: 20),
               height: 50,
               width: 250,
               decoration: BoxDecoration(
@@ -80,15 +72,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 },
                 child: Text(
-                  'Login',
+                  'Register',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
             ),
             SizedBox(
-              height: 130,
+              height: 30,
             ),
-            Text('New User? Create Account')
+            Text('Already registered? Login')
           ],
         ),
       ),
