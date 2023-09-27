@@ -12,6 +12,7 @@ class UserController extends GetxController {
     var data = {"email": email, "password": password};
     var res = await UserProvider.login(data);
     if (res.token == null) {
+      print("empty");
       return;
     }
     sessionSave(res);
@@ -33,11 +34,8 @@ class UserController extends GetxController {
   Future<void> create(
       {required String name,
       required String email,
-      required String tp,
-      required String password,
-      required String guardianName,
-      required String guardianTp,
-      required String areaId}) async {
+      required String password
+      }) async {
     var data = {
       "name": name,
       "email": email,

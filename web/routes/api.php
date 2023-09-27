@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\TrainLocationSaveController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/train-location', TrainLocationSaveController::class);
+
+
+Route::prefix('user')->group(function () {
+    Route::post('login',[UserController::class,'check']);
+    Route::post('store',[UserController::class,'store']);
+
+    Route::group(['middleware' => ['auth:sanctum', 'ability:user:*']], function () {
+        Route::get('logout',[UserController::class,'logout']);
+    });
+});
