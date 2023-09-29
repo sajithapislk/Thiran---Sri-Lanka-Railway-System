@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:search_choices/search_choices.dart';
 
 class TrainFindScreen extends StatefulWidget {
   const TrainFindScreen({Key? key}) : super(key: key);
@@ -23,11 +24,77 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'To'),
+                  SearchChoices.single(
+                    validator: (val) {
+                      // if(val == "" || val==null){
+                      //   return "Select Data";
+                      // }
+                      // if ((val).isEmpty) {
+                      //   return 'Please select some text';
+                      // }
+                      // return null;
+                    },
+                    items: [
+                      DropdownMenuItem(
+                        value: "a",
+                        child: Text("DropdownMenuItem"),
+                      )
+                    ],
+                    // items: projectController.projectList.value.map((item) {
+                    //   return DropdownMenuItem(
+                    //       value: item.projectName.toString(),
+                    //       child: Text(item.projectName.toString())
+                    //   );
+                    // }).toList(),
+                    // value: projectController.project.value.toString(),
+                    hint: "Project Name",
+                    onChanged: (value){
+                    },
+                    isExpanded: true,
+                    fieldPresentationFn: (Widget fieldWidget, {bool? selectionIsValid}) {
+                      return Container(
+                        child: InputDecorator(
+                          decoration: InputDecoration(labelText: 'From'),
+                          child: fieldWidget,
+                        ),
+                      );
+                    },
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'From'),
+                  SearchChoices.single(
+                    validator: (val) {
+                      // if(val == "" || val==null){
+                      //   return "Select Data";
+                      // }
+                      // if ((val).isEmpty) {
+                      //   return 'Please select some text';
+                      // }
+                      // return null;
+                    },
+                    items: [
+                      DropdownMenuItem(
+                        value: "a",
+                        child: Text("DropdownMenuItem"),
+                      )
+                    ],
+                    // items: projectController.projectList.value.map((item) {
+                    //   return DropdownMenuItem(
+                    //       value: item.projectName.toString(),
+                    //       child: Text(item.projectName.toString())
+                    //   );
+                    // }).toList(),
+                    // value: projectController.project.value.toString(),
+                    hint: "Project Name",
+                    onChanged: (value){
+                    },
+                    isExpanded: true,
+                    fieldPresentationFn: (Widget fieldWidget, {bool? selectionIsValid}) {
+                      return Container(
+                        child: InputDecorator(
+                          decoration: InputDecoration(labelText: 'From'),
+                          child: fieldWidget,
+                        ),
+                      );
+                    },
                   ),
                   TextFormField(
                     decoration: InputDecoration(labelText: 'Date'),
