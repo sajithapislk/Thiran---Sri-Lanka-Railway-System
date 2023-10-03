@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('trains', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('ft_max_seat');
-            $table->integer('sd_max_seat');
-            $table->integer('td_max_seat');
+            $table->string('no');
+            $table->integer('acs_max_seats'); // Air Conditioned Saloon
+            $table->integer('os_max_seats'); // Observation Saloon
+            $table->integer('scrs_max_seats'); // Second Class Reserved Seats
+            $table->integer('tcrs_max_seats'); // Third Class Reserved Seats
             $table->timestamps();
         });
     }

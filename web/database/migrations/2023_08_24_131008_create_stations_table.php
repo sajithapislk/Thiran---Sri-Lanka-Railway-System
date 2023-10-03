@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
+            $table->string('tp');
+            $table->double('left_slide',7,2);
+            $table->double('right_slide',7,2);
             $table->timestamps();
         });
     }

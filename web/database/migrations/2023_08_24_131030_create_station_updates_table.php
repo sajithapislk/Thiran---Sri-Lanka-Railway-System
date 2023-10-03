@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schedule_route_orders', function (Blueprint $table) {
+        Schema::create('station_updates', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('st_id');
             $table->unsignedBigInteger('station_id');
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('schedule_route_orders');
+        Schema::dropIfExists('station_update');
     }
 };

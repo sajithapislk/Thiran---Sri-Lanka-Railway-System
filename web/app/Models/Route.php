@@ -5,7 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ScheduleTrainSeat extends Model
+class Route extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'station_list' => 'array'
+    ];
 }

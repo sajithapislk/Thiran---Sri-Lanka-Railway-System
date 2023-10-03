@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('st_id');
-            $table->unsignedBigInteger('seat_id');
             $table->unsignedBigInteger('payment_id');
+            $table->unsignedBigInteger('from_s_id');
+            $table->unsignedBigInteger('to_s_id');
+            $table->integer('seat_no');
             $table->datetime('entered_at')->nullable();
+            $table->datetime('ended_at')->nullable();
             $table->datetime('is_canceled')->nullable();
             $table->timestamps();
             $table->foreign('st_id')->references('id')->on('schedule_times');
-            $table->foreign('seat_id')->references('id')->on('schedule_train_seats');
             $table->foreign('payment_id')->references('id')->on('payments');
         });
     }
