@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\StationController;
 use App\Http\Controllers\API\TrainLocationSaveController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
@@ -30,4 +31,8 @@ Route::prefix('user')->group(function () {
     Route::group(['middleware' => ['auth:sanctum', 'ability:user:*']], function () {
         Route::get('logout',[UserController::class,'logout']);
     });
+
+});
+Route::controller(StationController::class)->group(function () {
+    Route::get('station', 'index')->name('station');
 });

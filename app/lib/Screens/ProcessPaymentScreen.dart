@@ -134,12 +134,29 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
             padding: const EdgeInsets.only(
                 left: 15.0, right: 15.0, top: 15, bottom: 0
             ),
-            child: TextField(
-              controller: passwordController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Class',
-                  hintText: 'Class'),
+            child: SearchChoices.single(
+              validator: (val) {
+
+              },
+              items: [
+                DropdownMenuItem(
+                  value: "a",
+                  child: Text("DropdownMenuItem"),
+                )
+              ],
+              // value: projectController.project.value.toString(),
+              hint: "Project Name",
+              onChanged: (value){
+              },
+              isExpanded: true,
+              fieldPresentationFn: (Widget fieldWidget, {bool? selectionIsValid}) {
+                return Container(
+                  child: InputDecorator(
+                    decoration: InputDecoration(labelText: 'From'),
+                    child: fieldWidget,
+                  ),
+                );
+              },
             ),
           ),
         ]
