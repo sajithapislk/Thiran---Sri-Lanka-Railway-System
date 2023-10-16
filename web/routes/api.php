@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\StationController;
+use App\Http\Controllers\API\TrainLocationController;
 use App\Http\Controllers\API\TrainLocationSaveController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
@@ -36,3 +37,7 @@ Route::prefix('user')->group(function () {
 Route::controller(StationController::class)->group(function () {
     Route::get('station', 'index')->name('station');
 });
+Route::controller(TrainLocationController::class)->group(function () {
+    Route::get('train-location', 'store')->name('train-location.store');
+});
+

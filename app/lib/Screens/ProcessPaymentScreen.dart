@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:search_choices/search_choices.dart';
+import 'package:get/get.dart';
+
+import '../Controllers/StationController.dart';
 
 class ProcessPaymentScreen extends StatefulWidget {
   const ProcessPaymentScreen({Key? key}) : super(key: key);
@@ -9,8 +12,12 @@ class ProcessPaymentScreen extends StatefulWidget {
 }
 
 class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
+  final stationController = Get.put(StationController());
+
   final classController = TextEditingController();
   final passwordController = TextEditingController();
+
+  String? areaSelectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -105,59 +112,67 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
             padding: const EdgeInsets.only(
                 left: 15.0, right: 15.0, top: 15, bottom: 0
             ),
-            child: SearchChoices.single(
-              validator: (val) {
-
-              },
-              items: [
-                DropdownMenuItem(
-                  value: "a",
-                  child: Text("DropdownMenuItem"),
-                )
-              ],
-              // value: projectController.project.value.toString(),
-              hint: "Project Name",
-              onChanged: (value){
-              },
-              isExpanded: true,
-              fieldPresentationFn: (Widget fieldWidget, {bool? selectionIsValid}) {
+            child: Obx(() => SearchChoices.single(
+              fieldPresentationFn: (Widget fieldWidget,
+                  {bool? selectionIsValid}) {
                 return Container(
                   child: InputDecorator(
-                    decoration: InputDecoration(labelText: 'From'),
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'From'),
                     child: fieldWidget,
                   ),
                 );
               },
-            ),
+              items: stationController.list
+                  .map((element) => DropdownMenuItem(
+                child: Text(element.name),
+                value: "${element.id}|${element.name}",
+              ))
+                  .toList(),
+              value: areaSelectedValue,
+              hint: "Select one",
+              searchHint: "Select one",
+              onChanged: (value) {
+                setState(() {
+                  areaSelectedValue = value;
+                });
+              },
+              isExpanded: true,
+            )),
           ),
           Padding(
             padding: const EdgeInsets.only(
                 left: 15.0, right: 15.0, top: 15, bottom: 0
             ),
-            child: SearchChoices.single(
-              validator: (val) {
-
-              },
-              items: [
-                DropdownMenuItem(
-                  value: "a",
-                  child: Text("DropdownMenuItem"),
-                )
-              ],
-              // value: projectController.project.value.toString(),
-              hint: "Project Name",
-              onChanged: (value){
-              },
-              isExpanded: true,
-              fieldPresentationFn: (Widget fieldWidget, {bool? selectionIsValid}) {
+            child: Obx(() => SearchChoices.single(
+              fieldPresentationFn: (Widget fieldWidget,
+                  {bool? selectionIsValid}) {
                 return Container(
                   child: InputDecorator(
-                    decoration: InputDecoration(labelText: 'From'),
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'To'),
                     child: fieldWidget,
                   ),
                 );
               },
-            ),
+              items: stationController.list
+                  .map((element) => DropdownMenuItem(
+                child: Text(element.name),
+                value: "${element.id}|${element.name}",
+              ))
+                  .toList(),
+              value: areaSelectedValue,
+              hint: "Select one",
+              searchHint: "Select one",
+              onChanged: (value) {
+                setState(() {
+                  areaSelectedValue = value;
+                });
+              },
+              isExpanded: true,
+            )),
           ),
         ]
       ),
