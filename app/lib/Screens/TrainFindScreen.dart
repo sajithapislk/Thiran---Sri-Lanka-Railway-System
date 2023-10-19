@@ -1,6 +1,14 @@
+import 'dart:developer';
+
+import 'package:app/Controllers/ScheduleTimeTableController.dart';
+import 'package:app/Models/StationModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:search_choices/search_choices.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
+import '../Controllers/StationController.dart';
 
 class TrainFindScreen extends StatefulWidget {
   const TrainFindScreen({Key? key}) : super(key: key);
@@ -10,8 +18,14 @@ class TrainFindScreen extends StatefulWidget {
 }
 
 class _TrainFindScreenState extends State<TrainFindScreen> {
+  final stationController = Get.put(StationController());
+  final scheduleTimeController = Get.put(ScheduleTimeTableController());
+
+  String? toSelectedValue;
+  String? fromSelectedValue;
+
   final _formKey = GlobalKey<FormState>();
-  DateTime date = DateTime(2016, 10, 26);
+  DateTime date = DateTime.now();
 
   // This function displays a CupertinoModalPopup with a reasonable fixed height
   // which hosts CupertinoDatePicker.
@@ -49,78 +63,65 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  SearchChoices.single(
-                    validator: (val) {
-                      // if(val == "" || val==null){
-                      //   return "Select Data";
-                      // }
-                      // if ((val).isEmpty) {
-                      //   return 'Please select some text';
-                      // }
-                      // return null;
-                    },
-                    items: [
-                      DropdownMenuItem(
-                        value: "a",
-                        child: Text("DropdownMenuItem"),
-                      )
-                    ],
-                    // items: projectController.projectList.value.map((item) {
-                    //   return DropdownMenuItem(
-                    //       value: item.projectName.toString(),
-                    //       child: Text(item.projectName.toString())
-                    //   );
-                    // }).toList(),
-                    // value: projectController.project.value.toString(),
-                    hint: "Project Name",
-                    onChanged: (value){
-                    },
-                    isExpanded: true,
-                    fieldPresentationFn: (Widget fieldWidget, {bool? selectionIsValid}) {
+                  Obx(() => SearchChoices.single(
+                    fieldPresentationFn: (Widget fieldWidget,
+                        {bool? selectionIsValid}) {
                       return Container(
                         child: InputDecorator(
-                          decoration: InputDecoration(labelText: 'From'),
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'From'),
                           child: fieldWidget,
                         ),
                       );
                     },
-                  ),
-                  SearchChoices.single(
-                    validator: (val) {
-                      // if(val == "" || val==null){
-                      //   return "Select Data";
-                      // }
-                      // if ((val).isEmpty) {
-                      //   return 'Please select some text';
-                      // }
-                      // return null;
-                    },
-                    items: [
-                      DropdownMenuItem(
-                        value: "a",
-                        child: Text("DropdownMenuItem"),
-                      )
-                    ],
-                    // items: projectController.projectList.value.map((item) {
-                    //   return DropdownMenuItem(
-                    //       value: item.projectName.toString(),
-                    //       child: Text(item.projectName.toString())
-                    //   );
-                    // }).toList(),
-                    // value: projectController.project.value.toString(),
-                    hint: "Project Name",
-                    onChanged: (value){
+                    items: stationController.list
+                        .map((element) => DropdownMenuItem(
+                      child: Text(element.name),
+                      value: "${element.id}|${element.name}",
+                    ))
+                        .toList(),
+                    value: fromSelectedValue,
+                    hint: "Select one",
+                    searchHint: "Select one",
+                    onChanged: (value) {
+                      setState(() {
+                        fromSelectedValue = value;
+                      });
                     },
                     isExpanded: true,
-                    fieldPresentationFn: (Widget fieldWidget, {bool? selectionIsValid}) {
+                  )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Obx(() => SearchChoices.single(
+                    fieldPresentationFn: (Widget fieldWidget,
+                        {bool? selectionIsValid}) {
                       return Container(
                         child: InputDecorator(
-                          decoration: InputDecoration(labelText: 'From'),
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'To'),
                           child: fieldWidget,
                         ),
                       );
                     },
-                  ),
+                    items: stationController.list
+                        .map((element) => DropdownMenuItem(
+                      child: Text(element.name),
+                      value: "${element.id}|${element.name}",
+                    ))
+                        .toList(),
+                    value: toSelectedValue,
+                    hint: "Select one",
+                    searchHint: "Select one",
+                    onChanged: (value) {
+                      setState(() {
+                        toSelectedValue = value;
+                      });
+                    },
+                    isExpanded: true,
+                  )),
                   _DatePickerItem(
                     children: <Widget>[
                       const Text('Date'),
@@ -141,7 +142,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                         // use the intl package to format the value based on the
                         // user's locale settings.
                         child: Text(
-                          '${date.month}-${date.day}-${date.year}',
+                          '${date.year}-${date.month}-${date.day}',
                           style: const TextStyle(
                             fontSize: 22.0,
                           ),
@@ -152,7 +153,9 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                   Container(
                     margin: EdgeInsets.all(10.0),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        scheduleTimeController.getList(from: fromSelectedValue!.split('|')[0], to: toSelectedValue!.split('|')[0], date: date.toString());
+                      },
                       child: Text('Submit'),
                     ),
                   ),
@@ -161,9 +164,15 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: 2,
+            child: Obx(()=>ListView.builder(
+              itemCount: scheduleTimeController.list.length,
               itemBuilder: (context, index) {
+                var row = scheduleTimeController.list[index];
+                int _fromId = row.route.stationList[0];
+                int _toId = row.route.stationList[row.route.stationList.length-1];
+
+                StationModel? fromStation = stationController.findById(_fromId);
+                StationModel? toStation = stationController.findById(_toId);
                 return Stack(
                   // fit: StackFit.passthrough,
                   children: [
@@ -196,39 +205,42 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                             height: 10,
                           ),
                           Text(
-                            "From:",
+                            "From: ${fromStation!.name}",
                             style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 14,
                                 color: Colors.white),
                           ),
                           Text(
-                            "To:",
+                            "To: ${toStation!.name}",
                             style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 14,
                                 color: Colors.white),
                           ),
                           Text(
-                            "Date:",
+                            "Date: ${DateFormat('yyyy-MM-dd').format(row.startAt)}",
                             style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                                color: Colors.white),
+                              fontWeight: FontWeight.normal,
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
                           ),
                           Text(
-                            "Time:",
+                            "	Arrival Time: ${DateFormat('HH:mm:ss').format(row.startAt)}",
                             style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                                color: Colors.white),
+                              fontWeight: FontWeight.normal,
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
                           ),
                           Text(
-                            "Duration:",
+                            "End At: ${DateFormat('HH:mm:ss').format(row.endAt)}",
                             style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                                color: Colors.white),
+                              fontWeight: FontWeight.normal,
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
                           ),
                           Text(
                             "Price:",
@@ -264,6 +276,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                 );
               },
             ),
+            )
           )
         ],
       ),

@@ -12,12 +12,8 @@ class ProcessPaymentScreen extends StatefulWidget {
 }
 
 class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
-  final stationController = Get.put(StationController());
 
-  final classController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  String? areaSelectedValue;
+  final qtyController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -110,70 +106,26 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-                left: 15.0, right: 15.0, top: 15, bottom: 0
+                left: 15.0, right: 15.0, top: 15, bottom: 0),
+            //padding: EdgeInsets.symmetric(horizontal: 15),
+            child: TextField(
+              controller: qtyController,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Qty'),
             ),
-            child: Obx(() => SearchChoices.single(
-              fieldPresentationFn: (Widget fieldWidget,
-                  {bool? selectionIsValid}) {
-                return Container(
-                  child: InputDecorator(
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'From'),
-                    child: fieldWidget,
-                  ),
-                );
-              },
-              items: stationController.list
-                  .map((element) => DropdownMenuItem(
-                child: Text(element.name),
-                value: "${element.id}|${element.name}",
-              ))
-                  .toList(),
-              value: areaSelectedValue,
-              hint: "Select one",
-              searchHint: "Select one",
-              onChanged: (value) {
-                setState(() {
-                  areaSelectedValue = value;
-                });
-              },
-              isExpanded: true,
-            )),
           ),
           Padding(
             padding: const EdgeInsets.only(
-                left: 15.0, right: 15.0, top: 15, bottom: 0
+                left: 15.0, right: 15.0, top: 15, bottom: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Price"),
+                Text("129.00")
+              ],
             ),
-            child: Obx(() => SearchChoices.single(
-              fieldPresentationFn: (Widget fieldWidget,
-                  {bool? selectionIsValid}) {
-                return Container(
-                  child: InputDecorator(
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'To'),
-                    child: fieldWidget,
-                  ),
-                );
-              },
-              items: stationController.list
-                  .map((element) => DropdownMenuItem(
-                child: Text(element.name),
-                value: "${element.id}|${element.name}",
-              ))
-                  .toList(),
-              value: areaSelectedValue,
-              hint: "Select one",
-              searchHint: "Select one",
-              onChanged: (value) {
-                setState(() {
-                  areaSelectedValue = value;
-                });
-              },
-              isExpanded: true,
-            )),
-          ),
+          )
         ]
       ),
     );

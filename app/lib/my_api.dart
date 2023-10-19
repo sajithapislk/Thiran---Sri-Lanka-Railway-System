@@ -21,7 +21,6 @@ class CallApi {
       },
     );
 
-    log(response.body);
     return response;
   }
 

@@ -1,3 +1,4 @@
+import 'package:app/Screens/TrainFindScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,13 +14,13 @@ class _HomeScreenState extends State<HomeScreen> {
     Items(
         title: "Reservations",
         subtitle: "Train Table",
-        event: "3 Events",
+        event: ()=> Get.to(()=>TrainFindScreen()),
         img: "assets/icon/train_192px.png"
     ),
     Items(
       title: "My Reservations",
       subtitle: "Bocali, Apple",
-      event: "4 Items",
+      event: (){},
       img: "assets/icon/train_192px.png"
     )
   ];
@@ -75,9 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSpacing: 18,
               children: myList.map((data) {
                 return GestureDetector(
-                  onTap: (){
-                    // Get.to(()=>)
-                  },
+                  onTap: data.event,
                   child: Container(
                     decoration: BoxDecoration(
                         color: Color(color),
@@ -109,16 +108,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontSize: 10,
                               fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(
-                          height: 14,
-                        ),
-                        Text(
-                          data.event,
-                          style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600),
-                        ),
                       ],
                     ),
                   ),
@@ -133,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
 class Items {
   String title;
   String subtitle;
-  String event;
+  Function()? event;
   String img;
 
   Items(

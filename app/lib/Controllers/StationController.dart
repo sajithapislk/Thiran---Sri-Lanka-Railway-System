@@ -16,6 +16,14 @@ class StationController extends GetxController{
   Future<void> getList() async {
     var res = await StationProvider.getStationList();
     list.assignAll(res);
-    log(list.length.toString());
+  }
+
+  StationModel? findById(int id) {
+    for (var item in list) {
+      if (item.id == id) {
+        return item;
+      }
+    }
+    return null; // Return null if the item is not found
   }
 }

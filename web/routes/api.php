@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\ScheduleTimeController;
 use App\Http\Controllers\API\StationController;
 use App\Http\Controllers\API\TrainLocationController;
 use App\Http\Controllers\API\TrainLocationSaveController;
@@ -38,6 +39,9 @@ Route::controller(StationController::class)->group(function () {
     Route::get('station', 'index')->name('station');
 });
 Route::controller(TrainLocationController::class)->group(function () {
-    Route::get('train-location', 'store')->name('train-location.store');
+    Route::post('train-location', 'store')->name('train-location.store');
+});
+Route::controller(ScheduleTimeController::class)->group(function () {
+    Route::post('time-table', 'filter')->name('schedule-time.filter');
 });
 

@@ -18,10 +18,10 @@ return new class extends Migration
             $table->datetime('start_at');
             $table->datetime('end_at');
             $table->string('status');
-            $table->integer('acs_p_seats');
-            $table->integer('os_p_seats');
-            $table->integer('scrs_p_seats');
-            $table->integer('tcrs_p_seats');
+            $table->integer('acs_p_seats')->default(0);
+            $table->integer('os_p_seats')->default(0);
+            $table->integer('scrs_p_seats')->default(0);
+            $table->integer('tcrs_p_seats')->default(0);
             $table->timestamps();
             $table->foreign('train_id')->references('id')->on('trains');
             $table->foreign('route_id')->references('id')->on('routes');
