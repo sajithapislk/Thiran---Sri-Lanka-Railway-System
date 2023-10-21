@@ -173,6 +173,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
 
                 StationModel? fromStation = stationController.findById(_fromId);
                 StationModel? toStation = stationController.findById(_toId);
+
                 return Stack(
                   // fit: StackFit.passthrough,
                   children: [
@@ -205,7 +206,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                             height: 10,
                           ),
                           Text(
-                            "From: ${fromStation!.name}",
+                            "From: ${fromStation!.name }",
                             style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 14,

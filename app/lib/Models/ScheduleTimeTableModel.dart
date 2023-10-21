@@ -4,11 +4,31 @@
 
 import 'dart:convert';
 
-List<ScheduleTimeTableModel> scheduleTimeTableModelFromJson(String str) => List<ScheduleTimeTableModel>.from(json.decode(str).map((x) => ScheduleTimeTableModel.fromJson(x)));
+ScheduleTimeTableModel scheduleTimeTableModelFromJson(String str) => ScheduleTimeTableModel.fromJson(json.decode(str));
 
-String scheduleTimeTableModelToJson(List<ScheduleTimeTableModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String scheduleTimeTableModelToJson(ScheduleTimeTableModel data) => json.encode(data.toJson());
 
 class ScheduleTimeTableModel {
+  int distance;
+  List<Schedule> schedules;
+
+  ScheduleTimeTableModel({
+    required this.distance,
+    required this.schedules,
+  });
+
+  factory ScheduleTimeTableModel.fromJson(Map<String, dynamic> json) => ScheduleTimeTableModel(
+    distance: json["distance"],
+    schedules: List<Schedule>.from(json["schedules"].map((x) => Schedule.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "distance": distance,
+    "schedules": List<dynamic>.from(schedules.map((x) => x.toJson())),
+  };
+}
+
+class Schedule {
   int id;
   int trainId;
   int routeId;
@@ -19,11 +39,11 @@ class ScheduleTimeTableModel {
   int osPSeats;
   int scrsPSeats;
   int tcrsPSeats;
-  dynamic createdAt;
-  dynamic updatedAt;
+  String? createdAt;
+  String? updatedAt;
   Route route;
 
-  ScheduleTimeTableModel({
+  Schedule({
     required this.id,
     required this.trainId,
     required this.routeId,
@@ -39,7 +59,7 @@ class ScheduleTimeTableModel {
     required this.route,
   });
 
-  factory ScheduleTimeTableModel.fromJson(Map<String, dynamic> json) => ScheduleTimeTableModel(
+  factory Schedule.fromJson(Map<String, dynamic> json) => Schedule(
     id: json["id"],
     trainId: json["train_id"],
     routeId: json["route_id"],
@@ -77,14 +97,16 @@ class Route {
   int trainId;
   String name;
   List<int> stationList;
-  dynamic createdAt;
-  dynamic updatedAt;
+  String direction;
+  String? createdAt;
+  String? updatedAt;
 
   Route({
     required this.id,
     required this.trainId,
     required this.name,
     required this.stationList,
+    required this.direction,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -94,6 +116,7 @@ class Route {
     trainId: json["train_id"],
     name: json["name"],
     stationList: List<int>.from(json["station_list"].map((x) => x)),
+    direction: json["direction"],
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
   );
@@ -103,6 +126,7 @@ class Route {
     "train_id": trainId,
     "name": name,
     "station_list": List<dynamic>.from(stationList.map((x) => x)),
+    "direction": direction,
     "created_at": createdAt,
     "updated_at": updatedAt,
   };

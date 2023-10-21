@@ -3,6 +3,7 @@
 #include <WiFiClient.h>
 #include <Arduino_JSON.h>
 #include <TinyGPS++.h>
+#include <SoftwareSerial.h>
 
 TinyGPSPlus gps;
 
@@ -18,8 +19,12 @@ String serverName = "http://192.168.1.141:8000/api/";
 
 SoftwareSerial mygps(D1,D2);
 
+double latitude, longitude;
+double elevation;
+double speed, direction;
+
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   mygps.begin(9600);
 
   WiFi.begin(ssid, password);
@@ -34,49 +39,51 @@ void setup() {
   Serial.print("Connected to WiFi network with IP Address: ");
 
   Serial.println(WiFi.localIP());
- 
-  Serial.println("Timer set to 5 seconds (timerDelay variable), it will take 5 seconds before publishing the first reading.");
 }
 
 void loop() {
-  if ((millis() - lastTime) > timerDelay) {
+  // if ((millis() - lastTime) > timerDelay) {
     if(WiFi.status()== WL_CONNECTED){
-      
-      String gpsData = gpsRead();
-      Serial.println(gpsData);
-      if(gpsData!=""){
-        httpPOSTRequest(serverName,gpsData);
+      while (mygps.available() > 0) {
+        gps.encode(mygps.read());
+        if (gps.location.isUpdated()) {
+          latitude = gps.location.lat();
+          longitude = gps.location.lng();
+          elevation = gps.altitude.feet();
+          speed = gps.speed.mph();
+          direction = gps.course.deg();
+          if (speed > 10) {
+            Serial.println("Location is moving");
+            
+            Serial.println("Latitude= " + String(latitude));
+            Serial.println("Longitude= " + String(longitude));
+            Serial.println("Elevation= " + String(elevation));
+            Serial.println("Speed= " + String(speed));
+            Serial.println("Direction= " + String(direction));
+
+            httpPOSTRequest(serverName,gpsData);
+          } else {
+            Serial.println("Location is stable");
+            httpPOSTRequest(serverName,gpsData);
+          }
+        }
       }
     }
     else {
       Serial.println("WiFi Disconnected");
     }
-    lastTime = millis();
-  }
+    // lastTime = millis();
+  // }
 }
 
-int gpsRead(){
-  while (mygps.available() > 0){
-    gps.encode(mygps.read());
-    if (gps.location.isUpdated()){
-      Serial.print("Latitude= "); 
-      Serial.print(gps.location.lat(), 6);
-      Serial.print(" Longitude= "); 
-      Serial.println(gps.location.lng(), 6);
-      return "latitude="+gps.location.lat()+"&longitude="+gps.location.lng())
-    } 
-  }
-  return "";
-}
-
-String httpPOSTRequest(String serverName, String data) {
+String httpPOSTRequest(String route, String data) {
   WiFiClient client;
   HTTPClient http;
 
-  http.begin(client, serverName + "train_location");
+  http.begin(client, serverName + route);
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-  String httpRequestData = "key=tPmAT5Ab3j7F9&train_id=" + train_id + "&" + data;       
+  String httpRequestData = "key=tPmAT5Ab3j7F9&train_id=" +  String(train_id) + "&" + data;       
 
   int httpResponseCode = http.POST(httpRequestData);
   
