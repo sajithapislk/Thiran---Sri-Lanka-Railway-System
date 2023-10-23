@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\ScheduleTime;
 use App\Models\Station;
+use App\Models\TicketPrice;
 use Illuminate\Http\Request;
 
 class ScheduleTimeController extends Controller
@@ -30,8 +31,11 @@ class ScheduleTimeController extends Controller
                             $no++;
                             array_push($_scheduleTimes, $row);
 
+                            $ticket = TicketPrice::where('beyond','<=',$_distance)->where('above','>=',$_distance)->first();
+
                             return [
                                 'distance' => $_distance,
+                                'price' => $ticket,
                                 'schedules' => $_scheduleTimes
                             ];
                         }else{

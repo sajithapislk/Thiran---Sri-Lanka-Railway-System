@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->integer('beyond');
             $table->integer('above');
-            $table->double('price',8,2);
             $table->integer('acs_price'); // Air Conditioned Saloon
             $table->integer('os_price'); // Observation Saloon
             $table->integer('scrs_price'); // Second Class Reserved Seats

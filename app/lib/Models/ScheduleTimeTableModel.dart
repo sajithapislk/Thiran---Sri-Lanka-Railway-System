@@ -10,21 +10,73 @@ String scheduleTimeTableModelToJson(ScheduleTimeTableModel data) => json.encode(
 
 class ScheduleTimeTableModel {
   int distance;
+  Price price;
   List<Schedule> schedules;
 
   ScheduleTimeTableModel({
     required this.distance,
+    required this.price,
     required this.schedules,
   });
 
   factory ScheduleTimeTableModel.fromJson(Map<String, dynamic> json) => ScheduleTimeTableModel(
     distance: json["distance"],
+    price: Price.fromJson(json["price"]),
     schedules: List<Schedule>.from(json["schedules"].map((x) => Schedule.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "distance": distance,
+    "price": price.toJson(),
     "schedules": List<dynamic>.from(schedules.map((x) => x.toJson())),
+  };
+}
+
+class Price {
+  int? id;
+  int? beyond;
+  int? above;
+  int? acsPrice;
+  int? osPrice;
+  int? scrsPrice;
+  int? tcrsPrice;
+  dynamic? createdAt;
+  dynamic? updatedAt;
+
+  Price({
+    this.id,
+    this.beyond,
+    this.above,
+    this.acsPrice,
+    this.osPrice,
+    this.scrsPrice,
+    this.tcrsPrice,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory Price.fromJson(Map<String, dynamic> json) => Price(
+    id: json["id"],
+    beyond: json["beyond"],
+    above: json["above"],
+    acsPrice: json["acs_price"],
+    osPrice: json["os_price"],
+    scrsPrice: json["scrs_price"],
+    tcrsPrice: json["tcrs_price"],
+    createdAt: json["created_at"],
+    updatedAt: json["updated_at"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "beyond": beyond,
+    "above": above,
+    "acs_price": acsPrice,
+    "os_price": osPrice,
+    "scrs_price": scrsPrice,
+    "tcrs_price": tcrsPrice,
+    "created_at": createdAt,
+    "updated_at": updatedAt,
   };
 }
 
@@ -39,8 +91,8 @@ class Schedule {
   int osPSeats;
   int scrsPSeats;
   int tcrsPSeats;
-  String? createdAt;
-  String? updatedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
   Route route;
 
   Schedule({
@@ -98,8 +150,8 @@ class Route {
   String name;
   List<int> stationList;
   String direction;
-  String? createdAt;
-  String? updatedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
 
   Route({
     required this.id,

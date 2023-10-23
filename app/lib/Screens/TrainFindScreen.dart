@@ -228,7 +228,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                             ),
                           ),
                           Text(
-                            "	Arrival Time: ${DateFormat('HH:mm:ss').format(row.startAt)}",
+                            "Arrival Time: ${DateFormat('HH:mm:ss').format(row.startAt)}",
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 14,
@@ -244,7 +244,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                             ),
                           ),
                           Text(
-                            "Price:",
+                            "Price: ${scheduleTimeController.acs_price.value}LKR ${scheduleTimeController.os_price.value}LKR ${scheduleTimeController.scrs_price.value}LKR ${scheduleTimeController.tcrs_price.value}LKR",
                             style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 14,
