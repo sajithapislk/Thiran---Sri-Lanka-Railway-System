@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\PredictionController;
 use App\Http\Controllers\API\ScheduleTimeController;
 use App\Http\Controllers\API\StationController;
 use App\Http\Controllers\API\TrainLocationController;
@@ -44,4 +45,4 @@ Route::controller(TrainLocationController::class)->group(function () {
 Route::controller(ScheduleTimeController::class)->group(function () {
     Route::post('time-table', 'filter')->name('schedule-time.filter');
 });
-
+Route::post('prediction',[PredictionController::class,'Arrival_Time']);
