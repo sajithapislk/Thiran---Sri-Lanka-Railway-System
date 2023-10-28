@@ -33,26 +33,26 @@ class ScheduleTimeTableModel {
 }
 
 class Price {
-  int? id;
-  int? beyond;
-  int? above;
-  int? acsPrice;
-  int? osPrice;
-  int? scrsPrice;
-  int? tcrsPrice;
-  dynamic? createdAt;
-  dynamic? updatedAt;
+  int id;
+  int beyond;
+  int above;
+  int acsPrice;
+  int osPrice;
+  int scrsPrice;
+  int tcrsPrice;
+  dynamic createdAt;
+  dynamic updatedAt;
 
   Price({
-    this.id,
-    this.beyond,
-    this.above,
-    this.acsPrice,
-    this.osPrice,
-    this.scrsPrice,
-    this.tcrsPrice,
-    this.createdAt,
-    this.updatedAt,
+    required this.id,
+    required this.beyond,
+    required this.above,
+    required this.acsPrice,
+    required this.osPrice,
+    required this.scrsPrice,
+    required this.tcrsPrice,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory Price.fromJson(Map<String, dynamic> json) => Price(
@@ -94,6 +94,7 @@ class Schedule {
   dynamic createdAt;
   dynamic updatedAt;
   Route route;
+  Train train;
 
   Schedule({
     required this.id,
@@ -109,6 +110,7 @@ class Schedule {
     required this.createdAt,
     required this.updatedAt,
     required this.route,
+    required this.train,
   });
 
   factory Schedule.fromJson(Map<String, dynamic> json) => Schedule(
@@ -125,6 +127,7 @@ class Schedule {
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
     route: Route.fromJson(json["route"]),
+    train: Train.fromJson(json["train"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -141,6 +144,7 @@ class Schedule {
     "created_at": createdAt,
     "updated_at": updatedAt,
     "route": route.toJson(),
+    "train": train.toJson(),
   };
 }
 
@@ -179,6 +183,54 @@ class Route {
     "name": name,
     "station_list": List<dynamic>.from(stationList.map((x) => x)),
     "direction": direction,
+    "created_at": createdAt,
+    "updated_at": updatedAt,
+  };
+}
+
+class Train {
+  int id;
+  String name;
+  String no;
+  int acsMaxSeats;
+  int osMaxSeats;
+  int scrsMaxSeats;
+  int tcrsMaxSeats;
+  dynamic createdAt;
+  dynamic updatedAt;
+
+  Train({
+    required this.id,
+    required this.name,
+    required this.no,
+    required this.acsMaxSeats,
+    required this.osMaxSeats,
+    required this.scrsMaxSeats,
+    required this.tcrsMaxSeats,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory Train.fromJson(Map<String, dynamic> json) => Train(
+    id: json["id"],
+    name: json["name"],
+    no: json["no"],
+    acsMaxSeats: json["acs_max_seats"],
+    osMaxSeats: json["os_max_seats"],
+    scrsMaxSeats: json["scrs_max_seats"],
+    tcrsMaxSeats: json["tcrs_max_seats"],
+    createdAt: json["created_at"],
+    updatedAt: json["updated_at"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "no": no,
+    "acs_max_seats": acsMaxSeats,
+    "os_max_seats": osMaxSeats,
+    "scrs_max_seats": scrsMaxSeats,
+    "tcrs_max_seats": tcrsMaxSeats,
     "created_at": createdAt,
     "updated_at": updatedAt,
   };

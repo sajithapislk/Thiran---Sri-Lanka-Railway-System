@@ -16,7 +16,7 @@ class ScheduleTimeController extends Controller
         // if ($request->from == $request->to) {
         //     return ['error' => 'same station'];
         // }
-        $scheduleTimes = ScheduleTime::with('route')
+        $scheduleTimes = ScheduleTime::with('route','train')
             ->whereDate('start_at', $request->date)
             ->get();
         $_scheduleTimes = array();

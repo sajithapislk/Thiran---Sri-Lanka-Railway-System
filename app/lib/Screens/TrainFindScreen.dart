@@ -1,12 +1,11 @@
-import 'dart:developer';
-
 import 'package:app/Controllers/ScheduleTimeTableController.dart';
 import 'package:app/Models/StationModel.dart';
+import 'package:app/Screens/ProcessPaymentScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:search_choices/search_choices.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:search_choices/search_choices.dart';
 
 import '../Controllers/StationController.dart';
 
@@ -64,64 +63,64 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
               child: Column(
                 children: <Widget>[
                   Obx(() => SearchChoices.single(
-                    fieldPresentationFn: (Widget fieldWidget,
-                        {bool? selectionIsValid}) {
-                      return Container(
-                        child: InputDecorator(
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'From'),
-                          child: fieldWidget,
-                        ),
-                      );
-                    },
-                    items: stationController.list
-                        .map((element) => DropdownMenuItem(
-                      child: Text(element.name),
-                      value: "${element.id}|${element.name}",
-                    ))
-                        .toList(),
-                    value: fromSelectedValue,
-                    hint: "Select one",
-                    searchHint: "Select one",
-                    onChanged: (value) {
-                      setState(() {
-                        fromSelectedValue = value;
-                      });
-                    },
-                    isExpanded: true,
-                  )),
+                        fieldPresentationFn: (Widget fieldWidget,
+                            {bool? selectionIsValid}) {
+                          return Container(
+                            child: InputDecorator(
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'From'),
+                              child: fieldWidget,
+                            ),
+                          );
+                        },
+                        items: stationController.list
+                            .map((element) => DropdownMenuItem(
+                                  child: Text(element.name),
+                                  value: "${element.id}|${element.name}",
+                                ))
+                            .toList(),
+                        value: fromSelectedValue,
+                        hint: "Select one",
+                        searchHint: "Select one",
+                        onChanged: (value) {
+                          setState(() {
+                            fromSelectedValue = value;
+                          });
+                        },
+                        isExpanded: true,
+                      )),
                   SizedBox(
                     height: 15,
                   ),
                   Obx(() => SearchChoices.single(
-                    fieldPresentationFn: (Widget fieldWidget,
-                        {bool? selectionIsValid}) {
-                      return Container(
-                        child: InputDecorator(
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'To'),
-                          child: fieldWidget,
-                        ),
-                      );
-                    },
-                    items: stationController.list
-                        .map((element) => DropdownMenuItem(
-                      child: Text(element.name),
-                      value: "${element.id}|${element.name}",
-                    ))
-                        .toList(),
-                    value: toSelectedValue,
-                    hint: "Select one",
-                    searchHint: "Select one",
-                    onChanged: (value) {
-                      setState(() {
-                        toSelectedValue = value;
-                      });
-                    },
-                    isExpanded: true,
-                  )),
+                        fieldPresentationFn: (Widget fieldWidget,
+                            {bool? selectionIsValid}) {
+                          return Container(
+                            child: InputDecorator(
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'To'),
+                              child: fieldWidget,
+                            ),
+                          );
+                        },
+                        items: stationController.list
+                            .map((element) => DropdownMenuItem(
+                                  child: Text(element.name),
+                                  value: "${element.id}|${element.name}",
+                                ))
+                            .toList(),
+                        value: toSelectedValue,
+                        hint: "Select one",
+                        searchHint: "Select one",
+                        onChanged: (value) {
+                          setState(() {
+                            toSelectedValue = value;
+                          });
+                        },
+                        isExpanded: true,
+                      )),
                   _DatePickerItem(
                     children: <Widget>[
                       const Text('Date'),
@@ -154,7 +153,10 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                     margin: EdgeInsets.all(10.0),
                     child: ElevatedButton(
                       onPressed: () {
-                        scheduleTimeController.getList(from: fromSelectedValue!.split('|')[0], to: toSelectedValue!.split('|')[0], date: date.toString());
+                        scheduleTimeController.getList(
+                            from: fromSelectedValue!.split('|')[0],
+                            to: toSelectedValue!.split('|')[0],
+                            date: date.toString());
                       },
                       child: Text('Submit'),
                     ),
@@ -164,12 +166,14 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
             ),
           ),
           Expanded(
-            child: Obx(()=>ListView.builder(
+              child: Obx(
+            () => ListView.builder(
               itemCount: scheduleTimeController.list.length,
               itemBuilder: (context, index) {
                 var row = scheduleTimeController.list[index];
                 int _fromId = row.route.stationList[0];
-                int _toId = row.route.stationList[row.route.stationList.length-1];
+                int _toId =
+                    row.route.stationList[row.route.stationList.length - 1];
 
                 StationModel? fromStation = stationController.findById(_fromId);
                 StationModel? toStation = stationController.findById(_toId);
@@ -192,9 +196,8 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width:double.infinity,
-                            child: Text(
-                                "ABC Train",
+                            width: double.infinity,
+                            child: Text("ABC Train",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -206,7 +209,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                             height: 10,
                           ),
                           Text(
-                            "From: ${fromStation!.name }",
+                            "From: ${fromStation!.name}",
                             style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 14,
@@ -252,7 +255,10 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                           ),
                           Container(
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(
+                                    () => ProcessPaymentScreen(index: index));
+                              },
                               child: Text('Payment'),
                             ),
                             alignment: Alignment.center,
@@ -271,14 +277,12 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Image.asset('assets/icon/train_192px.png'),
-                        )
-                    )
+                        ))
                   ],
                 );
               },
             ),
-            )
-          )
+          ))
         ],
       ),
     );

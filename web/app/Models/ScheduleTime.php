@@ -25,4 +25,8 @@ class ScheduleTime extends Model
     {
         return $this->hasOne(Route::class,'id','route_id');
     }
+    public function train()
+    {
+        return $this->hasOne(Train::class,'id','train_id');
+    }
 }
