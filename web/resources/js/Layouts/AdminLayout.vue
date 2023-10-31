@@ -23,7 +23,7 @@
                                         href="#"
                                         class="text-blueGray-500 hover:text-blueGray-700 text-sm font-semibold py-1"
                                     >
-                                        Vishwa
+                                        Thiran
                                     </a>
                                 </div>
                             </div>

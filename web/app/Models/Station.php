@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Station extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "name",
+        "address",
+        "tp",
+        "left_slide",
+        "right_slide"
+    ];
 }

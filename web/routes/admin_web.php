@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\StationController;
 use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -23,6 +24,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
     })->name('dashboard');
+
+    Route::resource('station',StationController::class);
 
 });
 
