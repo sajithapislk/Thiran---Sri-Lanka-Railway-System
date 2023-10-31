@@ -58,12 +58,3 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
 });
-
-Route::middleware('guest:admin')->group(function () {
-    Route::get('admin-login', [AdminAuthenticatedSessionController::class, 'create'])
-    ->name('admin.login');
-
-    Route::post('admin-login', [AdminAuthenticatedSessionController::class, 'store']);
-});
-Route::middleware('auth:admin')->group(function () {
-});
