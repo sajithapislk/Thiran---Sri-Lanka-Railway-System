@@ -22,6 +22,12 @@ class _HomeScreenState extends State<HomeScreen> {
       subtitle: "Bocali, Apple",
       event: (){},
       img: "assets/icon/train_192px.png"
+    ),
+    Items(
+        title: "paypal",
+        subtitle: "Bocali, Apple",
+        event: (){},
+        img: "assets/icon/train_192px.png"
     )
   ];
   var color = 0xff453658;

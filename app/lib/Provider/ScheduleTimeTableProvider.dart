@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:app/Models/StationModel.dart';
 
 import '../Models/ScheduleTimeTableModel.dart';
-import '../my_api.dart';
+import '../Services/my_api.dart';
 
 class ScheduleTimeProvider {
   static Future<ScheduleTimeTableModel?> getScheduleTimeList(dynamic data) async {

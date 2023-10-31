@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('temp_reservations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('uid');
             $table->unsignedBigInteger('st_id');
             $table->unsignedBigInteger('payment_id');
             $table->unsignedBigInteger('from_s_id');
@@ -25,7 +24,6 @@ return new class extends Migration
             $table->datetime('ended_at')->nullable();
             $table->datetime('is_canceled')->nullable();
             $table->timestamps();
-            $table->foreign('uid')->references('id')->on('users'); //user id
             $table->foreign('st_id')->references('id')->on('schedule_times');
             $table->foreign('payment_id')->references('id')->on('payments');
             $table->foreign('from_s_id')->references('id')->on('stations');
@@ -38,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('temp_reservations');
     }
 };

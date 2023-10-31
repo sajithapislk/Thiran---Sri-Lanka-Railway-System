@@ -2,7 +2,7 @@ import 'dart:core';
 
 import 'package:app/Models/StationModel.dart';
 
-import '../my_api.dart';
+import '../Services/my_api.dart';
 
 class StationProvider {
   static Future<List<StationModel>> getStationList() async {

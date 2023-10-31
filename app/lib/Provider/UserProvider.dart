@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 
 import '../Models/UserLoginModel.dart';
-import '../my_api.dart';
+import '../Services/my_api.dart';
 
 class UserProvider {
   static Future<UserLoginModel> login(dynamic data) async {
