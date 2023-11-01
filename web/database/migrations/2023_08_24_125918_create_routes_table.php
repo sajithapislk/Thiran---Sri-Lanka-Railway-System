@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('train_id');
             $table->string('name');
+            $table->string('direction');
             $table->json('station_list');
             $table->timestamps();
         });
