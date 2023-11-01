@@ -45,38 +45,38 @@ class _PaymentScreenState extends State<PaymentScreen> {
           child: Container(
             child: Stack(
               children: [
-                WebView(
-                  javascriptMode: JavascriptMode.unrestricted,
-                  initialUrl: selectedUrl,
-                  gestureNavigationEnabled: true,
-
-                  userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_3 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13E233 Safari/601.1',
-                  onWebViewCreated: (WebViewController webViewController) {
-                    _controller.future.then((value) => controllerGlobal = value);
-                    _controller.complete(webViewController);
-                    //_controller.future.catchError(onError)
-                  },
-                  onProgress: (int progress) {
-                    print("WebView is loading (progress : $progress%)");
-                  },
-                  onPageStarted: (String url) {
-                    print('Page started loading: $url');
-                    setState(() {
-                      _isLoading = true;
-                    });
-                    print("printing urls "+url.toString());
-                    _redirect(url);
-
-                  },
-                  onPageFinished: (String url) {
-                    print('Page finished loading: $url');
-                    setState(() {
-                      _isLoading = false;
-                    });
-                    _redirect(url);
-
-                  },
-                ),
+                // WebView(
+                //   javascriptMode: JavascriptMode.unrestricted,
+                //   initialUrl: selectedUrl,
+                //   gestureNavigationEnabled: true,
+                //
+                //   userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_3 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13E233 Safari/601.1',
+                //   onWebViewCreated: (WebViewController webViewController) {
+                //     _controller.future.then((value) => controllerGlobal = value);
+                //     _controller.complete(webViewController);
+                //     //_controller.future.catchError(onError)
+                //   },
+                //   onProgress: (int progress) {
+                //     print("WebView is loading (progress : $progress%)");
+                //   },
+                //   onPageStarted: (String url) {
+                //     print('Page started loading: $url');
+                //     setState(() {
+                //       _isLoading = true;
+                //     });
+                //     print("printing urls "+url.toString());
+                //     _redirect(url);
+                //
+                //   },
+                //   onPageFinished: (String url) {
+                //     print('Page finished loading: $url');
+                //     setState(() {
+                //       _isLoading = false;
+                //     });
+                //     _redirect(url);
+                //
+                //   },
+                // ),
                 _isLoading ? Center(
                   child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
                 ) : SizedBox.shrink(),

@@ -19,7 +19,9 @@ class ScheduleTimeController extends Controller
         $scheduleTimes = ScheduleTime::with('route','train')
             ->whereDate('start_at', $request->date)
             ->get();
+        // return($scheduleTimes);
         $_scheduleTimes = array();
+        $_return = array();
         $_distance = 0.0;
         foreach ($scheduleTimes as $row) {
             $stationList = $row->route->station_list;
@@ -33,11 +35,11 @@ class ScheduleTimeController extends Controller
 
                             $ticket = TicketPrice::where('beyond','<=',$_distance)->where('above','>=',$_distance)->first();
 
-                            return [
+                            array_push($_return, [
                                 'distance' => $_distance,
                                 'price' => $ticket,
                                 'schedules' => $_scheduleTimes
-                            ];
+                            ]);
                         }else{
                             $stationInfo = Station::find($station);
                             $_distance = $_distance + ( $row->route->direction=='LEFT' ? $stationInfo->left_slide : $stationInfo->right_slide );
@@ -51,6 +53,6 @@ class ScheduleTimeController extends Controller
                 }
             }
         }
-        return $_scheduleTimes;
+        return $_return;
     }
 }
