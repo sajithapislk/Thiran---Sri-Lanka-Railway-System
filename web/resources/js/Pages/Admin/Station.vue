@@ -7,8 +7,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 defineProps({
-    list: Array,
-    cruiseLines: Array,
+    list: Array
 });
 
 const insertModal = ref(false);
