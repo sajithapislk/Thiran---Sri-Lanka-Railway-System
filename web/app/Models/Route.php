@@ -9,6 +9,13 @@ class Route extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'direction',
+        'station_list'
+    ];
+
+
     protected $casts = [
         'station_list' => 'array'
     ];

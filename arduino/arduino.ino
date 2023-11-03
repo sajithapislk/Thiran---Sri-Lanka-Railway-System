@@ -61,10 +61,8 @@ void loop() {
             Serial.println("Speed= " + String(speed));
             Serial.println("Direction= " + String(direction));
 
-            httpPOSTRequest(serverName,gpsData);
           } else {
             Serial.println("Location is stable");
-            httpPOSTRequest(serverName,gpsData);
           }
         }
       }

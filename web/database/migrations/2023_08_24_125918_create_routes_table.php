@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('routes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('train_id');
             $table->string('name');
             $table->string('direction');
             $table->json('station_list');
