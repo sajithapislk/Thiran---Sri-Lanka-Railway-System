@@ -15,7 +15,7 @@ class TicketPriceController extends Controller
      */
     public function index()
     {
-        $list = Station::all();
+        $list = TicketPrice::all();
         return Inertia::render('Admin/TicketPrice',compact('list'));
     }
 
@@ -32,7 +32,16 @@ class TicketPriceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        TicketPrice::create([
+            'beyond' => $request->beyond,
+            'above' => $request->above,
+            'acs_price' => $request->acs_price,
+            'os_price' => $request->os_price,
+            'scrs_price' => $request->scrs_price,
+            'tcrs_price' => $request->tcrs_price,
+        ]);
+
+        return back()->with('status', 'store successful');
     }
 
     /**

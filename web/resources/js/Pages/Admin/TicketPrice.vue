@@ -7,20 +7,22 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 defineProps({
-    list: Array
+    list: Array,
 });
 
 const insertModal = ref(false);
 
 const saveform = useForm({
-    name: "",
-    address: "",
-    tp: "",
-    left_slide: "",
-    right_slide: "",
+    beyond: "",
+    above: "",
+    acs_price: "",
+    os_price: "",
+    scrs_price: "",
+    tcrs_price: ""
 });
+
 const save = () => {
-    saveform.post(route("admin.station.store"), {
+    saveform.post(route("admin.ticket-price.store"), {
         preserveScroll: true,
         onSuccess: () => ModalFun(),
         onFinish: () => saveform.reset(),
@@ -85,27 +87,27 @@ const ModalFun = () => {
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    name
+                                    range
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    address
+                                    asc
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    tp
+                                    os
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    left_slide
+                                    scrs
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    right_slide
+                                    tcrs
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -124,27 +126,27 @@ const ModalFun = () => {
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
-                                    {{ row.name }}
+                                    {{ row.beyond }} >= {{ row.above }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
-                                    {{ row.address }}
+                                    {{ row.acs_price }} LKR
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
-                                    {{ row.tp }}
+                                    {{ row.os_price }} LKR
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
-                                    {{ row.left_slide }}
+                                    {{ row.scrs_price }} LKR
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
-                                    {{ row.right_slide }}
+                                    {{ row.tcrs_price }} LKR
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -162,80 +164,97 @@ const ModalFun = () => {
     <Modal :show="insertModal" @close="ModalFun">
         <div class="p-6">
             <form @submit="save">
-                <div class="w-full px-3">
-                    <label
-                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="name"
-                    >
-                        Name
-                    </label>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="w-full px-3">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            for="beyond"
+                        >
+                            beyond
+                        </label>
 
-                    <input
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
-                        type="text"
-                        v-model="saveform.name"
-                    />
-                </div>
+                        <input
+                            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            id="beyond"
+                            type="text"
+                            v-model="saveform.beyond"
+                        />
+                    </div>
 
-                <div class="w-full px-3">
-                    <label
-                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="name"
-                    >
-                        address
-                    </label>
+                    <div class="w-full px-3">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            for="above"
+                        >
+                            above
+                        </label>
 
-                    <input
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
-                        type="text"
-                        v-model="saveform.address"
-                    />
-                </div>
-                <div class="w-full px-3">
-                    <label
-                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="name"
-                    >
-                        tp
-                    </label>
-
-                    <input
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
-                        type="text"
-                        v-model="saveform.tp"
-                    />
+                        <input
+                            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            id="above"
+                            type="text"
+                            v-model="saveform.above"
+                        />
+                    </div>
                 </div>
                 <div class="w-full px-3">
                     <label
                         class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="name"
+                        for="acs_price"
                     >
-                        left_slide
+                        acs_price
                     </label>
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
+                        id="acs_price"
                         type="text"
-                        v-model="saveform.left_slide"
+                        v-model="saveform.acs_price"
                     />
                 </div>
                 <div class="w-full px-3">
                     <label
                         class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="name"
+                        for="os_price"
                     >
-                        right_slide
+                        os_price
                     </label>
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
+                        id="os_price"
                         type="text"
-                        v-model="saveform.right_slide"
+                        v-model="saveform.os_price"
+                    />
+                </div>
+                <div class="w-full px-3">
+                    <label
+                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="scrs_price"
+                    >
+                        scrs_price
+                    </label>
+
+                    <input
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="scrs_price"
+                        type="text"
+                        v-model="saveform.scrs_price"
+                    />
+                </div>
+                <div class="w-full px-3">
+                    <label
+                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="tcrs_price"
+                    >
+                        tcrs_price
+                    </label>
+
+                    <input
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="tcrs_price"
+                        type="text"
+                        v-model="saveform.tcrs_price"
                     />
                 </div>
             </form>

@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\StationController;
 use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\RouteController;
+use App\Http\Controllers\Web\TicketPriceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,6 +29,7 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::resource('station',StationController::class);
     Route::resource('route',RouteController::class);
+    Route::resource('ticket-price',TicketPriceController::class);
 
 });
 
