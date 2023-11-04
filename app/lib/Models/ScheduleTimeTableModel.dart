@@ -40,8 +40,8 @@ class Price {
   int osPrice;
   int scrsPrice;
   int tcrsPrice;
-  dynamic createdAt;
-  dynamic updatedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   Price({
     required this.id,
@@ -63,8 +63,8 @@ class Price {
     osPrice: json["os_price"],
     scrsPrice: json["scrs_price"],
     tcrsPrice: json["tcrs_price"],
-    createdAt: json["created_at"],
-    updatedAt: json["updated_at"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -75,8 +75,8 @@ class Price {
     "os_price": osPrice,
     "scrs_price": scrsPrice,
     "tcrs_price": tcrsPrice,
-    "created_at": createdAt,
-    "updated_at": updatedAt,
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
   };
 }
 
@@ -150,39 +150,35 @@ class Schedule {
 
 class Route {
   int id;
-  int trainId;
   String name;
-  List<int> stationList;
   String direction;
+  List<int> stationList;
   dynamic createdAt;
   dynamic updatedAt;
 
   Route({
     required this.id,
-    required this.trainId,
     required this.name,
-    required this.stationList,
     required this.direction,
+    required this.stationList,
     required this.createdAt,
     required this.updatedAt,
   });
 
   factory Route.fromJson(Map<String, dynamic> json) => Route(
     id: json["id"],
-    trainId: json["train_id"],
     name: json["name"],
-    stationList: List<int>.from(json["station_list"].map((x) => x)),
     direction: json["direction"],
+    stationList: List<int>.from(json["station_list"].map((x) => x)),
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "train_id": trainId,
     "name": name,
-    "station_list": List<dynamic>.from(stationList.map((x) => x)),
     "direction": direction,
+    "station_list": List<dynamic>.from(stationList.map((x) => x)),
     "created_at": createdAt,
     "updated_at": updatedAt,
   };
