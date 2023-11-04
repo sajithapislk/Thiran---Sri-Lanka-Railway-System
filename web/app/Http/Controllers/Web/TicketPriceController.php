@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Route;
 use App\Models\Station;
+use App\Models\TicketPrice;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class RouteController extends Controller
+class TicketPriceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        Inertia::render('Admin/Route/Insert');
+        $list = Station::all();
+        return Inertia::render('Admin/TicketPrice',compact('list'));
     }
 
     /**
@@ -23,8 +24,7 @@ class RouteController extends Controller
      */
     public function create()
     {
-        $list = Station::all();
-        return Inertia::render('Admin/Route/Insert', compact('list'));
+        //
     }
 
     /**
@@ -32,23 +32,13 @@ class RouteController extends Controller
      */
     public function store(Request $request)
     {
-        $_stationList = array();
-        foreach ($request->stations as $row) {
-            array_push($_stationList, $row["id"]);
-        }
-        Route::create([
-            'name' => $request->name,
-            'direction' => $request->direction,
-            'station_list' => $_stationList
-        ]);
-
-        return back()->with('status', 'Route successful');
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Route $route)
+    public function show(TicketPrice $ticketPrice)
     {
         //
     }
@@ -56,7 +46,7 @@ class RouteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Route $route)
+    public function edit(TicketPrice $ticketPrice)
     {
         //
     }
@@ -64,7 +54,7 @@ class RouteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Route $route)
+    public function update(Request $request, TicketPrice $ticketPrice)
     {
         //
     }
@@ -72,7 +62,7 @@ class RouteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Route $route)
+    public function destroy(TicketPrice $ticketPrice)
     {
         //
     }

@@ -58,7 +58,7 @@ const submit = () => {
         stations: tempList.value,
         name: name.value,
         direction: toggleValue.value === false ? 'LEFT' : 'RIGHT',
-        
+
     })
         .then(() => {
             tempList.value = [];
