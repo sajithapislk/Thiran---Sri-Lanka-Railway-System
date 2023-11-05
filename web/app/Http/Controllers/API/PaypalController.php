@@ -1,16 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
-use App\Models\CompanyWallet;
-use App\Models\CruiseDeal;
-use App\Models\CruiseLineWallet;
 use App\Models\Payment;
-use App\Models\ScheduleTime;
 use App\Models\TempReservation;
-use App\Models\UpcomingDeal;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -46,30 +41,30 @@ class PaypalController extends Controller
     public function processTransaction(Request $request)
     {
         $uniqueCode = $this->generateRandomString();
-        $upcomingDeal = ScheduleTime::find($request->id);
+        // $upcomingDeal = ScheduleTime::find($request->id);
 
-        $price = $request->qty * $upcomingDeal->price;
+        // $price = $request->qty * $upcomingDeal->price;
 
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken()['access_token'];
 
-        $payment = Payment::create([
-            'method'=>'paypal',
-            'status'=>'PENDING',
-            'amount'=>$price,
-            'token'=>$uniqueCode,
-        ]);
-        TempReservation::create([
-            'st_id'=>$upcomingDeal->id,
-            'payment_id'=>$payment->id,
-            'from_s_id'=>$request->from_s_id,
-            'to_s_id'=>$request->to_s_id,
-            'distance'=>$upcomingDeal->id,
-            'seat_type'=>$upcomingDeal->id,
-            'nop'=>$upcomingDeal->id,
-            'price'=>$upcomingDeal->id
-        ]);
+        // $payment = Payment::create([
+        //     'method'=>'paypal',
+        //     'status'=>'PENDING',
+        //     'amount'=>$price,
+        //     'token'=>$uniqueCode,
+        // ]);
+        // TempReservation::create([
+        //     'st_id'=>$upcomingDeal->id,
+        //     'payment_id'=>$payment->id,
+        //     'from_s_id'=>$request->from_s_id,
+        //     'to_s_id'=>$request->to_s_id,
+        //     'distance'=>$upcomingDeal->id,
+        //     'seat_type'=>$upcomingDeal->id,
+        //     'nop'=>$upcomingDeal->id,
+        //     'price'=>$upcomingDeal->id
+        // ]);
 
         $response = $provider->createOrder([
             "intent" => "CAPTURE",
@@ -82,7 +77,7 @@ class PaypalController extends Controller
                     "reference_id" => $uniqueCode,
                     "amount" => [
                         "currency_code" => "USD",
-                        "value" => $price
+                        "value" => "10"
                     ]
                 ]
             ]

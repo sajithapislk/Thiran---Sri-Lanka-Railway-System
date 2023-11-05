@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:app/Services/my_api.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:get/get.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentScreen extends StatefulWidget {
   PaymentScreen();
@@ -23,7 +23,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   void initState() {
     super.initState();
-    selectedUrl = '${CallApi().url}payment-mobile?customer_id=&order_id=';
+    selectedUrl = '${CallApi().url}process-transaction';
     //selectedUrl="https://mvs.bslmeiyu.com";
     // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
@@ -45,38 +45,38 @@ class _PaymentScreenState extends State<PaymentScreen> {
           child: Container(
             child: Stack(
               children: [
-                // WebView(
-                //   javascriptMode: JavascriptMode.unrestricted,
-                //   initialUrl: selectedUrl,
-                //   gestureNavigationEnabled: true,
-                //
-                //   userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_3 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13E233 Safari/601.1',
-                //   onWebViewCreated: (WebViewController webViewController) {
-                //     _controller.future.then((value) => controllerGlobal = value);
-                //     _controller.complete(webViewController);
-                //     //_controller.future.catchError(onError)
-                //   },
-                //   onProgress: (int progress) {
-                //     print("WebView is loading (progress : $progress%)");
-                //   },
-                //   onPageStarted: (String url) {
-                //     print('Page started loading: $url');
-                //     setState(() {
-                //       _isLoading = true;
-                //     });
-                //     print("printing urls "+url.toString());
-                //     _redirect(url);
-                //
-                //   },
-                //   onPageFinished: (String url) {
-                //     print('Page finished loading: $url');
-                //     setState(() {
-                //       _isLoading = false;
-                //     });
-                //     _redirect(url);
-                //
-                //   },
-                // ),
+                WebView(
+                  javascriptMode: JavascriptMode.unrestricted,
+                  initialUrl: selectedUrl,
+                  gestureNavigationEnabled: true,
+
+                  userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_3 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13E233 Safari/601.1',
+                  onWebViewCreated: (WebViewController webViewController) {
+                    _controller.future.then((value) => controllerGlobal = value);
+                    _controller.complete(webViewController);
+                    //_controller.future.catchError(onError)
+                  },
+                  onProgress: (int progress) {
+                    print("WebView is loading (progress : $progress%)");
+                  },
+                  onPageStarted: (String url) {
+                    print('Page started loading: $url');
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    print("printing urls "+url.toString());
+                    _redirect(url);
+
+                  },
+                  onPageFinished: (String url) {
+                    print('Page finished loading: $url');
+                    setState(() {
+                      _isLoading = false;
+                    });
+                    _redirect(url);
+
+                  },
+                ),
                 _isLoading ? Center(
                   child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
                 ) : SizedBox.shrink(),

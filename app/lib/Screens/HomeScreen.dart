@@ -1,3 +1,4 @@
+import 'package:app/Screens/PaymentScreen.dart';
 import 'package:app/Screens/TrainFindScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Items(
         title: "paypal",
         subtitle: "Bocali, Apple",
-        event: (){},
+        event: ()=>Get.to(()=>PaymentScreen()),
         img: "assets/icon/train_192px.png"
     )
   ];

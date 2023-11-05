@@ -6,6 +6,7 @@ use App\Http\Controllers\API\StationController;
 use App\Http\Controllers\API\TrainLocationController;
 use App\Http\Controllers\API\TrainLocationSaveController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\PayPalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,3 +47,9 @@ Route::controller(ScheduleTimeController::class)->group(function () {
     Route::post('time-table', 'filter')->name('schedule-time.filter');
 });
 Route::post('prediction',[PredictionController::class,'Arrival_Time']);
+
+Route::controller(PayPalController::class)->group(function () {
+    Route::get('process-transaction', 'processTransaction')->name('processTransaction');
+    Route::get('success-transaction', 'successTransaction')->name('successTransaction');
+    Route::get('cancel-transaction', 'cancelTransaction')->name('cancelTransaction');
+});
