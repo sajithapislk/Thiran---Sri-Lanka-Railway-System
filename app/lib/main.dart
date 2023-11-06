@@ -1,4 +1,5 @@
 import 'package:app/Screens/HomeScreen.dart';
+import 'package:app/Screens/SuccessScreen.dart';
 import 'package:app/Screens/TrainFindScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: SuccessScreen(),
     );
   }
 }

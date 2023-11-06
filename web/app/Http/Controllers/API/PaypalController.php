@@ -47,7 +47,7 @@ class PaypalController extends Controller
 
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
-        $paypalToken = $provider->getAccessToken()['access_token'];
+        $paypalToken = $provider->getAccessToken();
 
         // $payment = Payment::create([
         //     'method'=>'paypal',
