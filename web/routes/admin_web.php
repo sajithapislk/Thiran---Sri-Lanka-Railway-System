@@ -31,6 +31,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::resource('route',RouteController::class);
     Route::resource('ticket-price',TicketPriceController::class);
 
+    Route::get('logout', [AdminAuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
 });
 
 Route::middleware('guest:admin')->group(function () {

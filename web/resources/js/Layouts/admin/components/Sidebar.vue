@@ -109,6 +109,30 @@
                         <i class="fas fa-tv opacity-75 mr-2 text-sm"></i>
                         ticket-price
                     </Link>
+
+                    <Link
+
+                        class="text-blueGray-500 hover:text-blue-600 text-xs uppercase py-3 font-bold block"
+                    >
+                        <i class="fas fa-tv opacity-75 mr-2 text-sm"></i>
+                        Train Location
+                    </Link>
+
+                    <Link
+
+                        class="text-blueGray-500 hover:text-blue-600 text-xs uppercase py-3 font-bold block"
+                    >
+                        <i class="fas fa-tv opacity-75 mr-2 text-sm"></i>
+                        Lost & Found Item
+                    </Link>
+
+                    <Link
+
+                        class="text-blueGray-500 hover:text-blue-600 text-xs uppercase py-3 font-bold block"
+                    >
+                        <i class="fas fa-tv opacity-75 mr-2 text-sm"></i>
+                       Feedback
+                    </Link>
                 </li>
             </ul>
         </div>

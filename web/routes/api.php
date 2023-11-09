@@ -3,7 +3,6 @@
 use App\Http\Controllers\API\PredictionController;
 use App\Http\Controllers\API\ScheduleTimeController;
 use App\Http\Controllers\API\StationController;
-use App\Http\Controllers\API\TrainLocationController;
 use App\Http\Controllers\API\TrainLocationSaveController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\PayPalController;
@@ -40,9 +39,6 @@ Route::prefix('user')->group(function () {
 });
 Route::controller(StationController::class)->group(function () {
     Route::get('station', 'index')->name('station');
-});
-Route::controller(TrainLocationController::class)->group(function () {
-    Route::post('train-location', 'store')->name('train-location.store');
 });
 Route::controller(ScheduleTimeController::class)->group(function () {
     Route::post('time-table', 'filter')->name('schedule-time.filter');

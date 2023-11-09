@@ -32,6 +32,9 @@ class ProductObserver
                 );
                 $distance = $distanceController->distance;
 
+                // machine learning part (prediction time)
+                // pusher(real time update - notification)
+
                 if($distance<=0.1){
                     $station->update([
                         'status'=>"Station Ekata laga"

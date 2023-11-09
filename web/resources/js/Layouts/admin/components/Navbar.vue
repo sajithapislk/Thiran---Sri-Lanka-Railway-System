@@ -9,7 +9,7 @@
       <!-- Brand -->
       <a
         class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
-        href="https://www.creative-tim.com/learning-lab/tailwind-starter-kit#/dashboard"
+        :href="route('admin.dashboard')"
         >Dashboard</a
       >
       <!-- Form -->

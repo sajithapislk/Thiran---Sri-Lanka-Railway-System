@@ -56,7 +56,7 @@ const ModalFun = () => {
                             <h3
                                 class="font-semibold text-base text-blueGray-700"
                             >
-                                Station List
+                                Ticket Price
                             </h3>
                         </div>
                         <div

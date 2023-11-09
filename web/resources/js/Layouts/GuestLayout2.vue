@@ -21,15 +21,15 @@ defineProps({
                         >Sri-Lanka-Railway-System
                     </span>
                 </a>
-                <!-- <nav
+                <nav
                     class="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200"
                 >
                     <a
                         href="#_"
                         class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900"
-                        >Home</a
+                        >News</a
                     >
-                    <a
+                    <!-- <a
                         href="#_"
                         class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900"
                         >Features</a
@@ -43,43 +43,37 @@ defineProps({
                         href="#_"
                         class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900"
                         >Blog</a
-                    >
-                </nav> -->
+                    > -->
+                </nav>
             </div>
 
             <div
                 v-if="props.canLogin"
                 class="inline-flex items-center ml-5 space-x-6 lg:justify-end"
             >
-                <!-- <Link
-                    v-if="$page.props.auth.tutor"
-                    :href="route('tutor.dashboard')"
+                <Link
+                    v-if="$page.props.auth.admin"
+                    :href="route('admin.dashboard')"
                     class="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
-                    >Tutor Dashboard</Link
+                    >Admin Dashboard</Link
                 >
                 <template v-else>
                     <Link
-                        v-if="$page.props.auth.user"
-                        :href="route('dashboard')"
+                        v-if="$page.props.auth.admin"
+                        :href="route('admin.dashboard')"
                         class="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
                         >Dashboard</Link
                     >
 
                     <template v-else>
                         <Link
-                            :href="route('login')"
-                            class="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                            :href="route('admin.login')"
+                            class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
                             >Log in</Link
                         >
 
-                        <Link
-                            v-if="props.canRegister"
-                            :href="route('register')"
-                            class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-                            >Sign up</Link
-                        >
-                    </template>
-                </template> -->
+                </template>
+                </template>
             </div>
         </div>
     </section>
