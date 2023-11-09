@@ -15,4 +15,8 @@ class Train extends Model
         'scrs_max_seat',
         'tcrs_max_seat',
     ];
+    public function train()
+    {
+        return $this->hasOne(Train::class,'id','train_id');
+    }
 }

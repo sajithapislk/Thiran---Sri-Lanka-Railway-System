@@ -2,13 +2,16 @@
 
 namespace App\Observers;
 
+use App\Events\TimePredictionNotification;
 use App\Http\Controllers\DistanceController;
+use App\Http\Services\RandomForestPrediction;
+use App\Models\TrainLocation;
 use App\Models\ScheduleTime;
 use App\Models\Station;
 use App\Models\StationUpdate;
-use App\Models\TrainLocation;
+use Carbon\Carbon;
 
-class ProductObserver
+class TrainLocationObserver
 {
     /**
      * Handle the TrainLocation "created" event.
@@ -19,7 +22,7 @@ class ProductObserver
         $stationUpdates = StationUpdate::where('st_id',$st_id)->orderBy('id', 'DESC')->get();
         $length = $stationUpdates->count();
 
-        $scheduleTimes = ScheduleTime::with('route')->find($st_id);
+        $scheduleTimes = ScheduleTime::with('route','users')->find($st_id);
 
         if (isset($scheduleTimes->route->station_list[$length-1])) {
             $station = Station::find($scheduleTimes->route->station_list[$length-1]);
@@ -32,8 +35,26 @@ class ProductObserver
                 );
                 $distance = $distanceController->distance;
 
+                $trainLocation = $trainLocation->with('schedule_time.train');
                 // machine learning part (prediction time)
+                $randomForestResult = (new RandomForestPrediction([
+                    $trainLocation->train_id,
+                    $trainLocation->route_id,
+                    $trainLocation->route->from,
+                    $trainLocation->route->to,
+                    $distance,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ]))->predictArrivalTime();
+                $currentDateTime = Carbon::now();
+                $newDateTime = $currentDateTime->addMinutes($randomForestResult);
                 // pusher(real time update - notification)
+                foreach ($scheduleTimes->users as $key => $user) {
+                    TimePredictionNotification::dispatch($user->id, "TimePrediction", "Train will arrive at " + $newDateTime->format('h:i A'), Carbon::now());
+                }
 
                 if($distance<=0.1){
                     $station->update([

@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TrainLocation extends Model
 {
     use HasFactory;
+    public function schedule_time()
+    {
+        return $this->hasOne(Train::class,'id','st_id');
+    }
 }

@@ -29,4 +29,8 @@ class ScheduleTime extends Model
     {
         return $this->hasOne(Train::class,'id','train_id');
     }
+    public function users()
+    {
+        return $this->hasMany(Book::class,'st_id','id');
+    }
 }
