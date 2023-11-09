@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\StationController;
 use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\ComplainController;
 use App\Http\Controllers\Web\RouteController;
 use App\Http\Controllers\Web\TicketPriceController;
 use Illuminate\Foundation\Application;
@@ -30,6 +31,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::resource('station',StationController::class);
     Route::resource('route',RouteController::class);
     Route::resource('ticket-price',TicketPriceController::class);
+    Route::resource('complain',ComplainController::class);
 
     Route::get('logout', [AdminAuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
