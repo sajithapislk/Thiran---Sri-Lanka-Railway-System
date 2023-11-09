@@ -88,6 +88,27 @@
                         <i class="fas fa-tv opacity-75 mr-2 text-sm"></i>
                         Dashboard
                     </Link>
+                    <Link
+                        :href="route('admin.station.index')"
+                        class="text-blueGray-500 hover:text-blue-600 text-xs uppercase py-3 font-bold block"
+                    >
+                        <i class="fas fa-tv opacity-75 mr-2 text-sm"></i>
+                        station
+                    </Link>
+                    <Link
+                        :href="route('admin.route.index')"
+                        class="text-blueGray-500 hover:text-blue-600 text-xs uppercase py-3 font-bold block"
+                    >
+                        <i class="fas fa-tv opacity-75 mr-2 text-sm"></i>
+                        route
+                    </Link>
+                    <Link
+                        :href="route('admin.ticket-price.index')"
+                        class="text-blueGray-500 hover:text-blue-600 text-xs uppercase py-3 font-bold block"
+                    >
+                        <i class="fas fa-tv opacity-75 mr-2 text-sm"></i>
+                        ticket-price
+                    </Link>
                 </li>
             </ul>
         </div>

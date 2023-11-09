@@ -167,7 +167,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
           ),
           Expanded(
               child: Obx(
-            () => ListView.builder(
+            () => scheduleTimeController.list.isEmpty ? Center(child: Text('Empty')) : ListView.builder(
               itemCount: scheduleTimeController.list.length,
               itemBuilder: (context, index) {
                 var row = scheduleTimeController.list[index];

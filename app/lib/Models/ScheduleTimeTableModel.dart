@@ -9,7 +9,7 @@ ScheduleTimeTableModel scheduleTimeTableModelFromJson(String str) => ScheduleTim
 String scheduleTimeTableModelToJson(ScheduleTimeTableModel data) => json.encode(data.toJson());
 
 class ScheduleTimeTableModel {
-  int distance;
+  double distance;
   Price price;
   List<Schedule> schedules;
 
@@ -20,7 +20,7 @@ class ScheduleTimeTableModel {
   });
 
   factory ScheduleTimeTableModel.fromJson(Map<String, dynamic> json) => ScheduleTimeTableModel(
-    distance: json["distance"],
+    distance: double.parse(json["distance"].toString()),
     price: Price.fromJson(json["price"]),
     schedules: List<Schedule>.from(json["schedules"].map((x) => Schedule.fromJson(x))),
   );
@@ -36,10 +36,10 @@ class Price {
   int id;
   int beyond;
   int above;
-  int acsPrice;
-  int osPrice;
-  int scrsPrice;
-  int tcrsPrice;
+  double acsPrice;
+  double osPrice;
+  double scrsPrice;
+  double tcrsPrice;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -59,10 +59,10 @@ class Price {
     id: json["id"],
     beyond: json["beyond"],
     above: json["above"],
-    acsPrice: json["acs_price"],
-    osPrice: json["os_price"],
-    scrsPrice: json["scrs_price"],
-    tcrsPrice: json["tcrs_price"],
+    acsPrice: double.parse(json["acs_price"].toString()),
+    osPrice: double.parse(json["os_price"].toString()),
+    scrsPrice: double.parse(json["scrs_price"].toString()),
+    tcrsPrice: double.parse(json["tcrs_price"].toString()),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );

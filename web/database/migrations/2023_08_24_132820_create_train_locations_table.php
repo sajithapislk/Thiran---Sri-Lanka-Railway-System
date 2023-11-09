@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('train_locations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('st_id');
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->string('latitude',20);
+            $table->string('longitude',20);
             $table->string('status');
             $table->timestamps();
             $table->foreign('st_id')->references('id')->on('schedule_times');

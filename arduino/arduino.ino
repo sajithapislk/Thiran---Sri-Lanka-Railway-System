@@ -73,33 +73,3 @@ void loop() {
     // lastTime = millis();
   // }
 }
-
-String httpPOSTRequest(String route, String data) {
-  WiFiClient client;
-  HTTPClient http;
-
-  http.begin(client, serverName + route);
-  http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-
-  String httpRequestData = "key=tPmAT5Ab3j7F9&train_id=" +  String(train_id) + "&" + data;       
-
-  int httpResponseCode = http.POST(httpRequestData);
-  
-  String payload = "{}"; 
-  
-  if (httpResponseCode>0) {
-    Serial.print("HTTP Response code: ");
-    Serial.println(httpResponseCode);
-    payload = http.getString();
-  }
-  else {
-    Serial.print("Error code: ");
-    Serial.println(httpResponseCode);
-  }
-
-  http.end();
-
-  Serial.println(payload);
-
-  return payload;
-}

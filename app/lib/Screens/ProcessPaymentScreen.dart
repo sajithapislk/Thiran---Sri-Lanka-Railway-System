@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../Controllers/ScheduleTimeTableController.dart';
+import 'PaymentScreen.dart';
 
 class ProcessPaymentScreen extends StatefulWidget {
   int index;
@@ -291,8 +292,7 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
         Center(
           child: ElevatedButton(
             child: Text("Payment"),
-            onPressed: () {
-            },
+            onPressed: () =>Get.to(()=>PaymentScreen()),
           ),
         )
       ]),
