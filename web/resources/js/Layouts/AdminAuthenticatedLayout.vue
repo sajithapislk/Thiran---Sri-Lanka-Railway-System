@@ -183,7 +183,7 @@ c0.65,2.02,2.22,3.13,4.18,4.13C1212.48,314.49,1233.39,329.74,1253.98,345.38z"
                         </svg>
                         <span
                             class="-mr-1 font-medium group-hover:text-cyan-600"
-                            >Dashboard</span
+                            >Dashboard 1</span
                         >
                     </AdminNavLink>
                 </li>

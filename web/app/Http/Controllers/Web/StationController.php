@@ -37,6 +37,8 @@ class StationController extends Controller
             'tp' => $request->tp,
             'left_slide' => $request->left_slide,
             'right_slide' => $request->right_slide,
+            'longitude' => $request->longitude,
+            'latitude' => $request->latitude,
         ]);
 
         return back()->with('status', 'store successful');

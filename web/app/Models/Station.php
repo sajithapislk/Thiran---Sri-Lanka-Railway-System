@@ -14,6 +14,8 @@ class Station extends Model
         "address",
         "tp",
         "left_slide",
-        "right_slide"
+        "right_slide",
+        "longitude",
+        "latitude"
     ];
 }

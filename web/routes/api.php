@@ -7,6 +7,7 @@ use App\Http\Controllers\API\TrainLocationController;
 use App\Http\Controllers\API\TrainLocationSaveController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\PayPalController;
+use App\Http\Controllers\DistanceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
