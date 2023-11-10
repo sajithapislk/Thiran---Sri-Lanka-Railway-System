@@ -14,15 +14,33 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Items> myList = [
     Items(
         title: "Reservations",
-        subtitle: "Train Table",
+        subtitle: "",
         event: ()=> Get.to(()=>TrainFindScreen()),
         img: "assets/icon/train_192px.png"
     ),
     Items(
       title: "My Reservations",
-      subtitle: "Bocali, Apple",
+      subtitle: "",
       event: (){},
       img: "assets/icon/train_192px.png"
+    ),
+    Items(
+        title: "News",
+        subtitle: "",
+        event: (){},
+        img: "assets/icon/train_192px.png"
+    ),
+    Items(
+        title: "Complain",
+        subtitle: "",
+        event: (){},
+        img: "assets/icon/train_192px.png"
+    ),
+    Items(
+        title: "Lost And Found Item",
+        subtitle: "",
+        event: (){},
+        img: "assets/icon/train_192px.png"
     )
   ];
   var color = 0xff453658;
@@ -44,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Johny s Family",
+                    "Thiran",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,

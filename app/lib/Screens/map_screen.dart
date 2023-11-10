@@ -1,49 +1,161 @@
 import 'dart:async';
 
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:app/Controllers/map_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:location/location.dart';
+import 'package:get/get.dart';
+
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
   @override
-  State<MapScreen> createState() => MapScreenState();
+  State<MapScreen> createState() => _MapScreenState();
 }
 
-class MapScreenState extends State<MapScreen> {
-  final Completer<GoogleMapController> _controller =
+class _MapScreenState extends State<MapScreen> {
+  final mapController = Get.put(MapController());
+
+  Location _locationController = new Location();
+  BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
+
+  final Completer<GoogleMapController> _mapController =
   Completer<GoogleMapController>();
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+  LatLng? _currentP = null;
 
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  Map<PolylineId, Polyline> polylines = {};
+
+  @override
+  void initState() {
+    super.initState();
+    setCustomMarkerIcon();
+    getLocationUpdates().then(
+          (_) => {
+        getPolylinePoints().then((coordinates) => {
+          generatePolyLineFromPoints(coordinates),
+        }),
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
+      body: _currentP == null
+          ? const Center(
+        child: Text("Loading..."),
+      )
+          : GoogleMap(
+        onMapCreated: ((GoogleMapController controller) =>
+            _mapController.complete(controller)),
+        initialCameraPosition: CameraPosition(
+          target: mapController.pGooglePlex.value,
+          zoom: 13,
+        ),
+        markers: {
+          Marker(
+            markerId: MarkerId("_currentLocation"),
+            icon: currentLocationIcon,
+            position: _currentP!,
+          ),
+          Marker(
+              markerId: MarkerId("_sourceLocation"),
+              icon: BitmapDescriptor.defaultMarker,
+              position: mapController.pGooglePlex.value),
+          Marker(
+              markerId: MarkerId("_destionationLocation"),
+              icon: BitmapDescriptor.defaultMarker,
+              position: mapController.pApplePark.value)
         },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('To the lake!'),
-        icon: const Icon(Icons.directions_boat),
+        polylines: Set<Polyline>.of(polylines.values),
       ),
     );
   }
 
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+  Future<void> _cameraToPosition(LatLng pos) async {
+    final GoogleMapController controller = await _mapController.future;
+    CameraPosition _newCameraPosition = CameraPosition(
+      target: pos,
+      zoom: 13,
+    );
+    await controller.animateCamera(
+      CameraUpdate.newCameraPosition(_newCameraPosition),
+    );
+  }
+
+  Future<void> getLocationUpdates() async {
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+
+    _serviceEnabled = await _locationController.serviceEnabled();
+    if (_serviceEnabled) {
+      _serviceEnabled = await _locationController.requestService();
+    } else {
+      return;
+    }
+
+    _permissionGranted = await _locationController.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await _locationController.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationController.onLocationChanged
+        .listen((LocationData currentLocation) {
+      if (currentLocation.latitude != null &&
+          currentLocation.longitude != null) {
+        setState(() {
+          _currentP =
+              LatLng(currentLocation.latitude!, currentLocation.longitude!);
+          _currentP =
+              LatLng(7.372055, 80.617687);
+          _cameraToPosition(_currentP!);
+        });
+      }
+    });
+  }
+
+  Future<List<LatLng>> getPolylinePoints() async {
+    List<LatLng> polylineCoordinates = [];
+    PolylinePoints polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      mapController.googleMapAPI,
+      PointLatLng(mapController.pGooglePlex.value.latitude, mapController.pGooglePlex.value.longitude),
+      PointLatLng(mapController.pApplePark.value.latitude, mapController.pApplePark.value.longitude),
+      travelMode: TravelMode.transit,
+    );
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    } else {
+      print(result.errorMessage);
+    }
+    return polylineCoordinates;
+  }
+
+  void generatePolyLineFromPoints(List<LatLng> polylineCoordinates) async {
+    PolylineId id = PolylineId("poly");
+    Polyline polyline = Polyline(
+        polylineId: id,
+        color: Colors.black,
+        points: polylineCoordinates,
+        width: 8);
+    setState(() {
+      polylines[id] = polyline;
+    });
+  }
+  void setCustomMarkerIcon() {
+    BitmapDescriptor.fromAssetImage(
+        ImageConfiguration.empty, "assets/icon/train_96px.png")
+        .then(
+          (icon) {
+        currentLocationIcon = icon;
+      },
+    );
   }
 }

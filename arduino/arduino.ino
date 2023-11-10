@@ -61,10 +61,11 @@ void loop() {
             Serial.println("Speed= " + String(speed));
             Serial.println("Direction= " + String(direction));
 
-            httpPOSTRequest("", "latitude="+String(latitude)+"&longitude="+String(longitude)+"&status=MOVING");
+            // httpPOSTRequest("train-location", "latitude="+String(latitude)+"&longitude="+String(longitude)+"&status=MOVING");
 
           } else {
-            httpPOSTRequest("", "latitude="+String(latitude)+"&longitude="+String(longitude)+"&status=NOT_MOVING");
+            Serial.println("Location is not moving");
+            // httpPOSTRequest("train-location", "latitude="+String(latitude)+"&longitude="+String(longitude)+"&status=NOT_MOVING");
           }
         }
       }

@@ -1,3 +1,10 @@
+<script setup>
+import NavbarComponent from "./admin/components/Navbar.vue";
+import SidebarComponent from "./admin/components/Sidebar.vue";
+// import LineChartComponent from "./components/LineChart.vue";
+// import BarChartComponent from "./components/BarChart.vue";
+const date = new Date().getFullYear();
+</script>
 <template>
     <div>
         <sidebar-component></sidebar-component>
@@ -34,10 +41,3 @@
         </div>
     </div>
 </template>
-<script setup>
-import NavbarComponent from "./admin/components/Navbar.vue";
-import SidebarComponent from "./admin/components/Sidebar.vue";
-// import LineChartComponent from "./components/LineChart.vue";
-// import BarChartComponent from "./components/BarChart.vue";
-const date = new Date().getFullYear();
-</script>
