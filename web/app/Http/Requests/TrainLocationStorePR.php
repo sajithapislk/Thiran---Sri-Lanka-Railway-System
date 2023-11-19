@@ -22,7 +22,7 @@ class TrainLocationStorePR extends FormRequest
     public function rules(): array
     {
         return [
-            'st_id'=>'required',
+            'train_id'=>'required',
             'latitude'=>'required',
             'longitude'=>'required',
             'status'=>'required'

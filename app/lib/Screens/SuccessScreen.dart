@@ -3,21 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SuccessScreen extends StatefulWidget {
-
-  SuccessScreen({Key? key})
-      : super(key: key);
+  SuccessScreen({Key? key}) : super(key: key);
 
   @override
-  State<SuccessScreen> createState() =>
-      _SuccessScreenState();
+  State<SuccessScreen> createState() => _SuccessScreenState();
 }
 
-class _SuccessScreenState
-    extends State<SuccessScreen> {
+class _SuccessScreenState extends State<SuccessScreen> {
   double screenWidth = 600;
   double screenHeight = 400;
   Color textColor = const Color(0xFF32567A);
-
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +22,7 @@ class _SuccessScreenState
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        resizeToAvoidBottomInset : false,
+        resizeToAvoidBottomInset: false,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -1,7 +1,9 @@
-import 'package:app/Screens/PaymentScreen.dart';
+import 'package:app/Screens/MyReservation.dart';
 import 'package:app/Screens/TrainFindScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../Controllers/UserController.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,35 +17,31 @@ class _HomeScreenState extends State<HomeScreen> {
     Items(
         title: "Reservations",
         subtitle: "",
-        event: ()=> Get.to(()=>TrainFindScreen()),
-        img: "assets/icon/train_192px.png"
-    ),
+        event: () => Get.to(() => TrainFindScreen()),
+        img: "assets/icon/train_192px.png"),
     Items(
-      title: "My Reservations",
-      subtitle: "",
-      event: (){},
-      img: "assets/icon/train_192px.png"
-    ),
+        title: "My Reservations",
+        subtitle: "",
+        event: () => Get.to(() => MyReservation()),
+        img: "assets/icon/train_192px.png"),
     Items(
         title: "News",
         subtitle: "",
-        event: (){},
-        img: "assets/icon/train_192px.png"
-    ),
+        event: () {},
+        img: "assets/icon/train_192px.png"),
     Items(
         title: "Complain",
         subtitle: "",
-        event: (){},
-        img: "assets/icon/train_192px.png"
-    ),
+        event: () {},
+        img: "assets/icon/train_192px.png"),
     Items(
         title: "Lost And Found Item",
         subtitle: "",
-        event: (){},
-        img: "assets/icon/train_192px.png"
-    )
+        event: () {},
+        img: "assets/icon/train_192px.png")
   ];
   var color = 0xff453658;
+  final userController = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color(0xff392850),
       body: Column(children: <Widget>[
         SizedBox(
-          height: 110,
+          height: 50,
         ),
         Padding(
           padding: EdgeInsets.only(left: 16, right: 16),
@@ -80,6 +78,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
+              IconButton(
+                  onPressed: () {
+                    userController.logout();
+                  },
+                  icon: Icon(
+                    Icons.output,
+                    color: Colors.white,
+                  ))
             ],
           ),
         ),

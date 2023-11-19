@@ -53,7 +53,8 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
         //     middleTextStyle: TextStyle(color: Colors.white),
         //   );
         // }
-        final _price = scheduleTimeController.acs_price.value * int.parse(qtyController.text);
+        final _price = scheduleTimeController.acs_price.value *
+            int.parse(qtyController.text);
         price(_price.toString());
         return;
       }
@@ -79,7 +80,8 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
         //     middleTextStyle: TextStyle(color: Colors.white),
         //   );
         // }
-        final _price = scheduleTimeController.os_price.value * int.parse(qtyController.text);
+        final _price = scheduleTimeController.os_price.value *
+            int.parse(qtyController.text);
         price(_price.toString());
         return;
       }
@@ -105,7 +107,8 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
         //     middleTextStyle: TextStyle(color: Colors.white),
         //   );
         // }
-        final _price = scheduleTimeController.scrs_price.value * int.parse(qtyController.text);
+        final _price = scheduleTimeController.scrs_price.value *
+            int.parse(qtyController.text);
         price(_price.toString());
         return;
       }
@@ -131,7 +134,8 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
         //     middleTextStyle: TextStyle(color: Colors.white),
         //   );
         // }
-        final _price = scheduleTimeController.tcrs_price.value * int.parse(qtyController.text);
+        final _price = scheduleTimeController.tcrs_price.value *
+            int.parse(qtyController.text);
         price(_price.toString());
         return;
       }
@@ -292,7 +296,7 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
         Center(
           child: ElevatedButton(
             child: Text("Payment"),
-            onPressed: () =>Get.to(()=>PaymentScreen()),
+            onPressed: () => Get.to(() => PaymentScreen()),
           ),
         )
       ]),

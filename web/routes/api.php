@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\PredictionController;
 use App\Http\Controllers\API\ScheduleTimeController;
 use App\Http\Controllers\API\StationController;
@@ -29,13 +30,17 @@ Route::post('/train-location', TrainLocationSaveController::class);
 
 
 Route::prefix('user')->group(function () {
-    Route::post('login',[UserController::class,'check']);
-    Route::post('store',[UserController::class,'store']);
+    Route::post('login', [UserController::class, 'check']);
+    Route::post('store', [UserController::class, 'store']);
 
-    Route::group(['middleware' => ['auth:sanctum', 'ability:user:*']], function () {
-        Route::get('logout',[UserController::class,'logout']);
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+
+        Route::controller(BookController::class)->group(function () {
+            Route::get('book', 'index')->name('book.index');
+        });
+
+        Route::get('logout', [UserController::class, 'logout']);
     });
-
 });
 Route::controller(StationController::class)->group(function () {
     Route::get('station', 'index')->name('station');
@@ -43,7 +48,8 @@ Route::controller(StationController::class)->group(function () {
 Route::controller(ScheduleTimeController::class)->group(function () {
     Route::post('time-table', 'filter')->name('schedule-time.filter');
 });
-Route::post('prediction',[PredictionController::class,'Arrival_Time']);
+Route::post('prediction', [PredictionController::class, 'Arrival_Time']);
+
 
 Route::controller(PayPalController::class)->group(function () {
     Route::get('process-transaction', 'processTransaction')->name('processTransaction');

@@ -5,7 +5,9 @@ use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\ComplainController;
 use App\Http\Controllers\Web\RouteController;
+use App\Http\Controllers\Web\ScheduleTimeController;
 use App\Http\Controllers\Web\TicketPriceController;
+use App\Http\Controllers\Web\TrainController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,9 +34,15 @@ Route::middleware('auth:admin')->group(function () {
     Route::resource('route',RouteController::class);
     Route::resource('ticket-price',TicketPriceController::class);
     Route::resource('complain',ComplainController::class);
+    Route::resource('train',TrainController::class);
+    Route::resource('schedule-time',ScheduleTimeController::class);
 
     Route::get('logout', [AdminAuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
+
+    Route::get('/map', function () {
+        return Inertia::render('Admin/Map');
+    });
 });
 
 Route::middleware('guest:admin')->group(function () {

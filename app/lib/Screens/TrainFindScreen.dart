@@ -167,121 +167,126 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
           ),
           Expanded(
               child: Obx(
-            () => scheduleTimeController.list.isEmpty ? Center(child: Text('Empty')) : ListView.builder(
-              itemCount: scheduleTimeController.list.length,
-              itemBuilder: (context, index) {
-                var row = scheduleTimeController.list[index];
-                int _fromId = row.route.stationList[0];
-                int _toId =
-                    row.route.stationList[row.route.stationList.length - 1];
+            () => scheduleTimeController.list.isEmpty
+                ? Center(child: Text('Empty'))
+                : ListView.builder(
+                    itemCount: scheduleTimeController.list.length,
+                    itemBuilder: (context, index) {
+                      var row = scheduleTimeController.list[index];
+                      int _fromId = row.route.stationList[0];
+                      int _toId = row
+                          .route.stationList[row.route.stationList.length - 1];
 
-                StationModel? fromStation = stationController.findById(_fromId);
-                StationModel? toStation = stationController.findById(_toId);
+                      StationModel? fromStation =
+                          stationController.findById(_fromId);
+                      StationModel? toStation =
+                          stationController.findById(_toId);
 
-                return Stack(
-                  // fit: StackFit.passthrough,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(50, 10, 10, 10),
-                      padding: const EdgeInsets.fromLTRB(80, 10, 10, 10),
-                      height: 200,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF2886F1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      // color: Colors.red,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      return Stack(
+                        // fit: StackFit.passthrough,
                         children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: Text("ABC Train",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                )),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "From: ${fromStation!.name}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                                color: Colors.white),
-                          ),
-                          Text(
-                            "To: ${toStation!.name}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                                color: Colors.white),
-                          ),
-                          Text(
-                            "Date: ${DateFormat('yyyy-MM-dd').format(row.startAt)}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            "Arrival Time: ${DateFormat('HH:mm:ss').format(row.startAt)}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            "End At: ${DateFormat('HH:mm:ss').format(row.endAt)}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            "Price: ${scheduleTimeController.acs_price.value}LKR ${scheduleTimeController.os_price.value}LKR ${scheduleTimeController.scrs_price.value}LKR ${scheduleTimeController.tcrs_price.value}LKR",
-                            style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                                color: Colors.white),
-                          ),
                           Container(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Get.to(
-                                    () => ProcessPaymentScreen(index: index));
-                              },
-                              child: Text('Payment'),
+                            margin: const EdgeInsets.fromLTRB(50, 10, 10, 10),
+                            padding: const EdgeInsets.fromLTRB(80, 10, 10, 10),
+                            height: 200,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF2886F1),
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                            alignment: Alignment.center,
+                            // color: Colors.red,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Text("ABC Train",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                      )),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "From: ${fromStation!.name}",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 14,
+                                      color: Colors.white),
+                                ),
+                                Text(
+                                  "To: ${toStation!.name}",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 14,
+                                      color: Colors.white),
+                                ),
+                                Text(
+                                  "Date: ${DateFormat('yyyy-MM-dd').format(row.startAt)}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  "Arrival Time: ${DateFormat('HH:mm:ss').format(row.startAt)}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  "End At: ${DateFormat('HH:mm:ss').format(row.endAt)}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  "Price: ${scheduleTimeController.acs_price.value}LKR ${scheduleTimeController.os_price.value}LKR ${scheduleTimeController.scrs_price.value}LKR ${scheduleTimeController.tcrs_price.value}LKR",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 14,
+                                      color: Colors.white),
+                                ),
+                                Container(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Get.to(() =>
+                                          ProcessPaymentScreen(index: index));
+                                    },
+                                    child: Text('Payment'),
+                                  ),
+                                  alignment: Alignment.center,
+                                ),
+                              ],
+                            ),
                           ),
+                          Positioned(
+                              top: 30,
+                              left: 15,
+                              child: Container(
+                                height: 100,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFFDE248),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child:
+                                    Image.asset('assets/icon/train_192px.png'),
+                              ))
                         ],
-                      ),
-                    ),
-                    Positioned(
-                        top: 30,
-                        left: 15,
-                        child: Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFFDE248),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Image.asset('assets/icon/train_192px.png'),
-                        ))
-                  ],
-                );
-              },
-            ),
+                      );
+                    },
+                  ),
           ))
         ],
       ),

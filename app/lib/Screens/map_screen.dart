@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:app/Controllers/map_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:location/location.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -21,7 +21,7 @@ class _MapScreenState extends State<MapScreen> {
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
 
   final Completer<GoogleMapController> _mapController =
-  Completer<GoogleMapController>();
+      Completer<GoogleMapController>();
 
   LatLng? _currentP = null;
 
@@ -32,10 +32,10 @@ class _MapScreenState extends State<MapScreen> {
     super.initState();
     setCustomMarkerIcon();
     getLocationUpdates().then(
-          (_) => {
+      (_) => {
         getPolylinePoints().then((coordinates) => {
-          generatePolyLineFromPoints(coordinates),
-        }),
+              generatePolyLineFromPoints(coordinates),
+            }),
       },
     );
   }
@@ -45,32 +45,32 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       body: _currentP == null
           ? const Center(
-        child: Text("Loading..."),
-      )
+              child: Text("Loading..."),
+            )
           : GoogleMap(
-        onMapCreated: ((GoogleMapController controller) =>
-            _mapController.complete(controller)),
-        initialCameraPosition: CameraPosition(
-          target: mapController.pGooglePlex.value,
-          zoom: 13,
-        ),
-        markers: {
-          Marker(
-            markerId: MarkerId("_currentLocation"),
-            icon: currentLocationIcon,
-            position: _currentP!,
-          ),
-          Marker(
-              markerId: MarkerId("_sourceLocation"),
-              icon: BitmapDescriptor.defaultMarker,
-              position: mapController.pGooglePlex.value),
-          Marker(
-              markerId: MarkerId("_destionationLocation"),
-              icon: BitmapDescriptor.defaultMarker,
-              position: mapController.pApplePark.value)
-        },
-        polylines: Set<Polyline>.of(polylines.values),
-      ),
+              onMapCreated: ((GoogleMapController controller) =>
+                  _mapController.complete(controller)),
+              initialCameraPosition: CameraPosition(
+                target: mapController.pGooglePlex.value,
+                zoom: 13,
+              ),
+              markers: {
+                Marker(
+                  markerId: MarkerId("_currentLocation"),
+                  icon: currentLocationIcon,
+                  position: _currentP!,
+                ),
+                Marker(
+                    markerId: MarkerId("_sourceLocation"),
+                    icon: BitmapDescriptor.defaultMarker,
+                    position: mapController.pGooglePlex.value),
+                Marker(
+                    markerId: MarkerId("_destionationLocation"),
+                    icon: BitmapDescriptor.defaultMarker,
+                    position: mapController.pApplePark.value)
+              },
+              polylines: Set<Polyline>.of(polylines.values),
+            ),
     );
   }
 
@@ -111,8 +111,7 @@ class _MapScreenState extends State<MapScreen> {
         setState(() {
           _currentP =
               LatLng(currentLocation.latitude!, currentLocation.longitude!);
-          _currentP =
-              LatLng(7.372055, 80.617687);
+          _currentP = LatLng(7.372055, 80.617687);
           _cameraToPosition(_currentP!);
         });
       }
@@ -124,8 +123,10 @@ class _MapScreenState extends State<MapScreen> {
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       mapController.googleMapAPI,
-      PointLatLng(mapController.pGooglePlex.value.latitude, mapController.pGooglePlex.value.longitude),
-      PointLatLng(mapController.pApplePark.value.latitude, mapController.pApplePark.value.longitude),
+      PointLatLng(mapController.pGooglePlex.value.latitude,
+          mapController.pGooglePlex.value.longitude),
+      PointLatLng(mapController.pApplePark.value.latitude,
+          mapController.pApplePark.value.longitude),
       travelMode: TravelMode.transit,
     );
     if (result.points.isNotEmpty) {
@@ -149,11 +150,12 @@ class _MapScreenState extends State<MapScreen> {
       polylines[id] = polyline;
     });
   }
+
   void setCustomMarkerIcon() {
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration.empty, "assets/icon/train_96px.png")
+            ImageConfiguration.empty, "assets/icon/train_96px.png")
         .then(
-          (icon) {
+      (icon) {
         currentLocationIcon = icon;
       },
     );

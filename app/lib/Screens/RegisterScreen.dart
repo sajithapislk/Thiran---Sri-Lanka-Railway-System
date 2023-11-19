@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../Controllers/UserController.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -9,12 +10,13 @@ class RegisterScreen extends StatefulWidget {
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen>{
+class _RegisterScreenState extends State<RegisterScreen> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   final userController = Get.put(UserController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,8 +45,7 @@ class _RegisterScreenState extends State<RegisterScreen>{
               child: TextField(
                 controller: nameController,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Name'),
+                    border: OutlineInputBorder(), labelText: 'Name'),
               ),
             ),
             Padding(
@@ -83,10 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen>{
                   String _password = passwordController.text;
 
                   await userController.create(
-                      name: _name,
-                      email: _email,
-                      password: _password
-                  );
+                      name: _name, email: _email, password: _password);
                 },
                 child: Text(
                   'Register',

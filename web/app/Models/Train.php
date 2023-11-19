@@ -11,10 +11,13 @@ class Train extends Model
 
     protected $fillable = [
         'name',
-        'acs_max_seat',
-        'scrs_max_seat',
-        'tcrs_max_seat',
+        'no',
+        'acs_max_seats',
+        'os_max_seats',
+        'scrs_max_seats',
+        'tcrs_max_seats'
     ];
+
     public function train()
     {
         return $this->hasOne(Train::class,'id','train_id');
