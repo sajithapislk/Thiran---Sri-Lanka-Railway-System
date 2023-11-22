@@ -15,8 +15,10 @@ class StationModel {
   String tp;
   int leftSlide;
   int rightSlide;
-  dynamic createdAt;
-  dynamic updatedAt;
+  String longitude;
+  String latitude;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   StationModel({
     required this.id,
@@ -25,6 +27,8 @@ class StationModel {
     required this.tp,
     required this.leftSlide,
     required this.rightSlide,
+    required this.longitude,
+    required this.latitude,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -36,8 +40,10 @@ class StationModel {
     tp: json["tp"],
     leftSlide: json["left_slide"],
     rightSlide: json["right_slide"],
-    createdAt: json["created_at"],
-    updatedAt: json["updated_at"],
+    longitude: json["longitude"],
+    latitude: json["latitude"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -47,7 +53,9 @@ class StationModel {
     "tp": tp,
     "left_slide": leftSlide,
     "right_slide": rightSlide,
-    "created_at": createdAt,
-    "updated_at": updatedAt,
+    "longitude": longitude,
+    "latitude": latitude,
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
   };
 }

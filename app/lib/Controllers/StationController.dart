@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 class StationController extends GetxController{
   var list = <StationModel>[].obs;
+  final is_loaded = true.obs;
 
   @override
   void onInit() {
@@ -14,6 +15,7 @@ class StationController extends GetxController{
   Future<void> getList() async {
     var res = await StationProvider.getStationList();
     list.assignAll(res);
+    is_loaded(false);
   }
 
   StationModel? findById(int id) {
