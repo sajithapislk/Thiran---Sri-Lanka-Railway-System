@@ -32,6 +32,46 @@ const ModalFun = () => {
     insertModal.value = !insertModal.value;
     saveform.reset();
 };
+
+const center = ref({ lat: 7.466878843230555, lng: 80.62544710311586 });
+
+const handleMapClick = (event) => {
+    const clickedLatLng = {
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng(),
+    };
+
+    saveform.latitude=clickedLatLng.lat;
+    saveform.longitude=clickedLatLng.lng;
+    console.log("Clicked Latitude:", clickedLatLng.lat);
+    console.log("Clicked Longitude:", clickedLatLng.lng);
+    // You can use the clickedLatLng data as needed
+};
+
+const mapOptions = {
+    styles: [
+        {
+            featureType: "all",
+            elementType: "geometry",
+            stylers: [
+                {
+                    visibility: "on",
+                },
+            ],
+        },
+        {
+            featureType: "all",
+            elementType: "labels",
+            stylers: [
+                {
+                    visibility: "on",
+                },
+            ],
+        },
+    ],
+    gestureHandling: "cooperative",
+    draggableCursor: "crosshair", // Change the mouse icon to a crosshair
+};
 </script>
 
 <template>
@@ -260,12 +300,22 @@ const ModalFun = () => {
                         v-model="saveform.right_slide"
                     />
                 </div>
+                <GMapMap
+                    :center="center"
+                    :zoom="10"
+                    map-type-id="terrain"
+                    class="w-full h-96"
+                    @click="handleMapClick"
+                    :options="mapOptions"
+                >
+                    <!-- Other map components here -->
+                </GMapMap>
                 <div class="w-full px-3">
                     <label
                         class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                         for="name"
                     >
-                    latitude
+                        latitude
                     </label>
 
                     <input
@@ -280,7 +330,7 @@ const ModalFun = () => {
                         class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                         for="name"
                     >
-                    longitude
+                        longitude
                     </label>
 
                     <input
