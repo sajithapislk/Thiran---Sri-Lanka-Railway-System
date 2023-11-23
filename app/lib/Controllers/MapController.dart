@@ -1,9 +1,8 @@
-import 'dart:developer' as dev;
 import 'dart:developer';
 
 import 'package:app/Controllers/StationController.dart';
 import 'package:app/Models/BookModel.dart';
-import 'package:app/provider/map_provider.dart';
+import 'package:app/provider/MapProvider.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -53,12 +52,11 @@ class MapController extends GetxController {
     is_loaded(false);
   }
 
-  // Future<void> schedule_times({required String }) async {
-  //   var data = {"st_id": 'email', "password": 'password'};
-  //   var res = await MapProvider.login(data);
-  //   if (res.token == null) {
-  //     print("empty");
-  //     return;
-  //   }
-  // }
+  Future<void> schedule_times({required stId }) async {
+    var res = await MapProvider.getCurrentLocation(stId);
+    // if (res.token == null) {
+    //   print("empty");
+    //   return;
+    // }
+  }
 }

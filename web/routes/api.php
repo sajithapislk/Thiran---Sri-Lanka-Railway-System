@@ -7,6 +7,7 @@ use App\Http\Controllers\API\StationController;
 use App\Http\Controllers\API\TrainLocationSaveController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\PayPalController;
+use App\Http\Controllers\API\TrainLocationController;
 use App\Http\Controllers\DistanceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,9 @@ Route::prefix('user')->group(function () {
         Route::get('logout', [UserController::class, 'logout']);
     });
 });
+
+Route::get('train_locations/{st_id}', TrainLocationController::class);
+
 Route::controller(StationController::class)->group(function () {
     Route::get('station', 'index')->name('station');
 });

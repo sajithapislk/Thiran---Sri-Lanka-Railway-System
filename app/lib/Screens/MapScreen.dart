@@ -19,22 +19,23 @@ class _MapScreenState extends State<MapScreen> {
   final mapController = Get.put(MapController());
 
   Location _locationController = new Location();
-  BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor stationLocationIcon = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor trainLocationIcon = BitmapDescriptor.defaultMarker;
 
   final Completer<GoogleMapController> _mapController =
-  Completer<GoogleMapController>();
+      Completer<GoogleMapController>();
 
   Map<PolylineId, Polyline> polylines = {};
 
   @override
   void initState() {
     super.initState();
-    setCustomMarkerIcon();
+    setCustomIcon();
     getLocationUpdates().then(
-          (_) => {
+      (_) => {
         getPolylinePoints().then((coordinates) => {
-          generatePolyLineFromPoints(coordinates),
-        }),
+              generatePolyLineFromPoints(coordinates),
+            }),
       },
     );
   }
@@ -43,26 +44,33 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
-            () => mapController.stationList.isEmpty
+        () => mapController.stationList.isEmpty
             ? const Center(
-          child: Text("Loading..."),
-        )
+                child: Text("Loading..."),
+              )
             : GoogleMap(
-          onMapCreated: ((GoogleMapController controller) =>
-              _mapController.complete(controller)),
-          initialCameraPosition: CameraPosition(
-            target: mapController.stationList[0],
-            zoom: 50,
-          ),
-          markers: mapController.stationList
-              .map((element) => Marker(
-            markerId: MarkerId("_currentLocation"),
-            icon: currentLocationIcon,
-            position: element,
-          ))
-              .toSet(),
-          polylines: Set<Polyline>.of(polylines.values),
-        ),
+                onMapCreated: ((GoogleMapController controller) =>
+                    _mapController.complete(controller)),
+                initialCameraPosition: CameraPosition(
+                  target: mapController.stationList[0],
+                  zoom: 50,
+                ),
+                markers: {
+                  ...mapController.stationList.asMap().entries.map((entry) {
+                    return Marker(
+                      markerId: MarkerId(entry.key.toString()),
+                      icon: stationLocationIcon,
+                      position: entry.value,
+                    );
+                  }),
+                  Marker(
+                    markerId: MarkerId("additionalMarker1"),
+                    icon: trainLocationIcon,
+                    position: LatLng(7.4037763,80.6436449),
+                  )
+                },
+                polylines: Set<Polyline>.of(polylines.values),
+              ),
       ),
     );
   }
@@ -81,7 +89,8 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> getLocationUpdates() async {
     while (mapController.is_loaded.value) {
-      await Future.delayed(Duration(milliseconds: 100)); // Add a small delay to avoid busy-waiting
+      await Future.delayed(Duration(
+          milliseconds: 100)); // Add a small delay to avoid busy-waiting
     }
     _cameraToPosition();
 
@@ -101,7 +110,7 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<List<LatLng>> getPolylinePoints() async {
     List<LatLng> polylineCoordinates = [];
-    if(mapController.stationList.isEmpty){
+    if (mapController.stationList.isEmpty) {
       log("mapController.stationList.isEmpty");
       return [];
     }
@@ -116,8 +125,10 @@ class _MapScreenState extends State<MapScreen> {
 
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       mapController.googleMapAPI,
-      PointLatLng(mapController.stationList.first.latitude, mapController.stationList.first.longitude),
-      PointLatLng(mapController.stationList.last.latitude, mapController.stationList.last.longitude),
+      PointLatLng(mapController.stationList.first.latitude,
+          mapController.stationList.first.longitude),
+      PointLatLng(mapController.stationList.last.latitude,
+          mapController.stationList.last.longitude),
       travelMode: TravelMode.transit,
     );
 
@@ -143,13 +154,24 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  void setCustomMarkerIcon() {
+  void setCustomIcon() {
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration.empty, "assets/icon/train_96px.png")
+            ImageConfiguration.empty, "assets/icon/train_96px.png")
         .then(
-          (icon) {
-        currentLocationIcon = icon;
+      (icon) {
+        stationLocationIcon = icon;
       },
     );
+    BitmapDescriptor.fromAssetImage(
+        ImageConfiguration.empty, "assets/icon/train_192px.png")
+        .then(
+          (icon) {
+        trainLocationIcon = icon;
+      },
+    );
+  }
+
+  void setTrainIcon() {
+
   }
 }
