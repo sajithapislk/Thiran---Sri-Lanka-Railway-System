@@ -10,7 +10,8 @@ import 'package:location/location.dart';
 
 class MapController extends GetxController {
   List<int>? stationIdList;
-  MapController(this.stationIdList);
+  int stId;
+  MapController({required this.stationIdList,required this.stId});
   final _stationController = Get.put(StationController());
   final is_loaded = true.obs;
 
@@ -18,10 +19,10 @@ class MapController extends GetxController {
 
   String googleMapAPI = 'AIzaSyBFDrC2GwE-H1BnJpVhGgW_EUoZLdXt_Us';
 
-  final pGooglePlex = LatLng(7.3505661,80.6800127).obs;
-  final pApplePark = LatLng(7.4203979,80.6315839).obs;
+  late Rx<LatLng> currectLocation;
 
   RxList<LatLng> stationList = <LatLng>[].obs;
+
 
   @override
   void onInit() {
@@ -35,6 +36,7 @@ class MapController extends GetxController {
     }
   }
   Future<void> _polylines() async {
+    await _schedule_times();
     await _waitForLoaded();
     stationIdList?.forEach((int element) {
       final station = _stationController.findById(element);
@@ -54,8 +56,12 @@ class MapController extends GetxController {
     is_loaded(false);
   }
 
-  Future<void> schedule_times({required stId }) async {
+  Future<void> _schedule_times() async {
     var res = await MapProvider.getCurrentLocation(stId);
-
+    try {
+      currectLocation.value = LatLng(double.parse(res!.latitude),double.parse(res.longitude));
+    }catch(e){
+      log("error");
+    }
   }
 }

@@ -23,7 +23,10 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
-    mapController = Get.put(MapController(widget.bookModel.scheduleTime.route.stationList));
+    mapController = Get.put(MapController(
+      stationIdList: widget.bookModel.scheduleTime.route.stationList,
+      stId: widget.bookModel.stId
+    ));
     setCustomIcon();
     getLocationUpdates().then(
       (_) => {
@@ -118,12 +121,6 @@ class _MapScreenState extends State<MapScreen> {
       log("mapController.stationList.isEmpty");
       return [];
     }
-    final _firstLocation = mapController.stationList.isNotEmpty
-        ? mapController.stationList.first
-        : null;
-    final _lastLocation = mapController.stationList.isNotEmpty
-        ? mapController.stationList.last
-        : null;
 
     PolylinePoints polylinePoints = PolylinePoints();
 
@@ -133,7 +130,7 @@ class _MapScreenState extends State<MapScreen> {
           mapController.stationList.first.longitude),
       PointLatLng(mapController.stationList.last.latitude,
           mapController.stationList.last.longitude),
-      travelMode: TravelMode.driving,
+      travelMode: TravelMode.transit,
     );
 
     if (result.points.isNotEmpty) {
