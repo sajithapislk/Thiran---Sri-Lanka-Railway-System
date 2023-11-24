@@ -9,10 +9,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 class MapController extends GetxController {
+  List<int>? stationIdList;
+  MapController(this.stationIdList);
   final _stationController = Get.put(StationController());
   final is_loaded = true.obs;
 
-  List<int>? stationIdList = [1,2,3,4,5,6,7,8,9];
+  // List<int>? stationIdList = [1,2,3,4,5,6,7,8,9];
 
   String googleMapAPI = 'AIzaSyBFDrC2GwE-H1BnJpVhGgW_EUoZLdXt_Us';
 
@@ -54,9 +56,6 @@ class MapController extends GetxController {
 
   Future<void> schedule_times({required stId }) async {
     var res = await MapProvider.getCurrentLocation(stId);
-    // if (res.token == null) {
-    //   print("empty");
-    //   return;
-    // }
+
   }
 }

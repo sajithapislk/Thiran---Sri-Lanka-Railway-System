@@ -71,7 +71,7 @@ class _MyReservationState extends State<MyReservation> {
                           children: [
                             ElevatedButton(
                                 onPressed: () {
-                                  Get.to(()=>MapScreen());
+                                  Get.to(()=>MapScreen(bookModel: row));
                                 },
                                 child: Text("Map",style: TextStyle(
                                   color: Colors.black
