@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../Controllers/UserController.dart';
+import 'ComplainScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Items(
         title: "Complain",
         subtitle: "",
-        event: () {},
+        event: () => Get.to(() => ComplainScreen()),
         img: "assets/icon/train_192px.png"),
     Items(
         title: "Lost And Found Item",

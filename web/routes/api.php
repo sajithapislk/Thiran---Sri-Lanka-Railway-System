@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\BookController;
+use App\Http\Controllers\API\ComplainStoreController;
 use App\Http\Controllers\API\PredictionController;
 use App\Http\Controllers\API\ScheduleTimeController;
 use App\Http\Controllers\API\StationController;
@@ -40,6 +41,7 @@ Route::prefix('user')->group(function () {
             Route::get('book', 'index')->name('book.index');
         });
 
+        Route::post('complain', ComplainStoreController::class);
         Route::get('logout', [UserController::class, 'logout']);
     });
 });
