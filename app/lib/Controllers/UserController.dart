@@ -13,6 +13,7 @@ class UserController extends GetxController {
     var res = await UserProvider.login(data);
     if (res.token == null) {
       print("empty");
+
       return;
     }
     sessionSave(res);

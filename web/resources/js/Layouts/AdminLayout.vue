@@ -7,13 +7,14 @@ const date = new Date().getFullYear();
 </script>
 <template>
     <div>
-        <sidebar-component></sidebar-component>
+        <SidebarComponent/>
         <div class="relative md:ml-64 bg-blueGray-100">
             <navbar-component></navbar-component>
             <slot name="header" />
 
             <div class="px-4 md:px-10 mx-auto w-full -m-24">
-                <slot />
+                <slot />  <!-- print -->
+
 
                 <footer class="block py-4">
                     <div class="container mx-auto px-4">

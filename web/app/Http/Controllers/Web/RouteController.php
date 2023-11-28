@@ -15,7 +15,9 @@ class RouteController extends Controller
      */
     public function index()
     {
-        Inertia::render('Admin/Route/Insert');
+        $list = Route::all();
+        // return $list;
+        return Inertia::render('Admin/Route/Index',compact('list'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\ComplainStoreController;
+use App\Http\Controllers\API\LostFoundItemController;
 use App\Http\Controllers\API\PredictionController;
 use App\Http\Controllers\API\ScheduleTimeController;
 use App\Http\Controllers\API\StationController;
@@ -42,6 +43,13 @@ Route::prefix('user')->group(function () {
         });
 
         Route::post('complain', ComplainStoreController::class);
+
+        Route::controller(LostFoundItemController::class)->group(function () {
+            Route::get('station', 'index')->name('station');
+            Route::get('station', 'updateStation')->name('update-station');
+            Route::get('station', 'updateRelease')->name('update-release');
+        });
+
         Route::get('logout', [UserController::class, 'logout']);
     });
 });

@@ -36,6 +36,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::resource('complain',ComplainController::class);
     Route::resource('train',TrainController::class);
     Route::resource('schedule-time',ScheduleTimeController::class);
+    // train location
 
     Route::get('logout', [AdminAuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
