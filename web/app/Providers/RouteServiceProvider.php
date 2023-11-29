@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\StationAgent;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/dashboard';
     public const ADMIN_HOME = '/admin/dashboard';
+    public const STATION_AGENT = '/station-agent/dashboard';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -41,6 +43,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('admin')
                 ->name('admin.')
                 ->group(base_path('routes/admin_web.php'));
+
+            Route::middleware('web')
+                ->prefix('station-agent')
+                ->name('station-agent.')
+                ->group(base_path('routes/station_agent_web.php'));
         });
     }
 }

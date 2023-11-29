@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('station_agents', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('st_id');//Station ID
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->foreign('st_id')->references('id')->on('stations'); //user id
         });
     }
 
