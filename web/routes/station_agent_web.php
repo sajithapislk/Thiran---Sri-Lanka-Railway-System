@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\StationAgentAuthenticatedSessionController;
+use App\Http\Controllers\Web\StationUpdateController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -22,6 +23,8 @@ Route::middleware('auth:station-agent')->group(function () {
         return Inertia::render('StationAgent/Dashboard');
     })->name('dashboard');
 
+    Route::get('station-update', [StationUpdateController::class, 'index'])
+    ->name('station-update');
 
     Route::get('logout', [StationAgentAuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
