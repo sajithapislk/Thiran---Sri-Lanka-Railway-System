@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\TrainLocation;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class TrainLocationController extends Controller
 {
@@ -13,6 +14,8 @@ class TrainLocationController extends Controller
      */
     public function index()
     {
+        $list = TrainLocation::all();
+        return Inertia::render('Admin/TrainLocation', compact('list'));
         //
     }
 
@@ -21,6 +24,7 @@ class TrainLocationController extends Controller
      */
     public function create()
     {
+
         //
     }
 
@@ -29,6 +33,16 @@ class TrainLocationController extends Controller
      */
     public function store(Request $request)
     {
+
+        TrainLocation::create([
+            'id' => $request->id,
+            'st_id'=> $request->st_id,
+            'latitude'=> $request->latitude,
+            'longitude'=> $request->longitude,
+            'status'=> $request->status,
+        ]);
+
+        return back()->with('status', 'store successful');
         //
     }
 
