@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 
 import '../Models/ScheduleTimeTableModel.dart';
@@ -17,6 +19,7 @@ class ScheduleTimeTableController extends GetxController {
     required String date,
   }) async {
     var data = {"from": from, "to": to, "date": date};
+    log(data.toString());
     try {
       var res = await ScheduleTimeProvider.getScheduleTimeList(data);
       if (res != null) {

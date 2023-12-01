@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ScheduleTime;
 use App\Models\Station;
 use App\Models\TicketPrice;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ScheduleTimeController extends Controller
@@ -16,10 +17,10 @@ class ScheduleTimeController extends Controller
         // if ($request->from == $request->to) {
         //     return ['error' => 'same station'];
         // }
+        // return $request->date;
         $scheduleTimes = ScheduleTime::with('route','train')
-            ->whereDate('start_at', $request->date)
+            ->whereDate('start_at',Carbon::parse($request->date))
             ->get();
-        // return($scheduleTimes);
         $_scheduleTimes = array();
         $_distance = 0.0;
         foreach ($scheduleTimes as $row) {
@@ -31,8 +32,6 @@ class ScheduleTimeController extends Controller
                         if ($request->to == $station) {
                             $no++;
                             array_push($_scheduleTimes, $row);
-
-                            $ticket = TicketPrice::where('beyond','<=',$_distance)->where('above','>=',$_distance)->first();
 
                         }else{
                             $stationInfo = Station::find($station);
@@ -47,6 +46,7 @@ class ScheduleTimeController extends Controller
                 }
             }
         }
+        $ticket = TicketPrice::where('beyond','<=',$_distance)->where('above','>=',$_distance)->first();
         return [
             'distance' => $_distance,
             'price' => $ticket,
