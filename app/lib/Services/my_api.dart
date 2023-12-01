@@ -20,7 +20,7 @@ class CallApi {
         HttpHeaders.authorizationHeader: await _getToken(),
       },
     );
-
+    log(response.body);
     return response;
   }
 
