@@ -1,9 +1,24 @@
 <script setup>
 import StationAgentLayout from "@/Layouts/StationAgentLayout.vue";
+import { Head, Link, useForm } from "@inertiajs/vue3";
 
 defineProps({
     list: Array,
 });
+
+const saveform = useForm({
+    id: "",
+    status: ""
+});
+
+const confirm = (id) => {
+    saveform.id=id;
+    saveform.status = 'Station Confirmation';
+    saveform.post(route("station-agent.station-update.confirm"), {
+        preserveScroll: true,
+        onFinish: () => saveform.reset(),
+    });
+};
 
 </script>
 
@@ -38,6 +53,7 @@ defineProps({
                             <button
                                 class="bg-blue-500 text-white active:bg-blue-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
                                 style="transition: all 0.15s ease"
+
                             >
                                 Create
                             </button>
@@ -76,6 +92,12 @@ defineProps({
                                 >
                                     Created At
                                 </th>
+                                <th
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                >
+                                    Cfm
+                                </th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -105,6 +127,13 @@ defineProps({
                                 >
                                     {{ row.created_at }}
                                 </td>
+                                <button
+                                class="bg-blue-500 text-white active:bg-blue-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
+                                style="transition: all 0.15s ease"
+                                @click="confirm(row.id)"
+                            >
+                                confirm
+                            </button>
                             </tr>
                         </tbody>
                     </table>

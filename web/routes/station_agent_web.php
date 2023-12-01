@@ -26,6 +26,9 @@ Route::middleware('auth:station-agent')->group(function () {
     Route::get('station-update', [StationUpdateController::class, 'index'])
     ->name('station-update');
 
+    Route::post('station-update/confirm',[StationUpdateController::class,'confirm'])
+    ->name('station-update.confirm');
+
     Route::get('logout', [StationAgentAuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
 
