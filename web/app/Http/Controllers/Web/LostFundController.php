@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\LostFoundItem;
+use App\Models\Route;
+use App\Models\Train;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,7 +17,9 @@ class LostFundController extends Controller
     public function index()
     {
         $list = LostFoundItem::all();
-        return Inertia::render('Admin/LostFoundItem', compact('list'));
+        $trainList = Train::all();
+        $routeList = Route::all();
+        return Inertia::render('Admin/LostFoundItem', compact('list','trainList','routeList'));
         //
     }
 

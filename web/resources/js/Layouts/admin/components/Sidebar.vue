@@ -125,6 +125,20 @@
                         <i class="fas fa-tv opacity-75 mr-2 text-sm"></i>
                         Lost & Found Item
                     </Link>
+                    <Link
+                        :href="route('admin.train.index')"
+                        class="text-blueGray-500 hover:text-blue-600 text-xs uppercase py-3 font-bold block"
+                    >
+                        <i class="fas fa-tv opacity-75 mr-2 text-sm"></i>
+                        Train
+                    </Link>
+                    <Link
+                        :href="route('admin.schedule-time.index')"
+                        class="text-blueGray-500 hover:text-blue-600 text-xs uppercase py-3 font-bold block"
+                    >
+                        <i class="fas fa-tv opacity-75 mr-2 text-sm"></i>
+                        Schedule Time
+                    </Link>
 
                     <Link
                     :href="route('admin.complain.index')"
@@ -133,6 +147,7 @@
                         <i class="fas fa-tv opacity-75 mr-2 text-sm"></i>
                        Complain
                     </Link>
+
                 </li>
             </ul>
         </div>

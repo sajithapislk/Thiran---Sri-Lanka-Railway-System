@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Route;
 use App\Models\ScheduleTime;
+use App\Models\Train;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,7 +17,9 @@ class ScheduleTimeController extends Controller
     public function index()
     {
         $list = ScheduleTime::all();
-        return Inertia::render('Admin/ScheduleTime', compact('list'));
+        $trainList = Train::all();
+        $routeList = Route::all();
+        return Inertia::render('Admin/ScheduleTime',compact('list','trainList','routeList'));
     }
 
     /**
@@ -31,6 +35,21 @@ class ScheduleTimeController extends Controller
      */
     public function store(Request $request)
     {
+        ScheduleTime::create([
+            "train_id" => $request->train_id,
+            "route_id"  => $request->route_id,
+            "start_at" => $request->start_at,
+            "end_at" => $request->end_at,
+            "status" => $request->status,
+            "acs_p_seats" => $request->acs_p_seats,
+            "os_p_seats" => $request->os_p_seats,
+            "scrs_p_seats" => $request->scrs_p_seats,
+            "tcrs_p_seats" => $request->tcrs_p_seats,
+
+        ]);
+
+        return back()->with('status', 'store successful');
+
         //
     }
 

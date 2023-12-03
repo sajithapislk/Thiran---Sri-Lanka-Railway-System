@@ -8,6 +8,8 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 defineProps({
     list: Array,
+    trainList: Array,
+    routeList: Array
 });
 
 const insertModal = ref(false);
@@ -20,7 +22,7 @@ const saveform = useForm({
 });
 
 const save = () => {
-    saveform.post(route("admin.ticket-price.store"), {
+    saveform.post(route("admin.schedule-time.store"), {
         preserveScroll: true,
         onSuccess: () => ModalFun(),
         onFinish: () => saveform.reset(),
@@ -54,7 +56,7 @@ const ModalFun = () => {
                             <h3
                                 class="font-semibold text-base text-blueGray-700"
                             >
-                                Ticket Price
+                            Schedule Time
                             </h3>
                         </div>
                         <div
@@ -85,27 +87,47 @@ const ModalFun = () => {
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    range
+                                    train_id
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    asc
+                                    route_id
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    os
+                                    start_at
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    scrs
+                                    end_at
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    tcrs
+                                    status
+                                </th>
+                                <th
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                >
+                                    acs_p_seats
+                                </th>
+                                <th
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                >
+                                    os_p_seats
+                                </th>
+                                <th
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                >
+                                    scrs_p_seats
+                                </th>
+                                <th
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                >
+                                    tcrs_p_seats
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -179,68 +201,88 @@ const ModalFun = () => {
         </div>
         <div class="w-full xl:w-4/12 px-4"></div>
     </AdminLayout>
-    <Modal :show="insertModal" @close="ModalFun">
+<Modal :show="insertModal" @close="ModalFun">
         <div class="p-6">
             <form @submit="save">
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="w-full px-3">
+                    <div class="xl:w-full">
                         <label
-                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            for="beyond"
-                        >
-                            train
-                        </label>
-
-                        <input
+                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="grid-password"
+                    >
+                        Train Id
+                    </label>
+                        <select
+                            name="train_id"
+                            v-model="saveform.s_id"
                             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="beyond"
-                            type="text"
-                            v-model="saveform.train_id"
-                        />
+                            aria-label="Default select example"
+                            required
+                        >
+                            <option selected disabled>
+                                Open this select field
+                            </option>
+                            <option
+                                v-for="train in trainList"
+                                :value="train.id"
+                            >
+                                {{ train.name }}
+                            </option>
+                        </select>
                     </div>
-                    <div class="w-full px-3">
+                    <div class="xl:w-full">
                         <label
-                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            for="above"
-                        >
-                            route
-                        </label>
-
-                        <input
+                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="grid-password"
+                    >
+                        Route Id
+                    </label>
+                        <select
+                            name="route_id"
+                            v-model="saveform.s_id"
                             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="above"
-                            type="text"
-                            v-model="saveform.route_id"
-                        />
+                            aria-label="Default select example"
+                            required
+                        >
+                            <option selected disabled>
+                                Open this select field
+                            </option>
+                            <option
+                                v-for="route in routeList"
+                                :value="route.id"
+                            >
+                                {{ route.name }}
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="w-full px-3">
                     <label
                         class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="acs_price"
+                        for="name"
                     >
                         start_at
                     </label>
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="acs_price"
-                        type="text"
+                        id="name"
+                        type="datetime-local"
                         v-model="saveform.start_at"
                     />
                 </div>
                 <div class="w-full px-3">
                     <label
                         class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="os_price"
+                        for="name"
                     >
                         end_at
                     </label>
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="os_price"
-                        type="text"
+                        id="name"
+                        type="datetime-local"
                         v-model="saveform.end_at"
                     />
                 </div>

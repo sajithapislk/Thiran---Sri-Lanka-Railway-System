@@ -59,17 +59,6 @@ const ModalFun = () => {
                                 Train Location
                             </h3>
                         </div>
-                        <div
-                            class="relative w-full px-4 max-w-full flex-grow flex-1 text-right"
-                        >
-                            <button
-                                class="bg-blue-500 text-white active:bg-blue-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
-                                style="transition: all 0.15s ease"
-                                @click="ModalFun"
-                            >
-                                Create
-                            </button>
-                        </div>
                     </div>
                 </div>
                 <div class="block w-full overflow-x-auto">
@@ -141,4 +130,5 @@ const ModalFun = () => {
         </div>
         <div class="w-full xl:w-4/12 px-4"></div>
     </AdminLayout>
+
 </template>
