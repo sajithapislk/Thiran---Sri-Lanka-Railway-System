@@ -1,15 +1,38 @@
 <script setup>
-import { Link } from "@inertiajs/vue3";
-import AdminLayout from "@/Layouts/AdminLayout.vue";
+import StationAgentLayout from "@/Layouts/StationAgentLayout.vue";
+import { Head, Link, useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
+
 
 defineProps({
     list: Array,
 });
 
+const insertModal = ref(false);
+
+const saveform = useForm({
+    name: "",
+    no: "",
+    acs_max_seats: "",
+    os_max_seats: "",
+    scrs_max_seats: "",
+    tcrs_max_seats: "",
+});
+const save = () => {
+    saveform.post(route("station-agent.Books.store"), {
+        preserveScroll: true,
+        onSuccess: () => ModalFun(),
+        onFinish: () => saveform.reset(),
+    });
+};
+const ModalFun = () => {
+    insertModal.value = !insertModal.value;
+    saveform.reset();
+};
 </script>
 
 <template>
-    <AdminLayout>
+    <StationAgentLayout>
         <template #header>
             <div class="relative bg-blue-800 md:pt-32 pb-32 pt-12">
                 <div class="px-4 md:px-10 mx-auto w-full">
@@ -30,19 +53,8 @@ defineProps({
                             <h3
                                 class="font-semibold text-base text-blueGray-700"
                             >
-                                Route List
+                                Train
                             </h3>
-                        </div>
-                        <div
-                            class="relative w-full px-4 max-w-full flex-grow flex-1 text-right"
-                        >
-                            <Link
-                                class="bg-blue-500 text-white active:bg-blue-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
-                                style="transition: all 0.15s ease"
-                                :href="route('admin.route.create')"
-                            >
-                                Create
-                            </Link>
                         </div>
                     </div>
                 </div>
@@ -66,12 +78,27 @@ defineProps({
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    direction
+                                    no
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    station_list
+                                    acs_max_seats
+                                </th>
+                                <th
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                >
+                                    os_max_seats
+                                </th>
+                                <th
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                >
+                                    scrs_max_seats
+                                </th>
+                                <th
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                >
+                                    tcrs_max_seats
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -95,12 +122,27 @@ defineProps({
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
-                                    {{ row.direction }}
+                                    {{ row.no }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
-                                    {{ row.station_list }}
+                                    {{ row.acs_max_seats }}
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                >
+                                    {{ row.os_max_seats }}
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                >
+                                    {{ row.scrs_max_seats }}
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                >
+                                    {{ row.tcrs_max_seats }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -114,5 +156,5 @@ defineProps({
             </div>
         </div>
         <div class="w-full xl:w-4/12 px-4"></div>
-    </AdminLayout>
+    </StationAgentLayout>
 </template>

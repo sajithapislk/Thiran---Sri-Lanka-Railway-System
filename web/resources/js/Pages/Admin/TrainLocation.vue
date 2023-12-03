@@ -9,29 +9,6 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 defineProps({
     list: Array,
 });
-
-const insertModal = ref(false);
-
-const saveform = useForm({
-    beyond: "",
-    above: "",
-    acs_price: "",
-    os_price: "",
-    scrs_price: "",
-    tcrs_price: ""
-});
-
-const save = () => {
-    saveform.post(route("admin.train-location.store"), {
-        preserveScroll: true,
-        onSuccess: () => ModalFun(),
-        onFinish: () => saveform.reset(),
-    });
-};
-const ModalFun = () => {
-    insertModal.value = !insertModal.value;
-    saveform.reset();
-};
 </script>
 
 <template>

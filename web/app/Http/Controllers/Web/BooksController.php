@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Station;
+use App\Models\Book;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class StationController extends Controller
+class BooksController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $list = Station::all();
-        return Inertia::render('Admin/Station',compact('list'));
+        $list = Book::all();
+        return Inertia::render('StationAgent/Books',compact('list'));
+        //
     }
 
     /**
@@ -31,23 +32,13 @@ class StationController extends Controller
      */
     public function store(Request $request)
     {
-        Station::create([
-            'name' => $request->name,
-            'address' => $request->address,
-            'tp' => $request->tp,
-            'left_direction' => $request->left_direction,
-            'right_direction' => $request->right_direction,
-            'longitude' => $request->longitude,
-            'latitude' => $request->latitude,
-        ]);
-
-        return back()->with('status', 'store successful');
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Station $station)
+    public function show(string $id)
     {
         //
     }
@@ -55,7 +46,7 @@ class StationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Station $station)
+    public function edit(string $id)
     {
         //
     }
@@ -63,7 +54,7 @@ class StationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Station $station)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -71,7 +62,7 @@ class StationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Station $station)
+    public function destroy(string $id)
     {
         //
     }

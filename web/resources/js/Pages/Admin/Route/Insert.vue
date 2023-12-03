@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed } from "vue";
-import { Inertia } from "@inertiajs/inertia";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
@@ -28,7 +27,7 @@ const handleToggleChange = () => {
     const sum = tempList.value.reduce(
         (accumulator, item) =>
             accumulator +
-            (toggleValue.value === false ? item.left_slide : item.right_slide),
+            (toggleValue.value === false ? item.left_direction : item.right_direction),
         0
     );
     distance.value = sum;
@@ -54,12 +53,11 @@ let filteredStation = computed(() =>
 );
 
 const submit = () => {
-    Inertia.post(route("admin.route.store"), {
+    useForm({
         stations: tempList.value,
         name: name.value,
         direction: toggleValue.value === false ? 'LEFT' : 'RIGHT',
-
-    })
+    }).post(route("admin.route.store"))
         .then(() => {
             tempList.value = [];
             selected.value = props.list[0];
@@ -291,12 +289,12 @@ const submit = () => {
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    left_slide
+                                    left_direction
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    right_slide
+                                    right_direction
                                 </th>
                             </tr>
                         </thead>
@@ -320,12 +318,12 @@ const submit = () => {
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
-                                    {{ row.left_slide }}
+                                    {{ row.left_direction }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
-                                    {{ row.right_slide }}
+                                    {{ row.right_direction }}
                                 </td>
                             </tr>
                         </tbody>

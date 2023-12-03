@@ -44,7 +44,7 @@ class RouteController extends Controller
             'station_list' => $_stationList
         ]);
 
-        return back()->with('status', 'Route successful');
+        return redirect()->route('admin.route.index')->with('status', 'Route successful');
     }
 
     /**
