@@ -23,6 +23,7 @@ class ScheduleTimeController extends Controller
             ->get();
         $_scheduleTimes = array();
         $_distance = 0.0;
+        $_time = 0;
         foreach ($scheduleTimes as $row) {
             $stationList = $row->route->station_list;
             if (in_array($request->from, $stationList) && in_array($request->to, $stationList)) {
@@ -35,13 +36,15 @@ class ScheduleTimeController extends Controller
 
                         }else{
                             $stationInfo = Station::find($station);
-                            $_distance = $_distance + ( $row->route->direction=='LEFT' ? $stationInfo->left_slide : $stationInfo->right_slide );
+                            $_distance += ( $row->route->direction=='LEFT' ? $stationInfo->left_distance : $stationInfo->right_distance );
+                            $_time += ( $row->route->direction=='LEFT' ? $stationInfo->left_time : $stationInfo->right_time );
                         }
                     }
                     if ($request->from == $station && $no == 0) {
                         $no++;
                         $stationInfo = Station::find($station);
-                        $_distance = $_distance + ( $row->route->direction=='LEFT' ? $stationInfo->left_slide : $stationInfo->right_slide );
+                        $_distance += ( $row->route->direction=='LEFT' ? $stationInfo->left_distance : $stationInfo->right_distance );
+                        $_time += ( $row->route->direction=='LEFT' ? $stationInfo->left_time : $stationInfo->right_time );
                     }
                 }
             }

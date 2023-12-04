@@ -16,8 +16,8 @@ const saveform = useForm({
     name: "",
     address: "",
     tp: "",
-    left_slide: "",
-    right_slide: "",
+    left_distance: "",
+    right_distance: "",
     longitude: "",
     latitude: "",
 });
