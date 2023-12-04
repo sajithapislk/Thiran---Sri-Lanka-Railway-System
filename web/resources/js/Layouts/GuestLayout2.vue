@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link } from "@inertiajs/vue3";
+import { root } from "postcss";
 
 defineProps({
     props: Array,
@@ -25,9 +26,9 @@ defineProps({
                     class="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200"
                 >
                     <a
-                        href="#_"
+                        href= "#"
                         class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900"
-                        >News</a
+                        >Lost Found</a
                     >
                     <!-- <a
                         href="#_"

@@ -18,6 +18,8 @@ const saveform = useForm({
     tp: "",
     left_direction: "",
     right_direction: "",
+    left_time : "",
+    right_time : "",
     longitude: "",
     latitude: "",
 });
@@ -152,6 +154,16 @@ const mapOptions = {
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
+                                    right_time
+                                </th>
+                                <th
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                >
+                                    left_time
+                                </th>
+                                <th
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                >
                                     longitude
                                 </th>
                                 <th
@@ -197,6 +209,16 @@ const mapOptions = {
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
                                     {{ row.right_direction }}
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                >
+                                    {{ row.right_time }}
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                                >
+                                    {{ row.left_time }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -250,7 +272,7 @@ const mapOptions = {
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
+                        id="address"
                         type="text"
                         v-model="saveform.address"
                     />
@@ -265,7 +287,7 @@ const mapOptions = {
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
+                        id="tp"
                         type="text"
                         v-model="saveform.tp"
                     />
@@ -280,7 +302,7 @@ const mapOptions = {
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
+                        id="left_direction"
                         type="text"
                         v-model="saveform.left_direction"
                     />
@@ -295,9 +317,41 @@ const mapOptions = {
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
+                        id="right_direction"
                         type="text"
                         v-model="saveform.right_direction"
+                    />
+                </div>
+
+                <div class="w-full px-3">
+                    <label
+                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="name"
+                    >
+                        left_time(min)
+                    </label>
+
+                    <input
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="left_time"
+                        type="number"
+                        v-model="saveform.left_time"
+                    />
+                </div>
+
+                <div class="w-full px-3">
+                    <label
+                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="name"
+                    >
+                        right_time(min)
+                    </label>
+
+                    <input
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="right_time"
+                        type="number"
+                        v-model="saveform.right_time"
                     />
                 </div>
                 <GMapMap

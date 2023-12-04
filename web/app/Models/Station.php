@@ -15,6 +15,8 @@ class Station extends Model
         "tp",
         "left_direction",
         "right_direction",
+        "left_time",
+        "right_time",
         "longitude",
         "latitude"
     ];

@@ -19,11 +19,7 @@ const saveform = useForm({
     route_id :"",
     start_at :"",
     end_at :"",
-    status :"",
-    acs_p_seats: "",
-    os_p_seats: "",
-    scrs_p_seats: "",
-    tcrs_p_seats : "",
+
 });
 
 const save = () => {
@@ -271,7 +267,7 @@ const ModalFun = () => {
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
+                        id="start_at"
                         type="datetime-local"
                         v-model="saveform.start_at"
                     />
@@ -286,7 +282,7 @@ const ModalFun = () => {
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
+                        id="end_at"
                         type="datetime-local"
                         v-model="saveform.end_at"
                     />

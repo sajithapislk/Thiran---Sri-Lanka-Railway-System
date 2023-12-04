@@ -199,7 +199,7 @@ const ModalFun = () => {
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
+                        id="no"
                         type="text"
                         v-model="saveform.no"
                     />
@@ -214,7 +214,7 @@ const ModalFun = () => {
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
+                        id="acs_max_seats"
                         type="text"
                         v-model="saveform.acs_max_seats"
                     />
@@ -229,7 +229,7 @@ const ModalFun = () => {
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
+                        id="os_max_seats"
                         type="text"
                         v-model="saveform.os_max_seats"
                     />
@@ -244,7 +244,7 @@ const ModalFun = () => {
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
+                        id="scrs_max_seats"
                         type="text"
                         v-model="saveform.scrs_max_seats"
                     />
@@ -259,7 +259,7 @@ const ModalFun = () => {
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="name"
+                        id="tcrs_max_seats"
                         type="text"
                         v-model="saveform.tcrs_max_seats"
                     />

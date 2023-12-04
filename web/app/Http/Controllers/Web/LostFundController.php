@@ -17,9 +17,15 @@ class LostFundController extends Controller
     public function index()
     {
         $list = LostFoundItem::all();
-        $trainList = Train::all();
-        $routeList = Route::all();
-        return Inertia::render('Admin/LostFoundItem', compact('list','trainList','routeList'));
+        return Inertia::render('Admin/LostFoundItem', compact('list',));
+        //
+    }
+
+    public function public_index()
+    {
+        $list = LostFoundItem::all();
+        return Inertia::render('LostFoundItem', compact('list',));
+
         //
     }
 
@@ -60,6 +66,7 @@ class LostFundController extends Controller
      */
     public function show(string $id)
     {
+
         //
     }
 

@@ -8,8 +8,6 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 defineProps({
     list: Array,
-    trainList: Array,
-    routeList: Array
 });
 
 const insertModal = ref(false);
