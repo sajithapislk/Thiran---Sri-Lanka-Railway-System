@@ -9,13 +9,13 @@ TinyGPSPlus gps;
 
 const char* train_id = "1";
 
-const char* ssid = "Apis_Technologies";
-const char* password = "APIS1998";
+const char* ssid = "Dialog 4G 035";
+const char* password = "Ashan93252";
 
 unsigned long lastTime = 0;
 unsigned long timerDelay = 60000;
 
-String serverName = "http://192.168.1.141:8000/api/";
+String serverName = "http://192.168.8.181:8000/api/";
 
 SoftwareSerial mygps(D1, D2);
 

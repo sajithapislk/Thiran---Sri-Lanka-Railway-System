@@ -1,3 +1,5 @@
 
 .documents
 .vscode/settings.json
+arduino/arduino.ino
+*.ino
