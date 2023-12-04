@@ -13,6 +13,11 @@ class StationUpdate extends Model
         "id",
         "status"
     ];
+
+    public function schedule_time()
+    {
+        return $this->hasOne(ScheduleTime::class,'id','st_id');
+    }
 }
 
 

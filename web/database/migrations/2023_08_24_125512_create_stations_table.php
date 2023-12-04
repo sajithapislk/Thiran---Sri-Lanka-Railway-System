@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('tp');
-            $table->double('left_slide',7,2);
-            $table->double('right_slide',7,2);
+            $table->double('left_distance',7,2);
+            $table->double('right_distance',7,2);
+            $table->integer('left_time');
+            $table->integer('right_time');
             $table->string('longitude',20);
             $table->string('latitude',20);
             $table->timestamps();

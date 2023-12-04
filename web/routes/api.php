@@ -10,7 +10,7 @@ use App\Http\Controllers\API\TrainLocationSaveController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\PayPalController;
 use App\Http\Controllers\API\TrainLocationController;
-use App\Http\Controllers\DistanceController;
+use App\Http\Controllers\Web\StationUpdateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,9 +45,8 @@ Route::prefix('user')->group(function () {
         Route::post('complain', ComplainStoreController::class);
 
         Route::controller(LostFoundItemController::class)->group(function () {
-            Route::get('station', 'index')->name('station');
-            Route::get('station', 'updateStation')->name('update-station');
-            Route::get('station', 'updateRelease')->name('update-release');
+            Route::get('lost-found-item', 'index')->name('lost-found-item.index');
+            Route::post('lost-found-item', 'lostItemCreate')->name('lost-found-item.store');
         });
 
         Route::get('logout', [UserController::class, 'logout']);
@@ -70,3 +69,6 @@ Route::controller(PayPalController::class)->group(function () {
     Route::get('success-transaction', 'successTransaction')->name('successTransaction');
     Route::get('cancel-transaction', 'cancelTransaction')->name('cancelTransaction');
 });
+
+
+Route::get('weather/{lat}/{lon}', [StationUpdateController::class, 'getWeatherData']);

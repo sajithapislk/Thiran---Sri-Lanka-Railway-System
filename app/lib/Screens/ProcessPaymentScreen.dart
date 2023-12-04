@@ -182,7 +182,7 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
         });
         final _price = scheduleTimeController.tcrs_price.value *
             int.parse(qtyController.text);
-        price(_price.toString())
+        price(_price.toString());
       }
     } catch (e) {
       price('0.0');

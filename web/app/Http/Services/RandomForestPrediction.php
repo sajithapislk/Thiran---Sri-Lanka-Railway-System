@@ -20,7 +20,7 @@ class RandomForestPrediction
     }
 
     public function predictArrivalTime(){
-        $this->readFile('train.csv',10);
+        $this->readFile('train.csv',5);
 
         $model = new RandomForest(new ClassificationTree(10), 300, 0.1, true);
 
