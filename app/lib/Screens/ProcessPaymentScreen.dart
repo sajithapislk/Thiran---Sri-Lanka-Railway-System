@@ -42,7 +42,7 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
   void qtyChange() {
     try {
       if (optionValue == 'acs') {
-        final _available = widget.row.train.acsMaxSeats - widget.row.acsPSeats;
+        final _available = widget.row.data.train.acsMaxSeats - widget.row.data.acsPSeats;
         if (_available == 0) {
           Get.defaultDialog(
             title: "Seats ERROR",
@@ -78,7 +78,7 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
         price(_price.toString());
       }
       if (optionValue == 'os') {
-        final _available = widget.row.train.osMaxSeats - widget.row.osPSeats;
+        final _available = widget.row.data.train.osMaxSeats - widget.row.data.osPSeats;
         if (_available == 0) {
           Get.defaultDialog(
             title: "Seats ERROR",
@@ -112,7 +112,7 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
       }
       if (optionValue == 'scrs') {
         final _available =
-            widget.row.train.scrsMaxSeats - widget.row.scrsPSeats;
+            widget.row.data.train.scrsMaxSeats - widget.row.data.scrsPSeats;
         if (_available == 0) {
           Get.defaultDialog(
             title: "Seats ERROR",
@@ -149,7 +149,7 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
       }
       if (optionValue == 'tcrs') {
         final _available =
-            widget.row.train.tcrsMaxSeats - widget.row.tcrsPSeats;
+            widget.row.data.train.tcrsMaxSeats - widget.row.data.tcrsPSeats;
         if (_available == 0) {
           Get.defaultDialog(
             title: "Seats ERROR",
@@ -213,7 +213,7 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
                   children: [
                     SizedBox(
                       width: double.infinity,
-                      child: Text(widget.row.train.name,
+                      child: Text(widget.row.data.train.name,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -239,7 +239,7 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
                           color: Colors.white),
                     ),
                     Text(
-                      "Date: ${DateFormat('yyyy-MM-dd').format(widget.row.startAt)}",
+                      "Date: ${DateFormat('yyyy-MM-dd').format(widget.row.data.startAt)}",
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         fontSize: 14,
@@ -247,7 +247,7 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
                       ),
                     ),
                     Text(
-                      "Arrival Time: ${DateFormat('HH:mm:ss').format(widget.row.startAt)}",
+                      "Arrival Time: ${DateFormat('HH:mm:ss').format(widget.row.data.startAt)}",
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         fontSize: 14,
@@ -255,7 +255,7 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
                       ),
                     ),
                     Text(
-                      "End At: ${DateFormat('HH:mm:ss').format(widget.row.endAt)}",
+                      "End At: ${DateFormat('HH:mm:ss').format(widget.row.data.endAt)}",
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         fontSize: 14,

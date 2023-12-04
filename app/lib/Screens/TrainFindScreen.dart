@@ -174,9 +174,9 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                       itemCount: scheduleTimeController.list.length,
                       itemBuilder: (context, index) {
                         var row = scheduleTimeController.list[index];
-                        int _fromId = row.route.stationList[0];
-                        int _toId = row
-                            .route.stationList[row.route.stationList.length - 1];
+                        int _fromId = row.data.route.stationList[0];
+                        int _toId = row.data
+                            .route.stationList[row.data.route.stationList.length - 1];
 
                         StationModel? fromStation =
                             stationController.findById(_fromId);
@@ -189,7 +189,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                             Container(
                               margin: const EdgeInsets.fromLTRB(50, 10, 10, 10),
                               padding: const EdgeInsets.fromLTRB(80, 10, 10, 10),
-                              height: 250,
+                              height: 280,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 color: Color(0xFF2886F1),
@@ -202,7 +202,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                                 children: [
                                   SizedBox(
                                     width: double.infinity,
-                                    child: Text("ABC Train",
+                                    child: Text(row.data.train.name,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -228,7 +228,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                                         color: Colors.white),
                                   ),
                                   Text(
-                                    "Date: ${DateFormat('yyyy-MM-dd').format(row.startAt)}",
+                                    "Date: ${DateFormat('yyyy-MM-dd').format(row.data.startAt)}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       fontSize: 14,
@@ -236,7 +236,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                                     ),
                                   ),
                                   Text(
-                                    "Arrival Time: ${DateFormat('HH:mm:ss').format(row.startAt)}",
+                                    "Arrival Time: ${DateFormat('HH:mm:ss').format(row.data.startAt)}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       fontSize: 14,
@@ -244,7 +244,15 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                                     ),
                                   ),
                                   Text(
-                                    "End At: ${DateFormat('HH:mm:ss').format(row.endAt)}",
+                                    "End At: ${DateFormat('HH:mm:ss').format(row.data.endAt)}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    "selected station: ${DateFormat('HH:mm:ss').format(row.datetime)}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       fontSize: 14,

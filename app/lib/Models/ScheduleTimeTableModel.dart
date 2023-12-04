@@ -81,6 +81,26 @@ class Price {
 }
 
 class Schedule {
+  Data data;
+  DateTime datetime;
+
+  Schedule({
+    required this.data,
+    required this.datetime,
+  });
+
+  factory Schedule.fromJson(Map<String, dynamic> json) => Schedule(
+    data: Data.fromJson(json["data"]),
+    datetime: DateTime.parse(json["datetime"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "data": data.toJson(),
+    "datetime": datetime.toIso8601String(),
+  };
+}
+
+class Data {
   int id;
   int trainId;
   int routeId;
@@ -91,12 +111,12 @@ class Schedule {
   int osPSeats;
   int scrsPSeats;
   int tcrsPSeats;
-  dynamic createdAt;
-  dynamic updatedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
   Route route;
   Train train;
 
-  Schedule({
+  Data({
     required this.id,
     required this.trainId,
     required this.routeId,
@@ -113,7 +133,7 @@ class Schedule {
     required this.train,
   });
 
-  factory Schedule.fromJson(Map<String, dynamic> json) => Schedule(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["id"],
     trainId: json["train_id"],
     routeId: json["route_id"],
@@ -124,8 +144,8 @@ class Schedule {
     osPSeats: json["os_p_seats"],
     scrsPSeats: json["scrs_p_seats"],
     tcrsPSeats: json["tcrs_p_seats"],
-    createdAt: json["created_at"],
-    updatedAt: json["updated_at"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
     route: Route.fromJson(json["route"]),
     train: Train.fromJson(json["train"]),
   );
@@ -141,8 +161,8 @@ class Schedule {
     "os_p_seats": osPSeats,
     "scrs_p_seats": scrsPSeats,
     "tcrs_p_seats": tcrsPSeats,
-    "created_at": createdAt,
-    "updated_at": updatedAt,
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
     "route": route.toJson(),
     "train": train.toJson(),
   };

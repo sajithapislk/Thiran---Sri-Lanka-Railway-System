@@ -1,8 +1,17 @@
-import 'package:app/Screens/LostFoundItemScreen.dart';
+import 'package:app/AuthScreen.dart';
+import 'package:app/Screens/HomeScreen.dart';
+import 'package:app/Screens/LoginScreen.dart';
+import 'package:app/Screens/LostFoundItemCreateScreen.dart';
+import 'package:app/Screens/MapScreen.dart';
+import 'package:app/Screens/PaymentScreen.dart';
+import 'package:app/Screens/RegisterScreen.dart';
+import 'package:app/Screens/SuccessScreen.dart';
+import 'package:app/Screens/TrainFindScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'Screens/LostFoundItemScreen.dart';
+import 'Screens/ProcessPaymentScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LostFoundItemScreen(),
+      home: AuthCheckPage(),
     );
   }
 }
