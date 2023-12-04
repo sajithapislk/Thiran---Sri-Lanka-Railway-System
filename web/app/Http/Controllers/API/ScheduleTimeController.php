@@ -23,8 +23,9 @@ class ScheduleTimeController extends Controller
             ->get();
         $_scheduleTimes = array();
         $_distance = 0.0;
-        $_time = 0;
         foreach ($scheduleTimes as $row) {
+            $isInserted = false;
+            $_time = 0;
             $stationList = $row->route->station_list;
             if (in_array($request->from, $stationList) && in_array($request->to, $stationList)) {
                 $no = 0;
@@ -32,8 +33,7 @@ class ScheduleTimeController extends Controller
                     if($no == 1){
                         if ($request->to == $station) {
                             $no++;
-                            array_push($_scheduleTimes, $row);
-
+                            $isInserted=true;
                         }else{
                             $stationInfo = Station::find($station);
                             $_distance += ( $row->route->direction=='LEFT' ? $stationInfo->left_distance : $stationInfo->right_distance );
@@ -48,6 +48,11 @@ class ScheduleTimeController extends Controller
                     }
                 }
             }
+            if($isInserted)
+                array_push($_scheduleTimes, [
+                    'data' => $row,
+                    'datetime' => Carbon::parse($row->start_at)->addMinutes($_time)
+                ]);
         }
         $ticket = TicketPrice::where('beyond','<=',$_distance)->where('above','>=',$_distance)->first();
         return [

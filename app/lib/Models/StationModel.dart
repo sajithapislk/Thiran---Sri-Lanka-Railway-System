@@ -13,8 +13,10 @@ class StationModel {
   String name;
   String address;
   String tp;
-  int leftSlide;
-  int rightSlide;
+  int leftDistance;
+  int rightDistance;
+  int leftTime;
+  int rightTime;
   String longitude;
   String latitude;
   DateTime createdAt;
@@ -25,8 +27,10 @@ class StationModel {
     required this.name,
     required this.address,
     required this.tp,
-    required this.leftSlide,
-    required this.rightSlide,
+    required this.leftDistance,
+    required this.rightDistance,
+    required this.leftTime,
+    required this.rightTime,
     required this.longitude,
     required this.latitude,
     required this.createdAt,
@@ -38,8 +42,10 @@ class StationModel {
     name: json["name"],
     address: json["address"],
     tp: json["tp"],
-    leftSlide: json["left_slide"],
-    rightSlide: json["right_slide"],
+    leftDistance: json["left_distance"],
+    rightDistance: json["right_distance"],
+    leftTime: json["left_time"],
+    rightTime: json["right_time"],
     longitude: json["longitude"],
     latitude: json["latitude"],
     createdAt: DateTime.parse(json["created_at"]),
@@ -51,8 +57,10 @@ class StationModel {
     "name": name,
     "address": address,
     "tp": tp,
-    "left_slide": leftSlide,
-    "right_slide": rightSlide,
+    "left_distance": leftDistance,
+    "right_distance": rightDistance,
+    "left_time": leftTime,
+    "right_time": rightTime,
     "longitude": longitude,
     "latitude": latitude,
     "created_at": createdAt.toIso8601String(),
