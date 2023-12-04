@@ -3,23 +3,19 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\LostFoundItem;
-use App\Models\Route;
-use App\Models\Train;
+use App\Models\Book;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class LostFundController extends Controller
+class BooksController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $list = LostFoundItem::all();
-        $trainList = Train::all();
-        $routeList = Route::all();
-        return Inertia::render('Admin/LostFoundItem', compact('list','trainList','routeList'));
+        $list = Book::all();
+        return Inertia::render('StationAgent/Books',compact('list'));
         //
     }
 
@@ -36,22 +32,6 @@ class LostFundController extends Controller
      */
     public function store(Request $request)
     {
-        LostFoundItem::create([
-            'u_id'=>$request->u_id,
-            'item_name'=> $request->item_name,
-            'description'=> $request->description,
-            'img1'=> $request->img1,
-            'img2'=> $request->img2,
-            'img3'=> $request->img3,
-            'img4'=> $request->img4,
-            'station_id'=> $request->station_id,
-            'officer_id'=> $request->officer_id,
-            'is_release'=> $request->is_release,
-            'release_info'=> $request->release_info,
-            'release_tp'=> $request->release_tp,
-        ]);
-
-        return back()->with('status', 'store successful');
         //
     }
 

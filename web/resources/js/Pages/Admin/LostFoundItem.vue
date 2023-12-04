@@ -8,15 +8,25 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 defineProps({
     list: Array,
+    trainList: Array,
+    routeList: Array
 });
 
 const insertModal = ref(false);
 
 const saveform = useForm({
-    train_id : "",
-    route_id : "",
-    start_at: "",
-    end_at: ""
+        u_id :"",
+        item_name : "",
+        description : "",
+        img1 : "",
+        img2 : "",
+        img3 :"",
+        img4 :"",
+        station_id :"",
+        officer_id :"",
+        is_release :"",
+        release_info :"",
+        release_tp :""
 });
 
 const save = () => {
@@ -225,35 +235,57 @@ const ModalFun = () => {
         <div class="p-6">
             <form @submit="save">
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="w-full px-3">
-                        <label
-                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            for="beyond"
-                        >
-                            train
-                        </label>
 
-                        <input
-                            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="beyond"
-                            type="text"
+                    <div class="xl:w-full">
+                        <label
+                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="grid-password"
+                    >
+                        Train Id
+                    </label>
+                        <select
+                            name="train_id"
                             v-model="saveform.train_id"
-                        />
-                    </div>
-                    <div class="w-full px-3">
-                        <label
-                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            for="above"
-                        >
-                            route
-                        </label>
-
-                        <input
                             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="above"
-                            type="text"
+                            aria-label="Default select example"
+                            required
+                        >
+                            <option selected disabled>
+                                Open this select field
+                            </option>
+                            <option
+                                v-for="train in trainList"
+                                :value="train.id"
+                            >
+                                {{ train.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="xl:w-full">
+                        <label
+                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="grid-password"
+                    >
+                        Route Id
+                    </label>
+                        <select
+                            name="route_id"
                             v-model="saveform.route_id"
-                        />
+                            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            aria-label="Default select example"
+                            required
+                        >
+                            <option selected disabled>
+                                Open this select field
+                            </option>
+                            <option
+                                v-for="route in routeList"
+                                :value="route.id"
+                            >
+                                {{ route.name }}
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="w-full px-3">
@@ -267,7 +299,7 @@ const ModalFun = () => {
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         id="acs_price"
-                        type="text"
+                        type="datetime-local"
                         v-model="saveform.start_at"
                     />
                 </div>
@@ -282,7 +314,7 @@ const ModalFun = () => {
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         id="os_price"
-                        type="text"
+                        type="datetime-local"
                         v-model="saveform.end_at"
                     />
                 </div>

@@ -13,10 +13,8 @@ class Station extends Model
         "name",
         "address",
         "tp",
-        "left_distance",
-        "right_distance",
-        "left_time",
-        "right_time",
+        "left_direction",
+        "right_direction",
         "longitude",
         "latitude"
     ];

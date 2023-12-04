@@ -9,29 +9,6 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 defineProps({
     list: Array,
 });
-
-const insertModal = ref(false);
-
-const saveform = useForm({
-    beyond: "",
-    above: "",
-    acs_price: "",
-    os_price: "",
-    scrs_price: "",
-    tcrs_price: ""
-});
-
-const save = () => {
-    saveform.post(route("admin.train-location.store"), {
-        preserveScroll: true,
-        onSuccess: () => ModalFun(),
-        onFinish: () => saveform.reset(),
-    });
-};
-const ModalFun = () => {
-    insertModal.value = !insertModal.value;
-    saveform.reset();
-};
 </script>
 
 <template>
@@ -58,17 +35,6 @@ const ModalFun = () => {
                             >
                                 Train Location
                             </h3>
-                        </div>
-                        <div
-                            class="relative w-full px-4 max-w-full flex-grow flex-1 text-right"
-                        >
-                            <button
-                                class="bg-blue-500 text-white active:bg-blue-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
-                                style="transition: all 0.15s ease"
-                                @click="ModalFun"
-                            >
-                                Create
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -141,4 +107,5 @@ const ModalFun = () => {
         </div>
         <div class="w-full xl:w-4/12 px-4"></div>
     </AdminLayout>
+
 </template>
