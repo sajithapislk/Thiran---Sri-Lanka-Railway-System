@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StorePostRequest;
 use App\Http\Requests\User\LoginPostRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,6 +15,9 @@ class UserController extends Controller
     public function store(StorePostRequest $request)
     {
         $user =  User::create($request->validated());
+
+        event(new Registered($user));
+
         $token = $user->createToken('api',['user:*'])->plainTextToken;
 
         $response = [

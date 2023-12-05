@@ -19,12 +19,12 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
+    Mail::to('to@example.com')->send(new TestMail());
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('admin.login'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-    Mail::to('sajiyabro@gmail.com')->send( new TestMail());
 });
 
 Route::get('/dashboard', function () {
