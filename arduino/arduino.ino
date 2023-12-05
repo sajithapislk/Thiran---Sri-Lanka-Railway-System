@@ -13,7 +13,7 @@ const char* ssid = "Dialog 4G 035";
 const char* password = "Ashan93252";
 
 unsigned long lastTime = 0;
-unsigned long timerDelay = 60000;
+unsigned long timerDelay = 10000;
 
 String serverName = "http://192.168.8.181:8000/api/";
 

@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CallApi {
-  final String url = 'http://192.168.1.141:8000/api/';
+  final String url = 'http://192.168.8.181:8000/api/';
 
   Future<http.Response> postData(data, apiUrl) async {
     var fullUrl = url + apiUrl;

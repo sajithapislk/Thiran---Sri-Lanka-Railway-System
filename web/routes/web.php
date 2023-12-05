@@ -25,7 +25,6 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-    Mail::to('sajiyabro@gmail.com')->send( new TestMail());
 });
 
 Route::get('/dashboard', function () {

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class PaypalController extends Controller
@@ -42,9 +43,13 @@ class PaypalController extends Controller
     public function processTransaction(Request $request)
     {
         $uniqueCode = $this->generateRandomString();
-        // $upcomingDeal = ScheduleTime::find($request->id);
+        $upcomingDeal = ScheduleTime::find($request->id);
 
-        // $price = $request->qty * $upcomingDeal->price;
+        Log::Info($upcomingDeal);
+
+        $price = $request->qty * $upcomingDeal->price;
+
+        Log::Info($price);
 
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
@@ -56,16 +61,22 @@ class PaypalController extends Controller
             'amount'=>$price,
             'token'=>$uniqueCode,
         ]);
-        // TempReservation::create([
-        //     'st_id'=>$upcomingDeal->id,
-        //     'payment_id'=>$payment->id,
-        //     'from_s_id'=>$request->from_s_id,
-        //     'to_s_id'=>$request->to_s_id,
-        //     'distance'=>$upcomingDeal->id,
-        //     'seat_type'=>$upcomingDeal->id,
-        //     'nop'=>$upcomingDeal->id,
-        //     'price'=>$upcomingDeal->id
-        // ]);
+
+        Log::Info($payment);
+
+        $tempReservation = TempReservation::create([
+            'st_id'=>$upcomingDeal->id,
+            'payment_id'=>$payment->id,
+            'from_s_id'=>$request->from_s_id,
+            'to_s_id'=>$request->to_s_id,
+            'distance'=>$upcomingDeal->id,
+            'seat_type'=>$upcomingDeal->id,
+            'nop'=>$upcomingDeal->id,
+            'price'=>$upcomingDeal->id
+        ]);
+
+
+        Log::Info($tempReservation);
 
         $response = $provider->createOrder([
             "intent" => "CAPTURE",
