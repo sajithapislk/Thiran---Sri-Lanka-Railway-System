@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Models/UserLoginModel.dart';
 import '../Provider/UserProvider.dart';
+import '../Screens/OTPScreen.dart';
 
 class UserController extends GetxController {
   final userName = "".obs;
@@ -45,11 +46,11 @@ class UserController extends GetxController {
     };
     var res = await UserProvider.create(data);
 
-    if (res.token == null) {
+    if (res["status"] == "error") {
+      print("empty");
       return;
     }
-    sessionSave(res);
-    Get.offAll(() => const HomeScreen());
+    Get.offAll(() => VerificationScreen1(otp: res["otp"]));
   }
 
   void sessionSave(UserLoginModel res) async {

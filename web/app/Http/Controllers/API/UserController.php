@@ -5,20 +5,26 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StorePostRequest;
 use App\Http\Requests\User\LoginPostRequest;
+use App\Mail\OTP_Mail;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
     public function store(StorePostRequest $request)
     {
         $user =  User::create($request->validated());
-        $token = $user->createToken('api',['user:*'])->plainTextToken;
+
+        $otp = rand(11111,99999);
+
+        Mail::to($user->email)->send(new OTP_Mail($otp));
 
         $response = [
-            'user' => $user,
-            'token' => $token
+            'otp' => $otp,
+            'status' => 'insert successful'
         ];
 
         return response($response, 201);
