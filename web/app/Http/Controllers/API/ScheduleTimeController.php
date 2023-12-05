@@ -32,9 +32,9 @@ class ScheduleTimeController extends Controller
                 foreach ($stationList as $key => $station) {
                     $stationInfo = Station::find($station);
 
-                    if($station == $request->from ){
-                        $_time += ( $row->route->direction=='LEFT' ? $stationInfo->left_time : $stationInfo->right_time );
-                    }
+                    // if($station == $request->from ){
+                    //     $_time += ( $row->route->direction=='LEFT' ? $stationInfo->left_time : $stationInfo->right_time );
+                    // }
                     if($no == 1){
                         if ($request->to == $station) {
                             $no++;

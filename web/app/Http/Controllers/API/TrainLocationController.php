@@ -14,7 +14,14 @@ class TrainLocationController extends Controller
      */
     public function __invoke($st_id)
     {
-        $trainLocation = TrainLocation::find($st_id)->latest()->first();
-        return $trainLocation;
+        $trainLocation = TrainLocation::where('st_id',$st_id);
+
+        if ($trainLocation) {
+            $latestTrainLocation = $trainLocation->latest()->first();
+            return $latestTrainLocation;
+        } else {
+            // Handle the case where TrainLocation with $st_id is not found
+            return response()->json(['error' => 'Train location not found'], 404);
+        }
     }
 }
