@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:app/Controllers/UserController.dart';
 import 'package:app/Screens/HomeScreen.dart';
 import 'package:app/Screens/LoginScreen.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +16,15 @@ const Color accentOrangeColor = Color(0xFFEA7A3B);
 
 class VerificationScreen1 extends StatefulWidget {
   int otp;
+  String user_id;
 
-  VerificationScreen1({super.key,required this.otp});
+  VerificationScreen1({super.key,required this.otp, required this.user_id});
   @override
   _VerificationScreen1State createState() => _VerificationScreen1State();
 }
 
 class _VerificationScreen1State extends State<VerificationScreen1> {
+  final userController = Get.put(UserController());
   late List<TextStyle?> otpTextStyles;
   late List<TextEditingController?> controls;
   int numberOfFields = 5;
@@ -72,6 +75,7 @@ class _VerificationScreen1State extends State<VerificationScreen1> {
                   clearText = true;
                 });
                 if (widget.otp == int.parse(verificationCode)) {
+
                   Get.to(()=>LoginScreen());
                 }else{
                   log("false");
@@ -101,6 +105,7 @@ class _VerificationScreen1State extends State<VerificationScreen1> {
                 String concatenatedText = controls.map((controller) => controller!.text).join();
 
                 if (widget.otp == int.parse(concatenatedText)) {
+                  userController.verify(widget.user_id);
                   Get.to(()=>LoginScreen());
                 }else{
                   log("false");

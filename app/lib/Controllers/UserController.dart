@@ -21,7 +21,9 @@ class UserController extends GetxController {
     sessionSave(res);
     Get.offAll(() => const HomeScreen());
   }
-
+  Future<void> verify(String user_id)async {
+    await UserProvider.verify(user_id);
+  }
   Future<void> logout() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
 
@@ -50,7 +52,7 @@ class UserController extends GetxController {
       print("empty");
       return;
     }
-    Get.offAll(() => VerificationScreen1(otp: res["otp"]));
+    Get.offAll(() => VerificationScreen1(user_id: res["user_id"],otp: res["otp"]));
   }
 
   void sessionSave(UserLoginModel res) async {

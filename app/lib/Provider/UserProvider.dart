@@ -55,4 +55,8 @@ class UserProvider {
       return UserLoginModel(token: null, user: null);
     }
   }
+
+  static Future<void> verify(user_id) async {
+    await CallApi().getData('email-verify/${user_id}');
+  }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\ComplainStoreController;
+use App\Http\Controllers\API\EmailVerifyController;
 use App\Http\Controllers\API\LostFoundItemController;
 use App\Http\Controllers\API\PredictionController;
 use App\Http\Controllers\API\ScheduleTimeController;
@@ -72,3 +73,6 @@ Route::controller(PayPalController::class)->group(function () {
 
 
 Route::get('weather/{lat}/{lon}', [StationUpdateController::class, 'getWeatherData']);
+
+
+Route::get('email-verify/{user_id}', EmailVerifyController::class);
