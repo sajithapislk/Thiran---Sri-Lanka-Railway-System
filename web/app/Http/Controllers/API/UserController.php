@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StorePostRequest;
 use App\Http\Requests\User\LoginPostRequest;
+use App\Mail\OTP_Mail;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -16,13 +18,10 @@ class UserController extends Controller
     {
         $user =  User::create($request->validated());
 
-        event(new Registered($user));
-
-        $token = $user->createToken('api',['user:*'])->plainTextToken;
+        Mail::to($user->email)->send(new OTP_Mail($user));
 
         $response = [
-            'user' => $user,
-            'token' => $token
+            'status' => 'insert successful'
         ];
 
         return response($response, 201);

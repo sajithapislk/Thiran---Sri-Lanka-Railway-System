@@ -19,7 +19,6 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    Mail::to('to@example.com')->send(new TestMail());
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('admin.login'),
         'laravelVersion' => Application::VERSION,

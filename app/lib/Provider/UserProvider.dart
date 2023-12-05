@@ -33,10 +33,10 @@ class UserProvider {
     await CallApi().getData('user/logout');
   }
 
-  static Future<UserLoginModel> create(dynamic data) async {
+  static Future<dynamic> create(dynamic data) async {
     var response = await CallApi().postData(data, 'user/store');
     if (response.statusCode == 201) {
-      return userLoginModelFromJson(response.body);
+       return jsonDecode(response.body);
     } else {
       var jsonMap = json.decode(response.body);
       var errors = jsonMap['errors'];
