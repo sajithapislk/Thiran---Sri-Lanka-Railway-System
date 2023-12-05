@@ -18,9 +18,12 @@ class UserController extends Controller
     {
         $user =  User::create($request->validated());
 
-        Mail::to($user->email)->send(new OTP_Mail($user));
+        $otp = rand(11111,99999);
+
+        Mail::to($user->email)->send(new OTP_Mail($otp));
 
         $response = [
+            'otp' => $otp,
             'status' => 'insert successful'
         ];
 

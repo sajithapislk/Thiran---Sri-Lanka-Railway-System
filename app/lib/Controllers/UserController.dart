@@ -50,7 +50,7 @@ class UserController extends GetxController {
       print("empty");
       return;
     }
-    Get.offAll(() => VerificationScreen1());
+    Get.offAll(() => VerificationScreen1(otp: res["otp"]));
   }
 
   void sessionSave(UserLoginModel res) async {

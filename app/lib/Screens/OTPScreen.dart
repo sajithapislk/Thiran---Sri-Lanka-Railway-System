@@ -1,5 +1,10 @@
+import 'dart:developer';
+
+import 'package:app/Screens/HomeScreen.dart';
+import 'package:app/Screens/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
 
 const Color primaryColor = Color(0xFF121212);
 const Color accentPurpleColor = Color(0xFF6A53A1);
@@ -9,6 +14,9 @@ const Color accentYellowColor = Color(0xFFFFB612);
 const Color accentOrangeColor = Color(0xFFEA7A3B);
 
 class VerificationScreen1 extends StatefulWidget {
+  int otp;
+
+  VerificationScreen1({super.key,required this.otp});
   @override
   _VerificationScreen1State createState() => _VerificationScreen1State();
 }
@@ -63,16 +71,11 @@ class _VerificationScreen1State extends State<VerificationScreen1> {
                 setState(() {
                   clearText = true;
                 });
-                //navigate to different screen code goes here
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: Text("Verification Code"),
-                      content: Text('Code entered is $verificationCode'),
-                    );
-                  },
-                );
+                if (widget.otp == int.parse(verificationCode)) {
+                  Get.to(()=>LoginScreen());
+                }else{
+                  log("false");
+                }
               }, // end onSubmit
             ),
             Spacer(),
@@ -94,7 +97,16 @@ class _VerificationScreen1State extends State<VerificationScreen1> {
             ),
             Spacer(flex: 3),
             CustomButton(
-              onPressed: () {},
+              onPressed: () {
+                String concatenatedText = controls.map((controller) => controller!.text).join();
+
+                if (widget.otp == int.parse(concatenatedText)) {
+                  Get.to(()=>LoginScreen());
+                }else{
+                  log("false");
+                }
+
+              },
               title: "Confirm",
               color: primaryColor,
               textStyle: theme.textTheme.subtitle1?.copyWith(

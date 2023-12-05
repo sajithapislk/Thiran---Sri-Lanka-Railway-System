@@ -15,19 +15,12 @@ class OTP_Mail extends Mailable
     use Queueable, SerializesModels;
 
     private string $code ;
-    private User $user ;
     /**
      * Create a new message instance.
      */
-    public function __construct($user)
+    public function __construct($code)
     {
-        $this->user = $user;
-        $this->code = rand(11111,99999);
-
-        User::create([
-            'otp'=>$this->code,
-            'user_id'=>$this->user->id
-        ]);
+        $this->code = $code;
     }
 
     /**
