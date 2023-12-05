@@ -93,4 +93,14 @@ class LostFundController extends Controller
     {
         //
     }
+
+    public function img($path){
+        try {
+            $path = "app/lost-found-item/$path";
+            return response()->file(storage_path($path));
+        } catch (\Throwable $th) {
+            return "error";
+        }
+
+    }
 }

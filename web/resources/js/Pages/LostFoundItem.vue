@@ -67,13 +67,20 @@ const props = defineProps({
                             class="mb-4 text-2xl text-blue-900 font-black font-serif"
                         >
                             <a href="#" class="hover:underline hover:text-black"
-                                >Cool Article Title</a
+                            >
+                                {{ row.type }}
+                            </a
                             >
                         </h2>
                         <div class="flex flex-row">
-                            <img
+                            <!-- <img
                                 src="https://source.unsplash.com/200x200/?cat,kitten,kitty"
                                 class="w-48"
+                            /> -->
+
+                            <img
+                                :src="route('img',row.img1)"
+                                class ="w-48"
                             />
                             <div
                                 class="flex-1 flex flex-col justify-between text-xl font-light ml-4"
@@ -81,11 +88,7 @@ const props = defineProps({
                                 x-cloak
                             >
                                 <p>
-                                    Article synopsis a few sentences long. I'm
-                                    just typing stuff to fill in the space.
-                                    Spoiler: it's about cats. Lots of cats. Cats
-                                    everywhere. There might be kittens. You
-                                    never know.
+                                {{ row.description }}
                                 </p>
                                 <p class="text-right">
                                     <a
