@@ -1,3 +1,4 @@
+import 'package:app/Screens/RegisterScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -92,7 +93,10 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 130,
             ),
-            Text('New User? Create Account')
+            TextButton(
+              onPressed: ()=> Get.to(()=>RegisterScreen()),
+                child: Text('New User? Create Account')
+            )
           ],
         ),
       ),

@@ -7,6 +7,7 @@ import '../Models/UserLoginModel.dart';
 import '../Provider/UserProvider.dart';
 
 class UserController extends GetxController {
+  final userName = "".obs;
 
   Future<void> login({required String email, required String password}) async {
     var data = {"email": email, "password": password};
@@ -57,5 +58,7 @@ class UserController extends GetxController {
     localStorage.setString('user_id', res.user!.id.toString());
     localStorage.setString('user_name', res.user!.name.toString());
     localStorage.setString('token', res.token!);
+
+    userName(localStorage.getString('user_name'));
   }
 }

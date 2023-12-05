@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use DateTimeInterface;
 
 class StationUpdate extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        "id",
+        "st_id",
+        "station_id",
         "status"
     ];
 
@@ -18,6 +20,11 @@ class StationUpdate extends Model
     {
         return $this->hasOne(ScheduleTime::class,'id','st_id');
     }
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
 }
 
 

@@ -40,12 +40,7 @@ class ScheduleTimeController extends Controller
             "route_id"  => $request->route_id,
             "start_at" => $request->start_at,
             "end_at" => $request->end_at,
-            "status" => $request->status,
-            "acs_p_seats" => $request->acs_p_seats,
-            "os_p_seats" => $request->os_p_seats,
-            "scrs_p_seats" => $request->scrs_p_seats,
-            "tcrs_p_seats" => $request->tcrs_p_seats,
-
+            "status" => "Not Start to GO"
         ]);
 
         return back()->with('status', 'store successful');

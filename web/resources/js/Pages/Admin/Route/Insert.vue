@@ -27,7 +27,7 @@ const handleToggleChange = () => {
     const sum = tempList.value.reduce(
         (accumulator, item) =>
             accumulator +
-            (toggleValue.value === false ? item.left_direction : item.right_direction),
+            (toggleValue.value === false ? item.left_distance : item.right_distance),
         0
     );
     distance.value = sum;
@@ -289,12 +289,12 @@ const submit = () => {
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    left_direction
+                                    left_distance
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    right_direction
+                                    right_distance
                                 </th>
                             </tr>
                         </thead>
@@ -318,12 +318,12 @@ const submit = () => {
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
-                                    {{ row.left_direction }}
+                                    {{ row.left_distance }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
-                                    {{ row.right_direction }}
+                                    {{ row.right_distance }}
                                 </td>
                             </tr>
                         </tbody>
