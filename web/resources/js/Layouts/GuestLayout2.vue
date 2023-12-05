@@ -26,7 +26,7 @@ defineProps({
                     class="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200"
                 >
                     <a
-                        href= "#"
+                        :href="route('lost-found-item.index')"
                         class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900"
                         >Lost Found</a
                     >
