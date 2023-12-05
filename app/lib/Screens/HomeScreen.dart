@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Thiran",
+                    userController.userName.value,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,

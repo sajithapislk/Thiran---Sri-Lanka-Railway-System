@@ -30,21 +30,23 @@ class ScheduleTimeController extends Controller
             if (in_array($request->from, $stationList) && in_array($request->to, $stationList)) {
                 $no = 0;
                 foreach ($stationList as $key => $station) {
+                    $stationInfo = Station::find($station);
+
+                    if($station == $request->from ){
+                        $_time += ( $row->route->direction=='LEFT' ? $stationInfo->left_time : $stationInfo->right_time );
+                    }
                     if($no == 1){
                         if ($request->to == $station) {
                             $no++;
                             $isInserted=true;
                         }else{
-                            $stationInfo = Station::find($station);
                             $_distance += ( $row->route->direction=='LEFT' ? $stationInfo->left_distance : $stationInfo->right_distance );
-                            $_time += ( $row->route->direction=='LEFT' ? $stationInfo->left_time : $stationInfo->right_time );
+
                         }
                     }
                     if ($request->from == $station && $no == 0) {
                         $no++;
-                        $stationInfo = Station::find($station);
                         $_distance += ( $row->route->direction=='LEFT' ? $stationInfo->left_distance : $stationInfo->right_distance );
-                        $_time += ( $row->route->direction=='LEFT' ? $stationInfo->left_time : $stationInfo->right_time );
                     }
                 }
             }

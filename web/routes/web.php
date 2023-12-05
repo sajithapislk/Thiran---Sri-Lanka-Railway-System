@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\API\LostFoundItemController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Web\LostFundController;
+use App\Mail\TestMail;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -24,14 +24,12 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
+    Mail::to('sajiyabro@gmail.com')->send( new TestMail());
 });
-
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/lost-found-item', [LostFundController::class, 'public_index'])->name('lost-found-item.public_index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

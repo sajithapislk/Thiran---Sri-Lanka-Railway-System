@@ -35,8 +35,8 @@ class StationController extends Controller
             'name' => $request->name,
             'address' => $request->address,
             'tp' => $request->tp,
-            'left_direction' => $request->left_direction,
-            'right_direction' => $request->right_direction,
+            'left_distance' => $request->left_distance,
+            'right_distance' => $request->right_distance,
             'longitude' => $request->longitude,
             'latitude' => $request->latitude,
         ]);

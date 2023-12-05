@@ -10,6 +10,7 @@ use App\Models\ScheduleTime;
 use App\Models\Station;
 use App\Models\StationUpdate;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class TrainLocationObserver
 {
@@ -18,15 +19,34 @@ class TrainLocationObserver
      */
     public function created(TrainLocation $trainLocation): void
     {
-        $st_id = $trainLocation->st_id;
-        $stationUpdates = StationUpdate::where('st_id',$st_id)->orderBy('id', 'DESC')->get();
+        $stationUpdates = StationUpdate::where('st_id', $trainLocation->st_id)->orderBy('id', 'DESC')->get();
         $length = $stationUpdates->count();
 
-        $scheduleTimes = ScheduleTime::with('route','users')->find($st_id);
+        $scheduleTimes = ScheduleTime::with('route', 'users')->find($trainLocation->st_id);
 
-        if (isset($scheduleTimes->route->station_list[$length-1])) {
-            $station = Station::find($scheduleTimes->route->station_list[$length-1]);
-            if($station->latitude !== ""){
+        if ($length == 0) {
+            $_station = Station::find($scheduleTimes->route->station_list[$length]);
+            $distanceController = new DistanceController(
+                $trainLocation->latitude,
+                $trainLocation->longitude,
+                $_station->latitude,
+                $_station->longitude
+            );
+            $distance = $distanceController->distance;
+
+            $scheduleTimes->update([
+                'status' => $distance <= 0.1 ? 'Started' : 'Moving To Next Station : ' . $scheduleTimes->route->station_list[$length]
+            ]);
+
+            StationUpdate::create([
+                'st_id' => $trainLocation->st_id,
+                'station_id' => $scheduleTimes->route->station_list[$length],
+                'status' => $distance <= 0.1 ? 'Started' : 'Moving To Next Station : ' . $scheduleTimes->route->station_list[$length]
+            ]);
+            return;
+        } else {
+            if (isset($scheduleTimes->route->station_list[$length + 1])) {
+                $station = Station::find($scheduleTimes->route->station_list[$length + 1]);
                 $distanceController = new DistanceController(
                     $trainLocation->latitude,
                     $trainLocation->longitude,
@@ -35,46 +55,28 @@ class TrainLocationObserver
                 );
                 $distance = $distanceController->distance;
 
-                $trainLocation = $trainLocation->with('schedule_time.train');
-                // machine learning part (prediction time)
-                $randomForestResult = (new RandomForestPrediction([
-                    $trainLocation->train_id,
-                    $trainLocation->route_id,
-                    $trainLocation->route->from,
-                    $trainLocation->route->to,
-                    $distance,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-                ]))->predictArrivalTime();
-                $currentDateTime = Carbon::now();
-                $newDateTime = $currentDateTime->addMinutes($randomForestResult);
-                // pusher(real time update - notification)
-                foreach ($scheduleTimes->users as $key => $user) {
-                    TimePredictionNotification::dispatch($user->id, "TimePrediction", "Train will arrive at " + $newDateTime->format('h:i A'), Carbon::now());
-                }
+                $scheduleTimes->update([
+                    'status' => $distance <= 0.1 ? 'Next Station soon : ' . $scheduleTimes->route->station_list[$length] : 'Moving  : '
+                ]);
 
-                if($distance<=0.1){
-                    $station->update([
-                        'status'=>"Station Ekata laga"
-                    ]);
-                    if (isset($scheduleTimes->route->station_list[$length])) {
-                        $_nextStation = $scheduleTimes->route->station_list[$length];
-                        // $stationUpdate_check = StationUpdate::where('st_id',$st_id)->where('station_id',$_nextStation);
-                        // if (!$stationUpdate_check->exists()) {
-                            StationUpdate::create([
-                                'st_id' => $st_id,
-                                'station_id' => $_nextStation,
-                                'status' => "kalin station eke inne"
-                            ]);
-                    //     }
-                    }
-                }
+                $_stationUpdate = $stationUpdates
+                    ->where("station_id", $scheduleTimes->route->station_list[$length])
+                    ->first();
+
+                Log::info($_stationUpdate);
+
+                if ($_stationUpdate)
+                    return;
+
+                StationUpdate::create([
+                    'st_id' => $trainLocation->st_id,
+                    'station_id' => $scheduleTimes->route->station_list[$length],
+                    'status' => $distance <= 0.1 ? 'Next Station soon : ' . $scheduleTimes->route->station_list[$length] : 'Moving  : '.$scheduleTimes->route->station_list[$length]
+                ]);
+
+                return;
             }
         }
-
     }
 
     /**

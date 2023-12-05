@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use DateTimeInterface;
 
 class ScheduleTime extends Model
 {
@@ -33,4 +34,9 @@ class ScheduleTime extends Model
     {
         return $this->hasMany(Book::class,'st_id','id');
     }
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
 }

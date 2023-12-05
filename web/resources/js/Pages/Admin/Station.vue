@@ -16,8 +16,8 @@ const saveform = useForm({
     name: "",
     address: "",
     tp: "",
-    left_direction: "",
-    right_direction: "",
+    left_distance: "",
+    right_distance: "",
     left_time : "",
     right_time : "",
     longitude: "",
@@ -144,12 +144,12 @@ const mapOptions = {
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    left_direction
+                                    left_distance
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    right_direction
+                                    right_distance
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -203,12 +203,12 @@ const mapOptions = {
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
-                                    {{ row.left_direction }}
+                                    {{ row.left_distance }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
                                 >
-                                    {{ row.right_direction }}
+                                    {{ row.right_distance }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
@@ -297,14 +297,14 @@ const mapOptions = {
                         class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                         for="name"
                     >
-                        left_direction
+                        left_distance
                     </label>
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         id="left_direction"
                         type="text"
-                        v-model="saveform.left_direction"
+                        v-model="saveform.left_distance"
                     />
                 </div>
                 <div class="w-full px-3">
@@ -312,14 +312,14 @@ const mapOptions = {
                         class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                         for="name"
                     >
-                        right_direction
+                        right_distance
                     </label>
 
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         id="right_direction"
                         type="text"
-                        v-model="saveform.right_direction"
+                        v-model="saveform.right_distance"
                     />
                 </div>
 
