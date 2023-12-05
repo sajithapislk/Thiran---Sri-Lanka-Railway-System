@@ -14,7 +14,7 @@ class UserController extends Controller
     public function store(StorePostRequest $request)
     {
         $user =  User::create($request->validated());
-        $token = $user->createToken('user-api')->plainTextToken;
+        $token = $user->createToken('api',['user:*'])->plainTextToken;
 
         $response = [
             'user' => $user,

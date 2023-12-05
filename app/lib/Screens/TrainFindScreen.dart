@@ -252,7 +252,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                                     ),
                                   ),
                                   Text(
-                                    "selected station: ${DateFormat('HH:mm:ss').format(row.datetime)}",
+                                    "selected station: ${row.datetime}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       fontSize: 14,

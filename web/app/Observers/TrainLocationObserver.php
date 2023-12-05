@@ -22,6 +22,8 @@ class TrainLocationObserver
         $stationUpdates = StationUpdate::where('st_id', $trainLocation->st_id)->orderBy('id', 'DESC')->get();
         $length = $stationUpdates->count();
 
+        Log::info("length " . $length);
+
         $scheduleTimes = ScheduleTime::with('route', 'users')->find($trainLocation->st_id);
 
         if ($length == 0) {
@@ -35,16 +37,22 @@ class TrainLocationObserver
             $distance = $distanceController->distance;
 
             $scheduleTimes->update([
-                'status' => $distance <= 0.1 ? 'Started' : 'Moving To Next Station : ' . $scheduleTimes->route->station_list[$length]
+                'status' => 'Started'
             ]);
 
             StationUpdate::create([
                 'st_id' => $trainLocation->st_id,
                 'station_id' => $scheduleTimes->route->station_list[$length],
-                'status' => $distance <= 0.1 ? 'Started' : 'Moving To Next Station : ' . $scheduleTimes->route->station_list[$length]
+                'status' => 'Started'
             ]);
             return;
         } else {
+            if ($trainLocation->status == "NOT_MOVING") {
+                $scheduleTimes->update([
+                    'status' => 'NOT_MOVING'
+                ]);
+                return;
+            }
             if (isset($scheduleTimes->route->station_list[$length + 1])) {
                 $station = Station::find($scheduleTimes->route->station_list[$length + 1]);
                 $distanceController = new DistanceController(
@@ -55,25 +63,23 @@ class TrainLocationObserver
                 );
                 $distance = $distanceController->distance;
 
-                $scheduleTimes->update([
-                    'status' => $distance <= 0.1 ? 'Next Station soon : ' . $scheduleTimes->route->station_list[$length] : 'Moving  : '
-                ]);
-
                 $_stationUpdate = $stationUpdates
                     ->where("station_id", $scheduleTimes->route->station_list[$length])
                     ->first();
 
-                Log::info($_stationUpdate);
-
                 if ($_stationUpdate)
                     return;
 
-                StationUpdate::create([
-                    'st_id' => $trainLocation->st_id,
-                    'station_id' => $scheduleTimes->route->station_list[$length],
-                    'status' => $distance <= 0.1 ? 'Next Station soon : ' . $scheduleTimes->route->station_list[$length] : 'Moving  : '.$scheduleTimes->route->station_list[$length]
-                ]);
-
+                if ($distance <= 0.1) {
+                    $scheduleTimes->update([
+                        'status' => 'Next Station soon : ' . $scheduleTimes->route->station_list[$length]
+                    ]);
+                    StationUpdate::create([
+                        'st_id' => $trainLocation->st_id,
+                        'station_id' => $scheduleTimes->route->station_list[$length],
+                        'status' => 'Next Station soon : '. $scheduleTimes->route->station_list[$length]
+                    ]);
+                }
                 return;
             }
         }

@@ -8,6 +8,7 @@ use App\Models\Station;
 use App\Models\TicketPrice;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ScheduleTimeController extends Controller
 {
@@ -23,7 +24,7 @@ class ScheduleTimeController extends Controller
             ->get();
         $_scheduleTimes = array();
         $_distance = 0.0;
-        foreach ($scheduleTimes as $row) {
+        foreach ($scheduleTimes as $key => $row) {
             $isInserted = false;
             $_time = 0;
             $stationList = $row->route->station_list;
@@ -32,25 +33,29 @@ class ScheduleTimeController extends Controller
                 foreach ($stationList as $key => $station) {
                     $stationInfo = Station::find($station);
 
-                    if($station == $request->from ){
-                        $_time += ( $row->route->direction=='LEFT' ? $stationInfo->left_time : $stationInfo->right_time );
-                    }
                     if($no == 1){
                         if ($request->to == $station) {
                             $no++;
                             $isInserted=true;
                         }else{
                             $_distance += ( $row->route->direction=='LEFT' ? $stationInfo->left_distance : $stationInfo->right_distance );
-
                         }
                     }
                     if ($request->from == $station && $no == 0) {
                         $no++;
                         $_distance += ( $row->route->direction=='LEFT' ? $stationInfo->left_distance : $stationInfo->right_distance );
                     }
+
+                    if($no == 0){
+                        $_time += ( $row->route->direction=='LEFT' ? $stationInfo->left_time : $stationInfo->right_time );
+                        Log::info($key . " | " .$_time);
+                    }
                 }
             }
             if($isInserted)
+                Log::info($row->start_at);
+                Log::info(Carbon::parse($row->start_at));
+                Log::info(Carbon::parse($row->start_at)->addMinutes($_time));
                 array_push($_scheduleTimes, [
                     'data' => $row,
                     'datetime' => Carbon::parse($row->start_at)->addMinutes($_time)
