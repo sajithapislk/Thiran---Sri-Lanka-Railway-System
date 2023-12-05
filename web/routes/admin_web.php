@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\StationController;
 use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\ComplainController;
+use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\LostFundController;
 use App\Http\Controllers\Web\RouteController;
 use App\Http\Controllers\Web\ScheduleTimeController;
@@ -40,6 +41,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::resource('complain',ComplainController::class);
     Route::resource('train',TrainController::class);
     Route::resource('schedule-time',ScheduleTimeController::class);
+    Route::resource('Books',DashboardController::class);
     // train location
 
     Route::get('logout', [AdminAuthenticatedSessionController::class, 'destroy'])
