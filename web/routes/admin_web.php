@@ -29,9 +29,7 @@ use Inertia\Inertia;
 
 Route::middleware('auth:admin')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('Admin/Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::resource('station',StationController::class);
     Route::resource('route',RouteController::class);

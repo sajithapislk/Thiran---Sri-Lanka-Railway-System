@@ -10,6 +10,22 @@ class Book extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'id',
+        'uid',
+        'st_id',
+        'payment_id',
+        'from_s_id',
+        'to_s_id',
+        'distance',
+        'seat_type',
+        'nop',
+        'entered_at',
+        'ended_at',
+        'is_canceled',
+    ];
+
+
     public function payment()
     {
         return $this->hasOne(Payment::class,'id','payment_id');

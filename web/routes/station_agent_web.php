@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\StationAgentAuthenticatedSessionController;
+use App\Http\Controllers\StationAgentDashboard;
 use App\Http\Controllers\Web\BooksController;
 use App\Http\Controllers\Web\StationUpdateController;
 use Illuminate\Support\Facades\Route;
@@ -20,15 +21,10 @@ use Inertia\Inertia;
 
 Route::middleware('auth:station-agent')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('StationAgent/Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', StationAgentDashboard::class)->name('dashboard');
 
     Route::get('station-update', [StationUpdateController::class, 'index'])
     ->name('station-update');
-
-    Route::get('Books', [BooksController::class, 'index'])
-    ->name('Books');
 
     Route::post('station-update/confirm',[StationUpdateController::class,'confirm'])
     ->name('station-update.confirm');

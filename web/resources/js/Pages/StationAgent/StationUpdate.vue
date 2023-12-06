@@ -44,19 +44,12 @@ const confirm = (id) => {
                             <h3
                                 class="font-semibold text-base text-blueGray-700"
                             >
-                                Route List
+                                Station Update
                             </h3>
                         </div>
                         <div
                             class="relative w-full px-4 max-w-full flex-grow flex-1 text-right"
                         >
-                            <button
-                                class="bg-blue-500 text-white active:bg-blue-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
-                                style="transition: all 0.15s ease"
-
-                            >
-                                Create
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -95,7 +88,7 @@ const confirm = (id) => {
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 >
-                                    Cfm
+                                    confirm
                                 </th>
 
                             </tr>
