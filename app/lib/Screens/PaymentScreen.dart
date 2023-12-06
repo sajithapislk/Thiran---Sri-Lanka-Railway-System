@@ -4,8 +4,25 @@ import 'package:app/Services/my_api.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../Models/ScheduleTimeTableModel.dart';
+
 class PaymentScreen extends StatefulWidget {
-  PaymentScreen();
+  String qty;
+  String type;
+  double distance;
+  String price;
+  int id;
+  int from_s_id;
+  int to_s_id;
+
+  PaymentScreen({
+      required this.id,
+      required this.qty,
+      required this.type,
+      required this.distance,
+      required this.price,
+      required this.from_s_id,
+      required this.to_s_id});
 
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
@@ -23,7 +40,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   void initState() {
     super.initState();
-    selectedUrl = '${CallApi().url}process-transaction';
+    selectedUrl =
+        '${CallApi().url}process-transaction?id=${widget.id}&from_s_id=${widget.from_s_id}&to_s_id=${widget.to_s_id}&distance=${widget.distance}&type=${widget.type}&qty=${widget.qty}&price=${widget.price}';
     //selectedUrl="https://mvs.bslmeiyu.com";
     // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }

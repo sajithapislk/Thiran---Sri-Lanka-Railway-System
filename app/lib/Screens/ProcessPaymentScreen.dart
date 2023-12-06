@@ -10,8 +10,8 @@ import 'PaymentScreen.dart';
 class ProcessPaymentScreen extends StatefulWidget {
   int index;
   Schedule row;
-  StationModel? fromStation;
-  StationModel? toStation;
+  StationModel fromStation;
+  StationModel toStation;
 
   ProcessPaymentScreen(
       {Key? key,
@@ -374,7 +374,15 @@ class _ProcessPaymentScreenState extends State<ProcessPaymentScreen> {
             child: ElevatedButton(
               child: Text(_isAvailable ? "Payment" : "ERROR"),
               onPressed: () =>
-                  _isAvailable ? Get.to(() => PaymentScreen()) : null,
+                  _isAvailable ? Get.to(() => PaymentScreen(
+                    type:optionValue,
+                    qty: qtyController.text,
+                    id:row.data.id,
+                    distance: scheduleTimeController.distance.value,
+                    from_s_id: widget.fromStation.id,
+                    to_s_id: widget.toStation.id,
+                    price: price.value,
+                  )) : null,
             ),
           )
         ]),

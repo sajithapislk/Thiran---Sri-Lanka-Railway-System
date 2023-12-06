@@ -43,36 +43,33 @@ class PaypalController extends Controller
     public function processTransaction(Request $request)
     {
         $uniqueCode = $this->generateRandomString();
-        $upcomingDeal = ScheduleTime::find($request->id);
 
-        Log::Info($upcomingDeal);
+        $price = $request->price;
 
-        $price = $request->qty * $upcomingDeal->price;
-
-        Log::Info($price);
+        Log::Info($request);
 
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();
 
         $payment = Payment::create([
-            'method'=>'paypal',
-            'status'=>'PENDING',
-            'amount'=>$price,
-            'token'=>$uniqueCode,
+            'method' => 'paypal',
+            'status' => 'PENDING',
+            'amount' => $price,
+            'token' => $uniqueCode,
         ]);
 
         Log::Info($payment);
 
         $tempReservation = TempReservation::create([
-            'st_id'=>$upcomingDeal->id,
-            'payment_id'=>$payment->id,
-            'from_s_id'=>$request->from_s_id,
-            'to_s_id'=>$request->to_s_id,
-            'distance'=>$upcomingDeal->id,
-            'seat_type'=>$upcomingDeal->id,
-            'nop'=>$upcomingDeal->id,
-            'price'=>$upcomingDeal->id
+            'st_id' => $request->id,
+            'payment_id' => $payment->id,
+            'from_s_id' => $request->from_s_id,
+            'to_s_id' => $request->to_s_id,
+            'distance' => $request->distance,
+            'seat_type' => $request->type,
+            'nop' => $request->qty,
+            'price' => $price,
         ]);
 
 
@@ -89,7 +86,7 @@ class PaypalController extends Controller
                     "reference_id" => $uniqueCode,
                     "amount" => [
                         "currency_code" => "USD",
-                        "value" => "10"
+                        "value" => $price
                     ]
                 ]
             ]
@@ -104,19 +101,15 @@ class PaypalController extends Controller
                 }
             }
 
-            // return redirect()
-            //     ->route('patient.booking.paypal.cancel_transaction')
-            //     ->with('error', 'Something went wrong.');
+            return redirect()
+                ->route('cancelTransaction')
+                ->with('error', 'Something went wrong.');
 
-
-            return Inertia::render('ErrorPage', ['error' => 'Something went wrong.']);
         } else {
-            // return redirect()
-            //     ->route('patient.booking.paypal.cancel_transaction')
-            //     ->with('error', $response['message'] ?? 'Something went wrong.');
+            return redirect()
+                ->route('cancelTransaction')
+                ->with('error', $response['message'] ?? 'Something went wrong.');
 
-
-            return Inertia::render('ErrorPage', ['error' => 'Something went wrong.']);
         }
     }
     /**
@@ -134,25 +127,25 @@ class PaypalController extends Controller
         $response = $provider->capturePaymentOrder($request['token']);
         $token = $response['purchase_units'][0]['reference_id'];
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
-            $payment = Payment::where('token',$token)->first();
+            $payment = Payment::where('token', $token)->first();
 
             $payment->update([
-                'status'=>'SUCCESS',
-                'response'=>$response
+                'status' => 'SUCCESS',
+                'response' => $response
             ]);
 
             $TempReservation = TempReservation::where('payment_id', $payment->id)->first();
 
             Book::create([
-                'uid'=>$userId,
-                'st_id'=>$TempReservation->st_id,
-                'payment_id'=>$TempReservation->payment_id,
-                'from_s_id'=>$TempReservation->from_s_id,
-                'to_s_id'=>$TempReservation->to_s_id,
-                'distance'=>$TempReservation->distance,
-                'seat_type'=>$TempReservation->seat_type,
-                'nop'=>$TempReservation->nop,
-                'price'=>$TempReservation->price
+                'uid' => $userId,
+                'st_id' => $TempReservation->st_id,
+                'payment_id' => $TempReservation->payment_id,
+                'from_s_id' => $TempReservation->from_s_id,
+                'to_s_id' => $TempReservation->to_s_id,
+                'distance' => $TempReservation->distance,
+                'seat_type' => $TempReservation->seat_type,
+                'nop' => $TempReservation->nop,
+                'price' => $TempReservation->price
             ]);
 
             return "done";
@@ -172,12 +165,14 @@ class PaypalController extends Controller
             ->with('error', $response['message'] ?? 'You have canceled the transaction.');
     }
 
-    function pdf($id) {
-        $cruiseDeal = Book::with(['deal','available_room','user','payment'])->find($id);
+    function pdf($id)
+    {
+        $cruiseDeal = Book::with(['deal', 'available_room', 'user', 'payment'])->find($id);
         // return $cruiseDeal;
-        return view('PDF.invoice',compact('cruiseDeal'));
+        return view('PDF.invoice', compact('cruiseDeal'));
     }
-    function pdf_download($id) {
+    function pdf_download($id)
+    {
         $cruiseDeal = Book::find($id);
         // return $cruiseDeal;
         // return view('PDF.invoice',compact('cruiseDeal'));
@@ -185,9 +180,8 @@ class PaypalController extends Controller
             'cruiseDeal' => $cruiseDeal
         ]);
         $orientation = 'landscape';
-        $customPaper = array(0,0,950,950);
+        $customPaper = array(0, 0, 950, 950);
         $pdf->setPaper($customPaper, $orientation);
         return $pdf->stream();
-
     }
 }

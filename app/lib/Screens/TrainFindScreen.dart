@@ -288,6 +288,7 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                                         color: Colors.white),
                                   ),
                                   Container(
+                                    alignment: Alignment.center,
                                     child: ElevatedButton(
                                       onPressed: () {
                                         Get.to(() =>
@@ -300,7 +301,6 @@ class _TrainFindScreenState extends State<TrainFindScreen> {
                                       },
                                       child: Text('Payment'),
                                     ),
-                                    alignment: Alignment.center,
                                   ),
                                 ],
                               ),
