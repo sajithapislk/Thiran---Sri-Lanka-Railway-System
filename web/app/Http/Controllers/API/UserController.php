@@ -17,7 +17,6 @@ class UserController extends Controller
     public function store(StorePostRequest $request)
     {
         $user =  User::create($request->validated());
-        return $user;
 
         $otp = rand(11111,99999);
 
