@@ -17,12 +17,14 @@ class UserController extends Controller
     public function store(StorePostRequest $request)
     {
         $user =  User::create($request->validated());
+        return $user;
 
         $otp = rand(11111,99999);
 
         Mail::to($user->email)->send(new OTP_Mail($otp));
 
         $response = [
+            'user_id'=>$user->id,
             'otp' => $otp,
             'status' => 'insert successful'
         ];

@@ -1,5 +1,6 @@
 import 'package:app/Screens/LostFoundItemScreen.dart';
 import 'package:app/Screens/MyReservation.dart';
+import 'package:app/Screens/TimePredictionScreen.dart';
 import 'package:app/Screens/TrainFindScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,6 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
         title: "Lost And Found Item",
         subtitle: "",
         event: () => Get.to(() => LostFoundItemScreen()),
+        img: "assets/icon/train_192px.png"),
+    Items(
+        title: "Time Prediction",
+        subtitle: "",
+        event: () => Get.to(() => TimePredictionScreen()),
         img: "assets/icon/train_192px.png")
   ];
   var color = 0xff453658;

@@ -44,15 +44,7 @@ class _VerificationScreen1State extends State<VerificationScreen1> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Verification Code",
-              style: theme.textTheme.headline4,
-            ),
-            SizedBox(height: 16),
-            Text(
-              "We texted you a code",
-              style: theme.textTheme.headline6,
-            ),
+
             Text("Please enter it below", style: theme.textTheme.headline6),
             Spacer(flex: 2),
             OtpTextField(

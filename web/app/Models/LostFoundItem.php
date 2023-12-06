@@ -12,6 +12,7 @@ class LostFoundItem extends Model
 
     protected $fillable = [
         'u_id',
+        'type',
         'item_name',
         'description',
         'img1',

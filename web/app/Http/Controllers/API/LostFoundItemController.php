@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\LostFoundItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LostFoundItemController extends Controller
 {
@@ -13,7 +14,7 @@ class LostFoundItemController extends Controller
     }
     public function lostItemCreate(Request $request) {
         $lostFoundItem = LostFoundItem::create([
-            'u_id'=>$request->u_id,
+            'u_id'=>Auth::user()->id,
             'type'=>$request->type,
             'item_name'=>$request->item_name,
             'description'=>$request->description,

@@ -174,10 +174,10 @@ class _LostFoundItemCreateScreenState extends State<LostFoundItemCreateScreen> {
       "type":type,
       "item_name":itemName,
       "description":description,
-      "img1":_croppedFile1!.path,
-      "img2":_croppedFile2!.path,
-      "img3":_croppedFile3!.path,
-      "img4":_croppedFile4!.path,
+      "img1":_croppedFile1==null ? null : _croppedFile1!.path,
+      "img2":_croppedFile2==null ? null : _croppedFile2!.path,
+      "img3":_croppedFile3==null ? null : _croppedFile3!.path,
+      "img4":_croppedFile4==null ? null : _croppedFile4!.path,
     };
     lostFoundItemController.create(data:data);
   }
@@ -234,7 +234,7 @@ class _LostFoundItemCreateScreenState extends State<LostFoundItemCreateScreen> {
                   return null;
                 },
                 onSaved: (value) {
-                  description = value!;
+                  itemName = value!;
                 },
               ),
               SizedBox(height: 16.0),
