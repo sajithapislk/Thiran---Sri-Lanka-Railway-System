@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:app/Models/LostFoundItemModel.dart';
 import 'package:app/Provider/LostFoundItemProvider.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LostFoundItemController extends GetxController {
@@ -21,7 +22,14 @@ class LostFoundItemController extends GetxController {
   Future<void> create({required dynamic data}) async {
     var res = await LostFoundItemProvider.create(data);
     if(res) {
-      log("sucess");
+      Get.defaultDialog(
+        title: "Sucess",
+        middleText: "Sucess",
+        backgroundColor: Colors.green,
+        titleStyle: TextStyle(color: Colors.white),
+        middleTextStyle: TextStyle(color: Colors.white),
+
+      );
     }
   }
 }

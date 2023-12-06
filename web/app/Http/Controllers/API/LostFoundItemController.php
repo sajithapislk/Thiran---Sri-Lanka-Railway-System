@@ -51,6 +51,7 @@ class LostFoundItemController extends Controller
             $lostFoundItem->img4 = $image;
             $lostFoundItem->save();
         }
+        return $lostFoundItem;
     }
     public function updateStation(Request $request,LostFoundItem $item) {
         return $item->update([
