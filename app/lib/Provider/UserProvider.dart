@@ -8,6 +8,7 @@ import '../Services/my_api.dart';
 class UserProvider {
   static Future<UserLoginModel> login(dynamic data) async {
     var response = await CallApi().postData(data, 'user/login');
+
     if (response.statusCode == 201) {
       return userLoginModelFromJson(response.body);
     } else {
